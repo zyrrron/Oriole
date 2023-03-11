@@ -1,0 +1,106 @@
+sample	graph_path	lib_path	primitive_only	S_bounds	target_n	max_nodes_to_shift	high_constraint	low_constraint	loop_free	priority	trajectories	output_path
+case1	../benchmark/bionetwork/lauren_group/case1	./lib	TRUE	"1,5"		4	"2,2"	4	TRUE	C	1	./results/bionetwork/lauren_group/case1
+case2	../benchmark/bionetwork/lauren_group/case2	./lib	TRUE	"1,7"		4	"2,2"	4	TRUE	C	1	./results/bionetwork/lauren_group/case2
+1125	../benchmark/4-input-boolean-circuits/1125	./lib	TRUE	"1,7"		4	"2,2"	4	TRUE	C	1	./results/4-input-boolean-circuits/1125
+hexDisplay	../benchmark/electronic-circuits/hexDisplay	./lib	TRUE	"1,7"		5	"2,2"	4	TRUE	C	5	./results/electronic-circuits/hexDisplay
+md5Core	/Users/jgzhang/Work/Densmore_lab/Partition/code_version/v2/genetic-circuit-partitioning/2021.4/runs/benchmark/electronic-circuits/md5Core	./lib	TRUE	"3,7"		3	"1,1"	4	TRUE	C	3	/Users/jgzhang/Work/Densmore_lab/Partition/code_version/v2/genetic-circuit-partitioning/2021.4/runs/results/electronic-circuits/md5Core
+multiplier	../benchmark/electronic-circuits/multiplier	./lib	TRUE	"3,7"	3	5	"2,2"	4	TRUE	C	1	./results/electronic-circuits/multiplier
+RCA4	../benchmark/electronic-circuits/RCA4	./lib	TRUE	"3,7"		5	"2,2"	5	TRUE	C	5	./results/electronic-circuits/RCA4
+RCA16	../benchmark/electronic-circuits/RCA16	./lib	TRUE	"1,7"		5	"2,2"	4	TRUE	C	5	./results/electronic-circuits/RCA16
+RCA64	../benchmark/electronic-circuits/RCA64	./lib	TRUE	"1,7"		5	"2,2"	3	TRUE	C	5	./results/electronic-circuits/RCA64
+alu	../benchmark/electronic-circuits/alu	./lib	TRUE	"1,7"	45	5	"2,2"	4	TRUE	C	5	./results/electronic-circuits/alu
+80727	../benchmark/5-input-boolean-circuits/80727	./lib	TRUE	"3,6"		5	"1,1"	3	TRUE	C	10	./results/5-input-boolean-circuits/80727/test
+test	../benchmark/test/	./lib	TRUE	"2,6"	4	1	"1,1"	2	TRUE	C	1	./results/test
+md30	../benchmark/electronic-circuits/md5Core	./lib	TRUE	"1,7"	30	3	"1,1"	5	TRUE	C	1	./results/electronic-circuits/md5Core
+md31	../benchmark/electronic-circuits/md5Core	./lib	TRUE	"1,7"	31	3	"1,1"	4	TRUE	C	3	./results/electronic-circuits/md5Core
+md32	../benchmark/electronic-circuits/md5Core	./lib	TRUE	"1,7"	32	3	"1,1"	4	TRUE	C	3	./results/electronic-circuits/md5Core
+md50	../benchmark/electronic-circuits/md5Core	./lib	TRUE	"1,6"	50	3	"1,1"	4	TRUE	C	3	./results/electronic-circuits/md5Core
+md51	../benchmark/electronic-circuits/md5Core	./lib	TRUE	"1,5"	51	3	"1,1"	3	TRUE	C	5	./results/electronic-circuits/md5Core
+md52	../benchmark/electronic-circuits/md5Core	./lib	TRUE	"1,5"	52	3	"1,1"	3	TRUE	C	5	./results/electronic-circuits/md5Core
+md53	../benchmark/electronic-circuits/md5Core	./lib	TRUE	"1,5"	53	3	"1,1"	3	TRUE	C	5	./results/electronic-circuits/md5Core
+md54	../benchmark/electronic-circuits/md5Core	./lib	TRUE	"1,5"	54	3	"1,1"	3	TRUE	C	5	./results/electronic-circuits/md5Core
+md55	../benchmark/electronic-circuits/md5Core	./lib	TRUE	"1,6"	55	3	"1,1"	4	TRUE	C	3	./results/electronic-circuits/md5Core
+md56	../benchmark/electronic-circuits/md5Core	./lib	TRUE	"1,5"	56	3	"1,1"	3	TRUE	C	5	./results/electronic-circuits/md5Core
+md57	../benchmark/electronic-circuits/md5Core	./lib	TRUE	"1,5"	57	3	"1,1"	3	TRUE	C	5	./results/electronic-circuits/md5Core
+md58	../benchmark/electronic-circuits/md5Core	./lib	TRUE	"1,5"	58	3	"1,1"	3	TRUE	C	5	./results/electronic-circuits/md5Core
+md59	../benchmark/electronic-circuits/md5Core	./lib	TRUE	"1,5"	59	3	"1,1"	3	TRUE	C	5	./results/electronic-circuits/md5Core
+md60	../benchmark/electronic-circuits/md5Core	./lib	TRUE	"1,5"	60	3	"1,1"	3	TRUE	C	5	./results/electronic-circuits/md5Core
+4input_3310	../benchmark/4-input-boolean-circuits/3310	./lib	TRUE	"1,7"		3	"2,2"	4	TRUE	C	5	./results/4-input-boolean-circuits/3310
+4input_30304	../benchmark/4-input-boolean-circuits/30304	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/4-input-boolean-circuits/30304
+4input_17385	../benchmark/4-input-boolean-circuits/17385	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/4-input-boolean-circuits/17385
+4input_39513	../benchmark/4-input-boolean-circuits/39513	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/4-input-boolean-circuits/39513
+4input_16418	../benchmark/4-input-boolean-circuits/16418	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/4-input-boolean-circuits/16418
+5input_71517	../benchmark/5-input-boolean-circuits/71517	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/5-input-boolean-circuits/71517
+5input_54207	../benchmark/5-input-boolean-circuits/54207	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/5-input-boolean-circuits/54207
+5input_42709	../benchmark/5-input-boolean-circuits/42709	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/5-input-boolean-circuits/42709
+5input_23439	../benchmark/5-input-boolean-circuits/23439	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/5-input-boolean-circuits/23439
+5input_36413	../benchmark/5-input-boolean-circuits/36413	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/5-input-boolean-circuits/36413
+8input_83	../benchmark/8-input-boolean-circuits/83	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/8-input-boolean-circuits/83
+6input_99	../benchmark/6-input-boolean-circuits/99	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/6-input-boolean-circuits/99
+5input_90460	../benchmark/5-input-boolean-circuits/90460	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/5-input-boolean-circuits/90460
+7input_86	../benchmark/7-input-boolean-circuits/86	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/7-input-boolean-circuits/86
+6input_49	../benchmark/6-input-boolean-circuits/49	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/6-input-boolean-circuits/49
+8input_87	../benchmark/8-input-boolean-circuits/87	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/8-input-boolean-circuits/87
+6input_69	../benchmark/6-input-boolean-circuits/69	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/6-input-boolean-circuits/69
+6input_88	../benchmark/6-input-boolean-circuits/88	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/6-input-boolean-circuits/88
+6input_15	../benchmark/6-input-boolean-circuits/15	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/6-input-boolean-circuits/15
+6input_30	../benchmark/6-input-boolean-circuits/30	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/6-input-boolean-circuits/30
+6input_26	../benchmark/6-input-boolean-circuits/26	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/6-input-boolean-circuits/26
+6input_72	../benchmark/6-input-boolean-circuits/72	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/6-input-boolean-circuits/72
+6input_5	../benchmark/6-input-boolean-circuits/5	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/6-input-boolean-circuits/5
+6input_67	../benchmark/6-input-boolean-circuits/67	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/6-input-boolean-circuits/67
+6input_14	../benchmark/6-input-boolean-circuits/14	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/6-input-boolean-circuits/14
+7input_59	../benchmark/7-input-boolean-circuits/59	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/7-input-boolean-circuits/59
+8input_46	../benchmark/8-input-boolean-circuits/46	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/8-input-boolean-circuits/46
+7input_87	../benchmark/7-input-boolean-circuits/87	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/7-input-boolean-circuits/87
+7input_87_c5	../benchmark/7-input-boolean-circuits/87	./lib	TRUE	"1,7"		3	"2,1"	5	TRUE	C	3	./results/7-input-boolean-circuits/87-c5
+6input_54	../benchmark/6-input-boolean-circuits/54	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/6-input-boolean-circuits/54
+6input_54_c5	../benchmark/6-input-boolean-circuits/54	./lib	TRUE	"1,7"		3	"2,1"	5	TRUE	C	3	./results/6-input-boolean-circuits/54-c5
+7input_36	../benchmark/7-input-boolean-circuits/36	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/7-input-boolean-circuits/36
+7input_36_c5	../benchmark/7-input-boolean-circuits/36	./lib	TRUE	"1,7"		3	"2,1"	5	TRUE	C   3	./results/7-input-boolean-circuits/36-c5	
+7input_26	../benchmark/7-input-boolean-circuits/26	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/7-input-boolean-circuits/26
+8input_80	../benchmark/8-input-boolean-circuits/80	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/8-input-boolean-circuits/80
+8input_80_c5	../benchmark/8-input-boolean-circuits/80	./lib	TRUE	"1,7"		3	"2,1"	5	TRUE	C	3	./results/8-input-boolean-circuits/80-c5
+7input_65	../benchmark/7-input-boolean-circuits/65	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/7-input-boolean-circuits/65
+7input_65_c5	../benchmark/7-input-boolean-circuits/65	./lib	TRUE	"1,7"		3	"2,1"	5	TRUE	C	3	./results/7-input-boolean-circuits/65-c5
+7input_65_c6	../benchmark/7-input-boolean-circuits/65	./lib	TRUE	"1,7"		3	"2,1"	6	TRUE	C	3	./results/7-input-boolean-circuits/65-c6
+7input_1	../benchmark/7-input-boolean-circuits/1	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/7-input-boolean-circuits/1
+7input_1_c5	../benchmark/7-input-boolean-circuits/1	./lib	TRUE	"1,7"		3	"2,1"	5	TRUE	C	3	./results/7-input-boolean-circuits/1-c5
+8input_6	../benchmark/8-input-boolean-circuits/6	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/8-input-boolean-circuits/6
+8input_6_c5	../benchmark/8-input-boolean-circuits/6	./lib	TRUE	"1,7"		3	"2,1"	5	TRUE	C	3	./results/8-input-boolean-circuits/6-c5
+7input_80	../benchmark/7-input-boolean-circuits/80	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/7-input-boolean-circuits/80
+7input_80_c5	../benchmark/7-input-boolean-circuits/80	./lib	TRUE	"1,7"		3	"2,1"	5	TRUE	C	3	./results/7-input-boolean-circuits/80-c5
+7input_80_c6	../benchmark/7-input-boolean-circuits/80	./lib	TRUE	"1,7"		3	"2,1"	6	TRUE	C	3	./results/7-input-boolean-circuits/80-c6
+7input_95	../benchmark/7-input-boolean-circuits/95	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/7-input-boolean-circuits/95
+7input_95_c5	../benchmark/7-input-boolean-circuits/95	./lib	TRUE	"1,7"		3	"2,1"	5	TRUE	C	3	./results/7-input-boolean-circuits/95-c5
+7input_83	../benchmark/7-input-boolean-circuits/83	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/7-input-boolean-circuits/83
+7input_72	../benchmark/7-input-boolean-circuits/72	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/7-input-boolean-circuits/72
+7input_72_c5	../benchmark/7-input-boolean-circuits/72	./lib	TRUE	"1,7"		3	"2,1"	5	TRUE	C	3	./results/7-input-boolean-circuits/72-c5
+7input_71	../benchmark/7-input-boolean-circuits/71	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/7-input-boolean-circuits/71
+7input_71_c5	../benchmark/7-input-boolean-circuits/71	./lib	TRUE	"1,7"		3	"2,1"	5	TRUE	C	3	./results/7-input-boolean-circuits/71-c5
+7input_71_c6	../benchmark/7-input-boolean-circuits/71	./lib	TRUE	"1,7"		3	"2,1"	6	TRUE	C	3	./results/7-input-boolean-circuits/71-c6
+7input_33	../benchmark/7-input-boolean-circuits/33	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/7-input-boolean-circuits/33
+7input_15	../benchmark/7-input-boolean-circuits/15	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/7-input-boolean-circuits/15
+7input_15_c5	../benchmark/7-input-boolean-circuits/15	./lib	TRUE	"1,7"		3	"2,1"	5	TRUE	C	3	./results/7-input-boolean-circuits/15-c5
+7input_15_c6	../benchmark/7-input-boolean-circuits/15	./lib	TRUE	"1,7"		3	"2,1"	6	TRUE	C	3	./results/7-input-boolean-circuits/15-c6
+7input_45	../benchmark/7-input-boolean-circuits/45	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/7-input-boolean-circuits/45
+7input_45_c5	../benchmark/7-input-boolean-circuits/45	./lib	TRUE	"1,7"		3	"2,1"	5	TRUE	C	3	./results/7-input-boolean-circuits/45-c5
+7input_45_c6	../benchmark/7-input-boolean-circuits/45	./lib	TRUE	"1,7"		3	"2,1"	6	TRUE	C	3	./results/7-input-boolean-circuits/45-c6
+7input_69	../benchmark/7-input-boolean-circuits/69	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/7-input-boolean-circuits/69
+7input_69_c5	../benchmark/7-input-boolean-circuits/69	./lib	TRUE	"1,7"		3	"2,1"	5	TRUE	C	3	./results/7-input-boolean-circuits/69-c5
+7input_69_c6	../benchmark/7-input-boolean-circuits/69	./lib	TRUE	"1,7"		3	"2,1"	6	TRUE	C	3	./results/7-input-boolean-circuits/69-c6
+7input_54	../benchmark/7-input-boolean-circuits/54	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/7-input-boolean-circuits/54
+7input_54_c5	../benchmark/7-input-boolean-circuits/54	./lib	TRUE	"1,7"		3	"2,1"	5	TRUE	C	3	./results/7-input-boolean-circuits/54-c5
+7input_54_c6	../benchmark/7-input-boolean-circuits/54	./lib	TRUE	"1,7"		3	"2,1"	6	TRUE	C	3	./results/7-input-boolean-circuits/54-c6
+7input_89	../benchmark/7-input-boolean-circuits/89	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/7-input-boolean-circuits/89
+7input_89_c5	../benchmark/7-input-boolean-circuits/89	./lib	TRUE	"1,7"		3	"2,1"	5	TRUE	C	3	./results/7-input-boolean-circuits/89-c5
+7input_89_c6	../benchmark/7-input-boolean-circuits/89	./lib	TRUE	"1,7"		3	"2,1"	6	TRUE	C	3	./results/7-input-boolean-circuits/89-c6
+7input_90	../benchmark/7-input-boolean-circuits/90	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/7-input-boolean-circuits/90
+7input_90_c5	../benchmark/7-input-boolean-circuits/90	./lib	TRUE	"1,7"		3	"2,1"	5	TRUE	C	3	./results/7-input-boolean-circuits/90-c5
+7input_90_c6	../benchmark/7-input-boolean-circuits/90	./lib	TRUE	"1,7"		3	"2,1"	6	TRUE	C	3	./results/7-input-boolean-circuits/90-c6
+8input_70	../benchmark/8-input-boolean-circuits/70	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/8-input-boolean-circuits/70
+8input_70_c5	../benchmark/8-input-boolean-circuits/70	./lib	TRUE	"1,7"		3	"2,1"	5	TRUE	C	3	./results/8-input-boolean-circuits/70-c5
+7input_19	../benchmark/7-input-boolean-circuits/19	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/7-input-boolean-circuits/19
+7input_2	../benchmark/7-input-boolean-circuits/2	./lib	TRUE	"1,7"		3	"2,1"	4	TRUE	C	5	./results/7-input-boolean-circuits/2
+7input_19_c5	../benchmark/7-input-boolean-circuits/19	./lib	TRUE	"1,7"		3	"2,1"	5	TRUE	C	5	./results/7-input-boolean-circuits/19-c5
+7input_2_c5	../benchmark/7-input-boolean-circuits/2	./lib	TRUE	"1,7"		3	"2,1"	5	TRUE	C	3	./results/7-input-boolean-circuits/2-c5

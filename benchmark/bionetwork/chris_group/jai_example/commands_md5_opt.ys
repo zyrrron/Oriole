@@ -1,0 +1,12 @@
+read -vlog95 md5Core.v
+splitnets
+hierarchy -top md5Core; flatten
+proc; opt -full; memory; opt -full; fsm; opt -full 
+techmap; opt -full
+abc -g NOR
+splitnets -ports; opt -full
+opt_clean
+clean -purge
+flatten
+show -format pdf -prefix ~/genetic-circuit-partitioning/2021.4/runs/benchmark/bionetwork/chris_group/jai_example/md5_yosys_outputs/md5_opt
+write_json ~/genetic-circuit-partitioning/2021.4/runs/benchmark/bionetwork/chris_group/jai_example/md5_yosys_outputs/md5_opt.json
