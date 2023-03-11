@@ -16,9 +16,6 @@ def main():
     utils.start()
 
 
-
-
-
 # Store the edge info into a dictionary, use key-value as the direction of an edge.
 # We can get new dictionaries after this function, forwardEdge[‘start node’] =‘end node’, backEdge[‘end node’] =‘start node’
 def edgelistToDict():
