@@ -9,17 +9,31 @@ sys.path.append("../Oriole")
 import utils
 
 
-
-# If no solution find, return current best clustering solution, and the return the community caused the problem.
-# If solution find, we return "verification passed" and pass the solution to the merging stage.
-def main():
-    utils.start()
-
-
 # Store the edge info into a dictionary, use key-value as the direction of an edge.
 # We can get new dictionaries after this function, forwardEdge[‘start node’] =‘end node’, backEdge[‘end node’] =‘start node’
-def edgelistToDict():
-    pass
+def loadData():
+    G, G_primitive, DAG = utils.start()
+    print(G)
+    print(list(G.edges))
+    print(list(DAG.edges))
+    print(findOutgoingEdges('4', DAG))
+    print(findIncomingEdges('4', DAG))
+    print(DAG)
+
+
+# Find all incoming edges to node N
+def findIncomingEdges(n, DAG):
+    return DAG.in_edges(n)
+
+
+# Find all outgoing edges from node N
+def findOutgoingEdges(n, DAG):
+    return DAG.edges(n)
+
+
+# Find all neighbor nodes round the given node in G.
+def findNeighbors(node, G):
+    return G.neighbors(node)
 
 
 # put each node in a graph into a distinct community
@@ -38,6 +52,11 @@ def checkSize():
     pass
 
 
+# check loop in current sub-network
+def checkLoop():
+    pass
+
+
 # Try to enlarge the given community i.
 # After searching and calculating all the gains for moving each neighbor node into community i,
 # move the node j giving highest positive gain to our community i.
@@ -49,4 +68,20 @@ def enlargeCommunity():
     pass
 
 
+# If no solution find, return current best clustering solution, and the return the community caused the problem.
+def reportIssue():
+    pass
+
+
+# Save current verification solution and send it to "merging.py"
+def saveSolution():
+    pass
+
+
+# If solution find, we return "verification passed" and pass the solution to the merging stage.
+def main():
+    loadData()
+
+
 main()
+

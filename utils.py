@@ -123,9 +123,6 @@ def get_G_primitive (G, nonprimitives):
 
 
 def start():
-	print("hjwe")
-	graphviz = GraphvizOutput()
-	# graphviz.output_file = 'partition_RCA4.png'
 
 	begin_time = time.time()
 
@@ -154,14 +151,11 @@ def start():
 		trajectories = int(settings[s]['trajectories'])
 		out_path = settings[s]['output_path']
 		timestep = 1000000
-
 		begin_time_current_step = time.time()
+
 		# load graph
 		G = load_graph_undirected(settings, s)
 		DAG = load_graph(settings, s)
-
-		print(G)
-		print(DAG)
 
 		in_nodes, out_nodes, nonprimitives = get_nonprimitive_nodes(DAG)
 
@@ -170,12 +164,4 @@ def start():
 		else:
 			G_primitive = copy.deepcopy(DAG)
 
-		# outdir = out_path + '/nparts/'
-		# order = gp.rank_connectivity(DAG, primitive_only, outdir)
-		# print('median degree of connectivity in subgraphs', order)
-		#
-		# order = gp.rank_constraint_met(DAG, primitive_only, high_constraint, loop_free, outdir)
-		# print('percent of cells with unmet constraint under high constraint', order)
-		#
-		# order = gp.rank_constraint_met(DAG, primitive_only, low_constraint, loop_free, outdir)
-		# print('percent of cells with unmet constraint under low constraint', order)
+		return G, G_primitive, DAG
