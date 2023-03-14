@@ -21,6 +21,11 @@ def loadData():
     print(DAG)
 
 
+# Find the first communities that cannot meet all constraints, if there is no pending community exists, return -1, else return its community number
+def findPendingCommunity():
+    pass
+
+
 # Find all incoming edges to node N
 def findIncomingEdges(n, DAG):
     return DAG.in_edges(n)
@@ -39,11 +44,6 @@ def findNeighbors(node, G):
 # put each node in a graph into a distinct community
 # each node says: I am my own community
 def disctinctEachNode():
-    pass
-
-
-# Find the communities that cannot meet all constraints
-def findPendingCommunities():
     pass
 
 
