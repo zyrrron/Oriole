@@ -7,54 +7,35 @@
 import sys
 sys.path.append("../Oriole")
 import utils
+import networkx as nx
+import EdgeFunctions as ef
+import CheckConstraintFunctions as ccf
 
 
-# Store the edge info into a dictionary, use key-value as the direction of an edge.
-# We can get new dictionaries after this function, forwardEdge[‘start node’] =‘end node’, backEdge[‘end node’] =‘start node’
-def loadData():
-    G, G_primitive, DAG = utils.start()
-    print(G)
-    print(list(G.edges))
-    print(list(DAG.edges))
-    print(findOutgoingEdges('4', DAG))
-    print(findIncomingEdges('4', DAG))
-    print(DAG)
-
-
-# Find the first communities that cannot meet all constraints, if there is no pending community exists, return -1, else return its community number
-def findPendingCommunity():
-    pass
-
-
-# Find all incoming edges to node N
-def findIncomingEdges(n, DAG):
-    return DAG.in_edges(n)
-
-
-# Find all outgoing edges from node N
-def findOutgoingEdges(n, DAG):
-    return DAG.edges(n)
+# Find the communities that cannot meet all constraints, if there is no pending community exists, return -1, else return its community number
+def findPendingCommunities(G, result, constraint):
+    PendingCommunities = {}
+    for key in result:
+        res = ccf.checkInOut(G, key, constraint)
+        if res != 0:
+            PendingCommunities[key] = res
+    print(PendingCommunities)
+    return PendingCommunities
 
 
 # Find all neighbor nodes round the given node in G.
-def findNeighbors(node, G):
-    return G.neighbors(node)
+def findAllNeighbors(node, G):
+    return nx.all_neighbors(G, node)
 
 
 # put each node in a graph into a distinct community
 # each node says: I am my own community
-def disctinctEachNode():
-    pass
+def createInitialCommunities(G):
+    d = {}
+    for ele in G.nodes:
+        d[ele] = ele
+    return d
 
-
-# check community size
-def checkSize():
-    pass
-
-
-# check loop in current sub-network
-def checkLoop():
-    pass
 
 
 # Try to enlarge the given community i.
@@ -78,10 +59,22 @@ def saveSolution():
     pass
 
 
-# If solution find, we return "verification passed" and pass the solution to the merging stage.
+# If solution find, we return "verification passed" and save the current clustering solution.
 def main():
-    loadData()
+    # load samples and settings
+    samples, settings = utils.loadSettings()
 
+    # verify samples iteratively
+    for s in samples:
+
+        # load data
+        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path = utils.loadData(s, settings)
+
+        # initiate communities
+        CurrentClusterResult = createInitialCommunities(G_primitive)
+
+        #
+        PendingCommunities = findPendingCommunities(G_primitive, CurrentClusterResult, constraint)
 
 main()
 
