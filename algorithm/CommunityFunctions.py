@@ -23,6 +23,16 @@ def checkSize():
     pass
 
 
-# check loop in current sub-network
+# check loop in current community
 def checkLoop():
     pass
+
+
+# check and find the worst case in PendingCommunities
+def findWorstCommunity(PendingCommunities):
+    maxVal = 0
+    maxKey = ''
+    for key in PendingCommunities:
+        if PendingCommunities[key] > maxVal:
+            maxKey = key
+    return maxKey

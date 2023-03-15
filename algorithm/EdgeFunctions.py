@@ -9,3 +9,13 @@ def findIncomingEdges(G, n):
 def findOutgoingEdges(G, n):
     return G.edges(n)
 
+
+# Find all incoming edges to Community C
+def findIncomingEdgesComm(G, c):
+    return G.in_edges(c)
+
+
+# Find all outgoing edges from Community C
+def findOutgoingEdgesComm(G, c):
+    return G.edges(c)
+
