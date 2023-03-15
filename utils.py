@@ -159,7 +159,7 @@ def loadData(s, settings):
 	priority = settings[s]['priority']
 	trajectories = int(settings[s]['trajectories'])
 	out_path = settings[s]['output_path']
-	timestep = 1000000
+	timestep = 1000
 	begin_time_current_step = time.time()
 
 	# load graph
@@ -173,4 +173,4 @@ def loadData(s, settings):
 	else:
 		G_primitive = copy.deepcopy(DAG)
 
-	return G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path
+	return G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, timestep

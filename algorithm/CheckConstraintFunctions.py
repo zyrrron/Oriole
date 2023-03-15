@@ -12,7 +12,7 @@ def checkInOut(G, community, constraint):
             return max(0, len(InEdges)-constraint[0]) + max(0, len(OutEdges)-constraint[1])
     # check low constraint
     else:
-        if len(InEdges) + len(OutEdges) <= constraint:
+        if len(InEdges) + len(OutEdges) <= constraint[0]:
             return 0
         else:
             return len(InEdges) + len(OutEdges) - constraint

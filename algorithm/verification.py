@@ -5,11 +5,15 @@
 # Start working on the verification stage
 
 import sys
+import os
 sys.path.append("../Oriole")
 import utils
 import networkx as nx
 import EdgeFunctions as ef
 import CheckConstraintFunctions as ccf
+import InOutFunctions as iof
+import InitiateFunctions as inf
+import collections
 
 
 # Find the communities that cannot meet all constraints, if there is no pending community exists, return -1, else return its community number
@@ -28,14 +32,6 @@ def findAllNeighbors(node, G):
     return nx.all_neighbors(G, node)
 
 
-# put each node in a graph into a distinct community
-# each node says: I am my own community
-def createInitialCommunities(G):
-    d = {}
-    for ele in G.nodes:
-        d[ele] = ele
-    return d
-
 
 
 # Try to enlarge the given community i.
@@ -45,7 +41,9 @@ def createInitialCommunities(G):
 # Check if current community i meets all constraints every time when we move node j into community i.
 # Record it if meets all constraints.
 # Better use recursion here.
-def enlargeCommunity():
+def enlargeCommunity(G, PendingCommunities, S_bounds, ConstraintType, constraint, loop_free, priority):
+    # create the sub-network centering with the pending community
+    SubNetwork = inf.createSubNetwork()
     pass
 
 
@@ -61,20 +59,37 @@ def saveSolution():
 
 # If solution find, we return "verification passed" and save the current clustering solution.
 def main():
-    # load samples and settings
+    # Load samples and settings
     samples, settings = utils.loadSettings()
 
-    # verify samples iteratively
+    # Verify samples iteratively
     for s in samples:
 
-        # load data
-        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path = utils.loadData(s, settings)
+        # Load data and check if we can directly put all the nodes in one community
+        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, timestep = utils.loadData(s, settings)
 
-        # initiate communities
-        CurrentClusterResult = createInitialCommunities(G_primitive)
+        # If the max size for one community is bigger than the current total number of the nodes, output it and continue the next sample
+        if len(G_primitive.nodes) < S_bounds[1]:
+            iof.writeVerifySolution(out_path, G_primitive, [])
+            continue
 
-        #
-        PendingCommunities = findPendingCommunities(G_primitive, CurrentClusterResult, constraint)
+        # Initiate communities
+        CurrentVerifyResult = inf.createInitialCommunities(G_primitive)
+
+        CurrentStep = 1
+        while CurrentStep < timestep:
+
+            # Find the pending community, if no pending community, save current cluster result.
+            PendingCommunities = findPendingCommunities(G_primitive, CurrentVerifyResult, constraint)
+            if len(PendingCommunities) == 0:
+                iof.writeVerifySolution(out_path, G_primitive, CurrentVerifyResult)
+                break
+
+            # Start to solve the pending communities
+            enlargeCommunity(G_primitive, PendingCommunities, S_bounds, ConstraintType, constraint, loop_free, priority)
+
+            CurrentStep += 1
+
 
 main()
 
