@@ -9,12 +9,12 @@ import NodeFunctions as nf
 # Check if current community i meets all constraints every time when we move node j into community i.
 # Record it if meets all constraints.
 # Better use recursion here.
-def enlargeCommunity(G, PendingCommunity, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, CurrentVerifyResult):
+def enlargeCommunity(G, PendingCommunity, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, CurrentVerifyResult, size):
     # calculate the rewards provided by all neighbor communities
     NeighborNodes = nf.findAllNeighborsComm(PendingCommunity, G)
     rewards = {}
     for node in NeighborNodes:
-        rewards[node] = calf.calculateReward(G, node, PendingCommunity, CurrentVerifyResult)
+        rewards[node] = calf.calculateReward(G, node, PendingCommunity, CurrentVerifyResult, constraint)
 
     # find the community provides the highest reward
 

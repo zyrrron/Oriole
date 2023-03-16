@@ -17,30 +17,6 @@ import InitiateFunctions as inf
 import collections
 
 
-# Find the communities that cannot meet all constraints, if there is no pending community exists, return -1, else return its community number
-def findPendingCommunities(G, result, constraint):
-    PendingCommunities = {}
-    for key in result:
-        res = ccf.checkInOut(G, key, constraint)
-        if res != 0:
-            PendingCommunities[key] = res
-    print(PendingCommunities)
-    return PendingCommunities
-
-
-
-
-
-# If no solution find, return current best clustering solution, and the return the community caused the problem.
-def reportIssue():
-    pass
-
-
-# Save current verification solution and send it to "merging.py"
-def saveSolution():
-    pass
-
-
 # If solution find, we return "verification passed" and save the current clustering solution.
 def main():
     # Load samples and settings
@@ -61,17 +37,17 @@ def main():
         CurrentVerifyResult = inf.createInitialCommunities(G_primitive)
 
         # Find the pending community, if no pending community, save current cluster result.
-        PendingCommunities = findPendingCommunities(G_primitive, CurrentVerifyResult, constraint)
+        PendingCommunities = ccf.findPendingCommunities(G_primitive, CurrentVerifyResult, constraint)
         if len(PendingCommunities) == 0:
             iof.writeVerifySolution(out_path, G_primitive, CurrentVerifyResult)
             break
 
         # Start to solve the pending communities
         # Find the worst case in the PendingCommunities
-        PendingCommunity = ccf.findWorstCommunity(PendingCommunities)
+        PendingCommunity = ccf.findWorstCommunity(G_primitive, PendingCommunities, CurrentVerifyResult)
 
         # PendingCommunities_sorted is an ascendant list, worst case is the last one element.
-        ec.enlargeCommunity(G_primitive, PendingCommunity, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, CurrentVerifyResult)
+        ec.enlargeCommunity(G_primitive, PendingCommunity, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, CurrentVerifyResult, 1)
 
 
 main()

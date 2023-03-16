@@ -13,3 +13,13 @@ def writeVerifySolution(out_path, G, CurrentVerifyResult):
         NewCommunityNumToNodes, CurrentVerifyResult = uf.updateCommunityNum(CurrentVerifyResult)
         for key in NewCommunityNumToNodes:
             f_out.write(f'Community {key}: {NewCommunityNumToNodes[key]}\n')
+
+
+# If no solution find, return current best clustering solution, and the return the community caused the problem.
+def reportIssue():
+    pass
+
+
+# Save current verification solution and send it to "merging.py"
+def saveSolution():
+    pass
