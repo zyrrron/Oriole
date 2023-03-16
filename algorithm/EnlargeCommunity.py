@@ -1,6 +1,7 @@
 import InitiateFunctions as inf
 import CalculationFunctions as calf
 import NodeFunctions as nf
+import CommunityFunctions as ccf
 
 # Try to enlarge the given community i.
 # After searching and calculating all the gains for moving each neighbor node into community i,
@@ -11,10 +12,10 @@ import NodeFunctions as nf
 # Better use recursion here.
 def enlargeCommunity(G, PendingCommunity, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, CurrentVerifyResult, size):
     # calculate the rewards provided by all neighbor communities
-    NeighborNodes = nf.findAllNeighborsComm(PendingCommunity, G)
+    NeighborComm = ccf.findAllNeighborsComm(G, PendingCommunity, CurrentVerifyResult)
     rewards = {}
-    for node in NeighborNodes:
-        rewards[node] = calf.calculateReward(G, node, PendingCommunity, CurrentVerifyResult, constraint)
+    for c in NeighborComm:
+        rewards[c] = calf.calculateRewardComm(G, c, PendingCommunity, CurrentVerifyResult, constraint)
 
     # find the community provides the highest reward
 

@@ -45,6 +45,7 @@ def main():
         # Start to solve the pending communities
         # Find the worst case in the PendingCommunities
         PendingCommunity = ccf.findWorstCommunity(G_primitive, PendingCommunities, CurrentVerifyResult)
+        print(PendingCommunity)
 
         # PendingCommunities_sorted is an ascendant list, worst case is the last one element.
         ec.enlargeCommunity(G_primitive, PendingCommunity, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, CurrentVerifyResult, 1)

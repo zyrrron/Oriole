@@ -2,18 +2,18 @@ import EdgeFunctions as ef
 import CommunityFunctions as ccf
 
 # calculate the rewards that one node can provide after adding it to the community
-def calculateReward(G, NeighborComm, PendingCommunity, CurrentVerifyResult, constraint):
+def calculateRewardComm(G, NeighborComm, PendingCommunity, CurrentVerifyResult, constraint):
     # r1: indegree gain; r2: outdegree gain; r3: cycle gain
-    OriginalIndegree = ef.findIncomingEdgesComm(G, PendingCommunity, CurrentVerifyResult)
-    OriginalOutdegree = ef.findOutgoingEdgesComm(G, PendingCommunity, CurrentVerifyResult)
+    OriginalIndegree = ccf.findIncomingEdgesComm(G, PendingCommunity, CurrentVerifyResult)
+    OriginalOutdegree = ccf.findOutgoingEdgesComm(G, PendingCommunity, CurrentVerifyResult)
     OriginalCycle = ccf.findCyleComm(G, PendingCommunity, CurrentVerifyResult)
 
     # update current verify result after adding this neighbor community
     CurrentVerifyResult_new = ccf.addNeighborComm(CurrentVerifyResult, NeighborComm, PendingCommunity)
 
-    NewIndegree = ef.findIncomingEdgesComm(G, PendingCommunity, CurrentVerifyResult)
-    NewOutdegree = ef.findOutgoingEdgesComm(G, PendingCommunity, CurrentVerifyResult)
-    NewCycle = ccf.findCyleComm(G, PendingCommunity, CurrentVerifyResult)
+    NewIndegree = ccf.findIncomingEdgesComm(G, PendingCommunity, CurrentVerifyResult_new)
+    NewOutdegree = ccf.findOutgoingEdgesComm(G, PendingCommunity, CurrentVerifyResult_new)
+    NewCycle = ccf.findCyleComm(G, PendingCommunity, CurrentVerifyResult_new)
 
     r1, r2, r3 = 0, 0, OriginalCycle - NewCycle
     # high constraint

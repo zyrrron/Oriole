@@ -21,20 +21,42 @@ def checkInOut(G, community, constraint, CurrentVerifyResult):
 
 
 # check community size
-def checkSize():
-    pass
+def checkSize(CurrentVerifyResult, c):
+    size = 0
+    for key in CurrentVerifyResult:
+        if CurrentVerifyResult[key] == c:
+            size += 1
+    return size
 
 
-# Find all neighbor nodes around the given community in G.
-def findAllNeighborsComm(node, G):
-    return nx.all_neighbors(G, node)
+# Find all neighbor communities around the given community c in G.
+def findAllNeighborsComm(G, c, CurrentVerifyResult):
+
+    # collect all neighbor nodes for the nodes inside community c
+    NeighborNodes = set()
+    for node in c:
+        tmp = nx.all_neighbors(G, node)
+        for t in tmp:
+            NeighborNodes.add(t)
+
+    # find the neighbor communities according to the NeiborNodes
+    NeighborComm = set()
+    for node in NeighborNodes:
+        if CurrentVerifyResult[node] != c:
+            NeighborComm.add(CurrentVerifyResult[node])
+    return list(NeighborComm)
 
 
-# Find all incoming edges to Community C, need to do
+# Find Cycles related to given communities c
+def findCyleComm(G, PendingCommunity, CurrentVerifyResult):
+    return 0
+
+
+# Find all incoming edges to Community C
 def findIncomingEdgesComm(G, c, CurrentVerifyResult):
     CommunityNumToNodes = uf.mapCommunityToNodes(CurrentVerifyResult)
     InEdges = []
-    # Collect all incoming edges and outgoing edges for the nodes in community c
+    # Collect all incoming edges for the nodes in community c
     for node in c:
         tmp = ef.findIncomingEdges(G, node)
         for t in tmp:
@@ -51,12 +73,12 @@ def findIncomingEdgesComm(G, c, CurrentVerifyResult):
     return InEdgesComm
 
 
-# Find all outgoing edges from Community C, need to do
+# Find all outgoing edges from Community C
 def findOutgoingEdgesComm(G, c, CurrentVerifyResult):
     CommunityNumToNodes = uf.mapCommunityToNodes(CurrentVerifyResult)
     OutEdges = []
 
-    # Collect all incoming edges and outgoing edges for the nodes in community c
+    # Collect all outgoing edges for the nodes in community c
     for node in c:
         tmp = ef.findOutgoingEdges(G, node)
         for t in tmp:
@@ -78,12 +100,27 @@ def addNeighborComm(CurrentVerifyResult, NeighborComm, PendingCommunity):
     return CurrentVerifyResult
 
 
-# check loop in current community
-def checkLoop(G, community, CurrentVerifyResult):
+# Check loop caused by the current community c, if there is a loop, drop this try and back tracking to the last level.
+def checkLoop(G, c, CurrentVerifyResult):
+    InEdges = findIncomingEdgesComm(G, c, CurrentVerifyResult)
+    OutEdges = findOutgoingEdgesComm(G, c, CurrentVerifyResult)
+
+    # Find all communities provide incoming edges to community c
+    InEdgesComm = []
+
+    # Find all communities provide outgoing edges from community c
+    OutEdgesComm = []
+
+    # Compare InEdgesComm and OutEdgesComm, if they have same community b, that means loop between b and c.
+    # Calculate the total number of cycles and return it.
+
+
     return 0
 
 
-# check and find the worst case in PendingCommunities
+# Check and find the worst case in PendingCommunities
+# There won't be any cycle when we get into this function, because we will not allow a community make cycles during the
+# community enlarge procedure. Every time when we try to run this function, the current graph should not have any cycle between communities.
 def findWorstCommunity(G, PendingCommunities, CurrentVerifyResult):
     maxVal = 0
     maxKey = ''
@@ -106,7 +143,7 @@ def findWorstCommunity(G, PendingCommunities, CurrentVerifyResult):
 def findPendingCommunities(G, result, constraint):
     PendingCommunities = {}
     for key in result:
-        res = checkInOut(G, key, constraint, result) + checkLoop(G, key, result)
+        res = checkInOut(G, key, constraint, result)
         if res != 0:
             PendingCommunities[key] = res
     print(PendingCommunities)
