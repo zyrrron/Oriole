@@ -137,7 +137,6 @@ def loadSettings():
 
 def loadData(s, settings):
 
-
 	print('Processing sample', s)
 	# print (settings[s])
 	# obtain user-defined params

@@ -24,6 +24,7 @@ def main():
 
     # Verify samples iteratively
     for s in samples:
+        print(s)
 
         # Load data and check if we can directly put all the nodes in one community
         G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, timestep = utils.loadData(s, settings)
@@ -40,7 +41,7 @@ def main():
         PendingCommunities = ccf.findPendingCommunities(G_primitive, CurrentVerifyResult, constraint)
         if len(PendingCommunities) == 0:
             iof.writeVerifySolution(out_path, G_primitive, CurrentVerifyResult)
-            break
+            continue
         print(PendingCommunities)
 
         # Start to solve the pending communities

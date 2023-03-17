@@ -2,6 +2,8 @@ import InitiateFunctions as inf
 import CalculationFunctions as calf
 import NodeFunctions as nf
 import CommunityFunctions as ccf
+import copy
+
 
 # Try to enlarge the given community i.
 # After searching and calculating all the gains for moving each neighbor node into community i,
@@ -11,6 +13,12 @@ import CommunityFunctions as ccf
 # Record it if meets all constraints.
 # Better use recursion here.
 def enlargeCommunity(G, PendingCommunity, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, CurrentVerifyResult, size):
+
+    # Initiate the values we will return
+    CurrentVerifyResult_new = copy.deepcopy(CurrentVerifyResult)
+    VerifyFlag = True
+    ErrorLog = {}
+
     # calculate the rewards provided by all neighbor communities
     NeighborComm = ccf.findAllNeighborsComm(G, PendingCommunity, CurrentVerifyResult)
     rewards = {}
@@ -24,4 +32,5 @@ def enlargeCommunity(G, PendingCommunity, S_bounds, ConstraintType, constraint, 
     # start the middle part of backtracking
     for c in rewards_new:
         print(rewards_new[c])
-    return
+
+    return CurrentVerifyResult_new, VerifyFlag, ErrorLog
