@@ -5,7 +5,7 @@ import networkx as nx
 def createInitialCommunities(G):
     d = {}
     for ele in G.nodes:
-        d[ele] = int(ele)
+        d[ele] = ele
     return d
 
 
