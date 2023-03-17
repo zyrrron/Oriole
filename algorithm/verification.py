@@ -41,6 +41,7 @@ def main():
         if len(PendingCommunities) == 0:
             iof.writeVerifySolution(out_path, G_primitive, CurrentVerifyResult)
             break
+        print(PendingCommunities)
 
         # Start to solve the pending communities
         # Find the worst case in the PendingCommunities

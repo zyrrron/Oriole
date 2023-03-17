@@ -151,5 +151,4 @@ def findPendingCommunities(G, result, constraint):
         res = checkInOut(G, key, constraint, result) + checkLoopComm(G, key, result)
         if res != 0:
             PendingCommunities[key] = res
-    print(PendingCommunities)
     return PendingCommunities
