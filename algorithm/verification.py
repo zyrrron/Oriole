@@ -48,9 +48,16 @@ def main():
         PendingCommunity = ccf.findWorstCommunity(G_primitive, PendingCommunities, CurrentVerifyResult)
         print(PendingCommunity)
 
-        # PendingCommunities_sorted is an ascendant list, worst case is the last one element.
-        ec.enlargeCommunity(G_primitive, PendingCommunity, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, CurrentVerifyResult, 1)
+        # Start to solve the worst case by enlarging its size
+        VerifyResult, VerifyFlag, ErrorLog = ec.enlargeCommunity(G_primitive, PendingCommunity, S_bounds, ConstraintType,
+                                                       constraint, loop_free, priority, timestep, CurrentVerifyResult, 1)
 
+        # If VerifyFlag is false, that means the graph and constraints don't pass the verification, user should change
+        # it later. If it is ture, save the result. Then we go to the merging stage.
+        if VerifyFlag:
+            iof.writeVerifySolution(out_path, G_primitive, VerifyResult)
+        else:
+            iof.reportIssue(out_path, G_primitive, VerifyResult, ErrorLog)
 
 main()
 

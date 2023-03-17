@@ -16,7 +16,7 @@ def writeVerifySolution(out_path, G, CurrentVerifyResult):
 
 
 # If no solution find, return current best clustering solution, and the return the community caused the problem.
-def reportIssue():
+def reportIssue(out_path, G_primitive, VerifyResult, ErrorLog):
     pass
 
 
