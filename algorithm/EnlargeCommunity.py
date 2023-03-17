@@ -20,5 +20,8 @@ def enlargeCommunity(G, PendingCommunity, S_bounds, ConstraintType, constraint, 
     # find the community provides the highest reward, sort this rewards dictionary first and try them in the order
     tmp = sorted(rewards.items(), key=lambda x: x[1], reverse=True)
     rewards_new = dict(tmp)
-    print(rewards_new)
+
+    # start the middle part of backtracking
+    for c in rewards_new:
+        print(rewards_new[c])
     return

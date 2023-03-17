@@ -64,7 +64,6 @@ def findIncomingEdgesComm(G, c, CurrentVerifyResult):
         # ele[1] must be in c, because it is an incoming edge, end node must in c.
         if ele[0] not in CommunityNumToNodes[c]:
             InEdgesComm.append(ele)
-        else: print(ele)
 
     return InEdgesComm
 
@@ -86,8 +85,7 @@ def findOutgoingEdgesComm(G, c, CurrentVerifyResult):
         # ele[1] must be in c, because it is an incoming edge, end node must in c.
         if ele[1] not in CommunityNumToNodes[c]:
             OutEdgesComm.append(ele)
-        else:
-            print(ele)
+
     return OutEdgesComm
 
 
