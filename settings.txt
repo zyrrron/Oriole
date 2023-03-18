@@ -1,4 +1,8 @@
 sample	graph_path	lib_path	primitive_only	S_bounds	target_n	high_low_flag	high_constraint	low_constraint	loop_free	priority	trajectories	output_path
+test0	../benchmark/test/test0	./lib	TRUE	"1,3"		high	"2,2"	4	TRUE	C	1	../results/test/test0
+test1	../benchmark/test/test1	./lib	TRUE	"1,7"		high	"2,2"	4	TRUE	C	1	../results/test/test1
+test2	../benchmark/test/test2	./lib	TRUE	"1,5"		high	"2,2"	4	TRUE	C	1	../results/test/test2
+test3	../benchmark/test/test3	./lib	TRUE	"1,5"		high	"2,2"	4	TRUE	C	1	../results/test/test3
 case1	../benchmark/bionetwork/lauren_group/case1	./lib	TRUE	"1,5"		low	"2,2"	4	TRUE	C	1	../results/bionetwork/lauren_group/case1
 case1_h	../benchmark/bionetwork/lauren_group/case1	./lib	TRUE	"1,7"		high	"2,2"	4	TRUE	C	1	../results/bionetwork/lauren_group/case1_h
 case2	../benchmark/bionetwork/lauren_group/case2	./lib	TRUE	"1,7"		low	"2,2"	4	TRUE	C	1	../results/bionetwork/lauren_group/case2
@@ -12,7 +16,6 @@ RCA16	../benchmark/electronic-circuits/RCA16	./lib	TRUE	"1,7"			"2,2"	4	TRUE	C	5
 RCA64	../benchmark/electronic-circuits/RCA64	./lib	TRUE	"1,7"			"2,2"	3	TRUE	C	5	../results/electronic-circuits/RCA64
 alu	../benchmark/electronic-circuits/alu	./lib	TRUE	"1,7"	45		"2,2"	4	TRUE	C	5	../results/electronic-circuits/alu
 80727	../benchmark/5-input-boolean-circuits/80727	./lib	TRUE	"3,6"			"1,1"	3	TRUE	C	10	../results/5-input-boolean-circuits/80727/test
-test	../benchmark/test	./lib	TRUE	"1,5"		high	"2,2"	4	TRUE	C	1	../results/test
 md30	../benchmark/electronic-circuits/md5Core	./lib	TRUE	"1,7"	30		"1,1"	5	TRUE	C	1	../results/electronic-circuits/md5Core
 md31	../benchmark/electronic-circuits/md5Core	./lib	TRUE	"1,7"	31		"1,1"	4	TRUE	C	3	../results/electronic-circuits/md5Core
 md32	../benchmark/electronic-circuits/md5Core	./lib	TRUE	"1,7"	32		"1,1"	4	TRUE	C	3	../results/electronic-circuits/md5Core
