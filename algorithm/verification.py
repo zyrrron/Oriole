@@ -42,12 +42,12 @@ def main():
         if len(PendingCommunities) == 0:
             iof.writeVerifySolution(out_path, G_primitive, CurrentVerifyResult)
             continue
-        print(PendingCommunities)
+        print("PendingCommunities: ", PendingCommunities)
 
         # Start to solve the pending communities
         # Find the worst case in the PendingCommunities
         PendingCommunity = ccf.findWorstCommunity(G_primitive, PendingCommunities, CurrentVerifyResult)
-        print(PendingCommunity)
+        print("PendingCommunity: ", PendingCommunity)
 
         # Start to solve the worst case by enlarging its size
         VerifyResult, VerifyFlag, ErrorLog = ec.enlargeCommunity(G_primitive, PendingCommunity, S_bounds, ConstraintType,
