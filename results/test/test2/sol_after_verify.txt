@@ -1,0 +1,6 @@
+Community 1: ['6']
+Community 2: ['5', '7', '8', '3']
+Community 3: ['1']
+Community 4: ['2']
+Community 5: ['4']
+Community 6: ['9']
