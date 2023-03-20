@@ -4,9 +4,9 @@ import UpdateFunctions as uf
 import copy
 
 # check indegree/outdegree constraints for a given community
-def checkInOut(G, community, constraint, CurrentVerifyResult):
-    InEdges = ef.findIncomingEdges(G, community)
-    OutEdges = ef.findOutgoingEdges(G, community)
+def checkInOutComm(G, community, constraint, CurrentVerifyResult):
+    InEdges = findIncomingEdgesComm(G, community, CurrentVerifyResult)
+    OutEdges = findOutgoingEdgesComm(G, community, CurrentVerifyResult)
     # check high constraint
     if len(constraint) == 2:
         if len(InEdges) <= constraint[0] and len(OutEdges) <= constraint[1]:
@@ -22,10 +22,10 @@ def checkInOut(G, community, constraint, CurrentVerifyResult):
 
 
 # check community size
-def checkSize(CurrentVerifyResult, c):
+def checkSize(CurrentVerifyResult, PendingCommunity):
     size = 0
     for key in CurrentVerifyResult:
-        if CurrentVerifyResult[key] == c:
+        if CurrentVerifyResult[key] == PendingCommunity:
             size += 1
     return size
 
@@ -148,7 +148,7 @@ def findWorstCommunity(G, PendingCommunities, CurrentVerifyResult):
 def findPendingCommunities(G, result, constraint):
     PendingCommunities = {}
     for key in result:
-        res = checkInOut(G, key, constraint, result) + checkLoopComm(G, key, result)
+        res = checkInOutComm(G, key, constraint, result) + checkLoopComm(G, key, result)
         if res != 0:
             PendingCommunities[key] = res
     return PendingCommunities
