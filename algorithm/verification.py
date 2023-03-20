@@ -32,6 +32,7 @@ def main():
         # If the max size for one community is bigger than the current total number of the nodes, output it and continue the next sample
         if len(G_primitive.nodes) < S_bounds[1]:
             iof.writeVerifySolution(out_path, G_primitive, [])
+            print("All nodes can be put in one community!")
             continue
 
         # Initiate communities
@@ -41,6 +42,7 @@ def main():
         PendingCommunities = ccf.findPendingCommunities(G_primitive, CurrentVerifyResult, constraint)
         if len(PendingCommunities) == 0:
             iof.writeVerifySolution(out_path, G_primitive, CurrentVerifyResult)
+            print(CurrentVerifyResult)
             continue
         print("PendingCommunities: ", PendingCommunities)
 
@@ -50,8 +52,9 @@ def main():
         print("PendingCommunity: ", PendingCommunity)
 
         # Start to solve the worst case by enlarging its size
-        VerifyResult, VerifyFlag, ErrorLog = ec.enlargeCommunity(G_primitive, PendingCommunity, S_bounds, ConstraintType,
-                                                       constraint, loop_free, priority, timestep, CurrentVerifyResult, 1)
+        VerifyResult, VerifyFlag, ErrorLog, timestep = ec.enlargeCommunity(G_primitive, PendingCommunity, S_bounds, ConstraintType,
+                                                       constraint, loop_free, priority, timestep, CurrentVerifyResult)
+        print(VerifyFlag, VerifyResult)
 
         # If VerifyFlag is false, that means the graph and constraints don't pass the verification, user should change
         # it later. If it is ture, save the result. Then we go to the merging stage.
