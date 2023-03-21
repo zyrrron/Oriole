@@ -22,8 +22,6 @@ for s in samples:
         continue
 
     # Start merging from the community '1'
-    ec.enlargeCommunityMerge(G_primitive, '1', S_bounds, ConstraintType,
-                        constraint, loop_free, priority, timestep, VerifyResult)
-
-
+    MergeResult, MergeFlag, MergeErrorLog = ec.enlargeCommunityMerge(G_primitive, '1', S_bounds, ConstraintType,
+                        constraint, loop_free, priority, timestep, VerifyResult, target_n)
 
