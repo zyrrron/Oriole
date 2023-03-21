@@ -35,7 +35,8 @@ def findAllNeighborsComm(G, c, CurrentVerifyResult):
 
     # collect all neighbor nodes for the nodes inside community c
     NeighborNodes = set()
-    for node in c:
+    CommunityNumToNodes = uf.mapCommunityToNodes(CurrentVerifyResult)
+    for node in CommunityNumToNodes[c]:
         tmp = nx.all_neighbors(G, node)
         for t in tmp:
             NeighborNodes.add(t)

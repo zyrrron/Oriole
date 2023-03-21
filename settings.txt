@@ -7,9 +7,10 @@ case1	../benchmark/bionetwork/lauren_group/case1	./lib	TRUE	"1,5"		low	"2,2"	4	T
 case1_h	../benchmark/bionetwork/lauren_group/case1	./lib	TRUE	"1,7"		high	"2,2"	4	TRUE	C	1	../results/bionetwork/lauren_group/case1_h
 case2	../benchmark/bionetwork/lauren_group/case2	./lib	TRUE	"1,7"		low	"2,2"	4	TRUE	C	1	../results/bionetwork/lauren_group/case2
 case2_h	../benchmark/bionetwork/lauren_group/case2	./lib	TRUE	"1,7"		high	"2,2"	4	TRUE	C	1	../results/bionetwork/lauren_group/case2_h
+case3	../benchmark/bionetwork/chris_grou/jai_example/md5_opt	./lib	TRUE	"1,7"		low	"2,2"	4	TRUE	C	1	../results/bionetwork/chris_grou/jai_example/md5_opt
+case3_h	../benchmark/bionetwork/chris_grou/jai_example/md5_opt	./lib	TRUE	"1,7"		high	"2,2"	4	TRUE	C	1	../results/bionetwork/chris_grou/jai_example/md5_opt_h
 1125	../benchmark/4-input-boolean-circuits/1125	./lib	TRUE	"1,7"			"2,2"	4	TRUE	C	1	../results/4-input-boolean-circuits/1125
 hexDisplay	../benchmark/electronic-circuits/hexDisplay	./lib	TRUE	"1,7"			"2,2"	4	TRUE	C	5	../results/electronic-circuits/hexDisplay
-md5Core	/Users/jgzhang/Work/Densmore_lab/Partition/code_version/v2/genetic-circuit-partitioning/2021.4/runs/benchmark/electronic-circuits/md5Core	./lib	TRUE	"3,7"			"1,1"	4	TRUE	C	3	/Users/jgzhang/Work/Densmore_lab/Partition/code_version/v2/genetic-circuit-partitioning/2021.4/runs/results/electronic-circuits/md5Core
 multiplier	../benchmark/electronic-circuits/multiplier	./lib	TRUE	"3,7"	3		"2,2"	4	TRUE	C	1	../results/electronic-circuits/multiplier
 RCA4	../benchmark/electronic-circuits/RCA4	./lib	TRUE	"3,7"			"2,2"	5	TRUE	C	5	../results/electronic-circuits/RCA4
 RCA16	../benchmark/electronic-circuits/RCA16	./lib	TRUE	"1,7"			"2,2"	4	TRUE	C	5	../results/electronic-circuits/RCA16

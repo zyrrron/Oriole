@@ -4,7 +4,12 @@ import copy
 # update community numbers, and return a dictionary with key=community number, and value=[nodes, nodes, ...]
 def updateCommunityNum(CurrentVerifyResult):
     CurrentVerifyResult_new = copy.deepcopy(CurrentVerifyResult)
-    CommunityNumToNodes = mapCommunityToNodes(CurrentVerifyResult)
+
+    # Sort the dictionary by int(key)
+    tmp = sorted(CurrentVerifyResult_new.items(), key=lambda x: int(x[0]))
+    CurrentVerifyResult_new = dict(tmp)
+
+    CommunityNumToNodes = mapCommunityToNodes(CurrentVerifyResult_new)
     # update community numbers start from 1
     i = 1
     NewCommunityNumToNodes = {}

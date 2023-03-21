@@ -54,7 +54,8 @@ def main():
         # Start to solve the worst case by enlarging its size
         VerifyResult, VerifyFlag, ErrorLog, timestep = ec.enlargeCommunity(G_primitive, PendingCommunity, S_bounds, ConstraintType,
                                                        constraint, loop_free, priority, timestep, CurrentVerifyResult)
-        print(VerifyFlag, VerifyResult)
+        if not VerifyFlag:
+            print("Error caused by: ", ErrorLog)
 
         # If VerifyFlag is false, that means the graph and constraints don't pass the verification, user should change
         # it later. If it is ture, save the result. Then we go to the merging stage.

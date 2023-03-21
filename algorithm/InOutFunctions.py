@@ -11,6 +11,7 @@ def writeVerifySolution(out_path, G, CurrentVerifyResult):
         f_out.write(f'Community 0: {list(G.nodes)}')
     else:
         NewCommunityNumToNodes, CurrentVerifyResult = uf.updateCommunityNum(CurrentVerifyResult)
+        print(NewCommunityNumToNodes)
         for key in NewCommunityNumToNodes:
             f_out.write(f'Community {key}: {NewCommunityNumToNodes[key]}\n')
 

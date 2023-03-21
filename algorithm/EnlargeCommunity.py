@@ -46,6 +46,7 @@ def enlargeCommunity(G, PendingCommunity, S_bounds, ConstraintType, constraint, 
         if VerifyFlag:
             return CurrentVerifyResult, True, {}, timestep
         else:
+            print("Error: ", PendingCommunity)
             return CurrentVerifyResult, False, {PendingCommunity}, timestep
 
 
