@@ -158,7 +158,7 @@ def loadData(s, settings):
 	priority = settings[s]['priority']
 	trajectories = int(settings[s]['trajectories'])
 	out_path = settings[s]['output_path']
-	timestep = 100000
+	timestep = 10000000000
 	begin_time_current_step = time.time()
 
 	# load graph
