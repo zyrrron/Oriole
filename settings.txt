@@ -1,15 +1,15 @@
 sample	graph_path	lib_path	primitive_only	S_bounds	target_n	high_low_flag	high_constraint	low_constraint	loop_free	priority	trajectories	output_path
-test0	../benchmark/test/test0	./lib	TRUE	"1,3"		high	"2,2"	4	TRUE	C	1	../results/test/test0
-test1	../benchmark/test/test1	./lib	TRUE	"1,7"		high	"2,2"	4	TRUE	C	1	../results/test/test1
-test2	../benchmark/test/test2	./lib	TRUE	"1,4"		high	"2,2"	4	TRUE	C	1	../results/test/test2
-test3	../benchmark/test/test3	./lib	TRUE	"1,4"		high	"2,2"	4	TRUE	C	1	../results/test/test3
-test4	../benchmark/test/test4	./lib	TRUE	"1,5"		high	"2,2"	4	TRUE	C	1	../results/test/test4
-case1	../benchmark/bionetwork/lauren_group/case1	./lib	TRUE	"1,3"		low	"2,2"	4	TRUE	C	1	../results/bionetwork/lauren_group/case1
-case1_h	../benchmark/bionetwork/lauren_group/case1	./lib	TRUE	"1,3"		high	"2,2"	4	TRUE	C	1	../results/bionetwork/lauren_group/case1_h
-case2	../benchmark/bionetwork/lauren_group/case2	./lib	TRUE	"1,7"		low	"2,2"	4	TRUE	C	1	../results/bionetwork/lauren_group/case2
-case2_h	../benchmark/bionetwork/lauren_group/case2	./lib	TRUE	"1,7"		high	"2,2"	4	TRUE	C	1	../results/bionetwork/lauren_group/case2_h
-case3	../benchmark/bionetwork/chris_group/jai_example/md5_opt	./lib	TRUE	"1,7"		low	"2,2"	4	TRUE	C	1	../results/bionetwork/chris_group/jai_example/md5_opt
-case3_h	../benchmark/bionetwork/chris_group/jai_example/md5_opt	./lib	TRUE	"1,7"		high	"2,2"	4	TRUE	C	1	../results/bionetwork/chris_group/jai_example/md5_opt_h
+test0	../benchmark/test/test0	./lib	TRUE	"1,3"	5	high	"2,2"	4	TRUE	C	1	../results/test/test0
+test1	../benchmark/test/test1	./lib	TRUE	"1,7"	5	high	"2,2"	4	TRUE	C	1	../results/test/test1
+test2	../benchmark/test/test2	./lib	TRUE	"1,4"	5	high	"2,2"	4	TRUE	C	1	../results/test/test2
+test3	../benchmark/test/test3	./lib	TRUE	"1,4"	5	high	"2,2"	4	TRUE	C	1	../results/test/test3
+test4	../benchmark/test/test4	./lib	TRUE	"1,5"	5	high	"2,2"	4	TRUE	C	1	../results/test/test4
+case1	../benchmark/bionetwork/lauren_group/case1	./lib	TRUE	"1,3"	2	low	"2,2"	4	TRUE	C	1	../results/bionetwork/lauren_group/case1
+case1_h	../benchmark/bionetwork/lauren_group/case1	./lib	TRUE	"1,3"	2	high	"2,2"	4	TRUE	C	1	../results/bionetwork/lauren_group/case1_h
+case2	../benchmark/bionetwork/lauren_group/case2	./lib	TRUE	"1,7"	2	low	"2,2"	4	TRUE	C	1	../results/bionetwork/lauren_group/case2
+case2_h	../benchmark/bionetwork/lauren_group/case2	./lib	TRUE	"1,7"	2	high	"2,2"	4	TRUE	C	1	../results/bionetwork/lauren_group/case2_h
+case3	../benchmark/bionetwork/chris_group/jai_example/md5_opt	./lib	TRUE	"1,7"	60	low	"2,2"	4	TRUE	C	1	../results/bionetwork/chris_group/jai_example/md5_opt
+case3_h	../benchmark/bionetwork/chris_group/jai_example/md5_opt	./lib	TRUE	"1,7"	60	high	"2,2"	4	TRUE	C	1	../results/bionetwork/chris_group/jai_example/md5_opt_h
 1125	../benchmark/4-input-boolean-circuits/1125	./lib	TRUE	"1,7"			"2,2"	4	TRUE	C	1	../results/4-input-boolean-circuits/1125
 hexDisplay	../benchmark/electronic-circuits/hexDisplay	./lib	TRUE	"1,7"			"2,2"	4	TRUE	C	5	../results/electronic-circuits/hexDisplay
 multiplier	../benchmark/electronic-circuits/multiplier	./lib	TRUE	"3,7"	3		"2,2"	4	TRUE	C	1	../results/electronic-circuits/multiplier

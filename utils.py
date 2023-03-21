@@ -142,7 +142,7 @@ def loadData(s, settings):
 	# obtain user-defined params
 	tmp = settings[s]['S_bounds'].split(',')
 	S_bounds = [eval(i) for i in tmp]
-	target_n = settings[s]['target_n'].split(',')
+	target_n = int(settings[s]['target_n'].split(',')[0])
 	primitive_only = settings[s]['primitive_only']
 	ConstraintType = settings[s]['high_low_flag'].split(',')[0]
 	constraint = []
@@ -159,6 +159,7 @@ def loadData(s, settings):
 	trajectories = int(settings[s]['trajectories'])
 	out_path = settings[s]['output_path']
 	timestep = 10000000000
+	timestep2 = 10000
 	begin_time_current_step = time.time()
 
 	# load graph
@@ -172,4 +173,4 @@ def loadData(s, settings):
 	else:
 		G_primitive = copy.deepcopy(DAG)
 
-	return G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, timestep
+	return G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, timestep, target_n, timestep2

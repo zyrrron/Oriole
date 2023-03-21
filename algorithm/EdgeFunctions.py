@@ -1,5 +1,6 @@
 import networkx as nx
 
+
 # Find all incoming edges to node N
 def findIncomingEdges(G, n):
     return G.in_edges(n)

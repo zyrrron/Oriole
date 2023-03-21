@@ -1,16 +1,17 @@
 import os
 import UpdateFunctions as uf
 
+
 # Write current verify solution into a output file
-def writeVerifySolution(out_path, G, CurrentVerifyResult):
+def writeVerifySolution(out_path, G, CurrentResult):
     outfile = out_path + '/sol_after_verify.txt'
     if not os.path.exists(out_path):
         os.makedirs(out_path)
     f_out = open(outfile, 'w')
-    if len(CurrentVerifyResult) == 0:
+    if len(CurrentResult) == 0:
         f_out.write(f'Community 1: {list(G.nodes)}')
     else:
-        NewCommunityNumToNodes, CurrentVerifyResult = uf.updateCommunityNum(CurrentVerifyResult)
+        NewCommunityNumToNodes, CurrentResult = uf.updateCommunityNum(CurrentResult)
         print(NewCommunityNumToNodes)
         for key in NewCommunityNumToNodes:
             f_out.write(f'Community {key}: {NewCommunityNumToNodes[key]}\n')
@@ -29,5 +30,25 @@ def reportIssue(out_path, ErrorLog):
 
 
 # Save current verification solution and send it to "merging.py"
-def loadVerifySolution():
-    pass
+def loadVerifySolution(path, s):
+
+    # read data from verification result
+    with open(f"{path}/sol_after_verify.txt") as f:
+        i = 0
+        d = []
+        for line in f:
+            i += 1
+            line = line.replace('\'','')
+            line = line.split('[')[1]
+            line = line.split(']')[0]
+            line = line.split(',')
+            d.append(line)
+
+    # change it to the same format in verification stage CurrentResult
+    VerifyResult = {}
+    CommunityNum = 1
+    for ele in d:
+        for e in ele:
+            VerifyResult[e] = str(CommunityNum)
+        CommunityNum += 1
+    return VerifyResult

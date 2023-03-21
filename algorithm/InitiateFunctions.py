@@ -1,5 +1,6 @@
 import networkx as nx
 
+
 # Put each node in a graph into a distinct community
 # Each node says: I am my own community
 def createInitialCommunities(G):
