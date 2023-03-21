@@ -9,12 +9,6 @@ def createInitialCommunities(G):
     return d
 
 
-# Create the subnetwork centering with the pending community
-def createSubNetwork(G, PendingCommunities):
-    nodes = getNodesFromCommunity(PendingCommunities)
-    return
-
-
 # Get all nodes in the given community
 def getNodesFromCommunity(PendingCommunities):
     pass
