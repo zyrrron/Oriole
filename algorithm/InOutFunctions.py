@@ -17,7 +17,7 @@ def writeVerifySolution(out_path, G, CurrentVerifyResult):
 
 
 # If no solution find, return current best clustering solution, and the return the community caused the problem.
-def reportIssue(out_path, G, VerifyResult, ErrorLog):
+def reportIssue(out_path, ErrorLog):
     outfile = out_path + '/error_report.txt'
     if not os.path.exists(out_path):
         os.makedirs(out_path)

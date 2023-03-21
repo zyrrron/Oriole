@@ -59,7 +59,7 @@ def main():
             print("Verification passed!")
             iof.writeVerifySolution(out_path, G_primitive, VerifyResult)
         else:
-            iof.reportIssue(out_path, G_primitive, VerifyResult, ErrorLog)
+            iof.reportIssue(out_path, ErrorLog)
 
 main()
 
