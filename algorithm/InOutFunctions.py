@@ -8,7 +8,7 @@ def writeVerifySolution(out_path, G, CurrentVerifyResult):
         os.makedirs(out_path)
     f_out = open(outfile, 'w')
     if len(CurrentVerifyResult) == 0:
-        f_out.write(f'Community 0: {list(G.nodes)}')
+        f_out.write(f'Community 1: {list(G.nodes)}')
     else:
         NewCommunityNumToNodes, CurrentVerifyResult = uf.updateCommunityNum(CurrentVerifyResult)
         print(NewCommunityNumToNodes)
@@ -18,6 +18,12 @@ def writeVerifySolution(out_path, G, CurrentVerifyResult):
 
 # If no solution find, return current best clustering solution, and the return the community caused the problem.
 def reportIssue(out_path, G, VerifyResult, ErrorLog):
+    outfile = out_path + '/error_report.txt'
+    if not os.path.exists(out_path):
+        os.makedirs(out_path)
+    f_out = open(outfile, 'w')
+
+    f_out.write(f"Error caused by: {ErrorLog}. Please check constraints and the edges connected to this node.")
     print("Verification failed!")
     print("Error caused by: ", ErrorLog)
 
