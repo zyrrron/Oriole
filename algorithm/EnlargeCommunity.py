@@ -46,7 +46,6 @@ def enlargeCommunity(G, PendingCommunity, S_bounds, ConstraintType, constraint, 
         if VerifyFlag:
             return CurrentVerifyResult, True, {}, timestep
         else:
-            print("Error: ", PendingCommunity)
             return CurrentVerifyResult, False, {PendingCommunity}, timestep
 
 
@@ -67,7 +66,7 @@ def enlargeCommunity(G, PendingCommunity, S_bounds, ConstraintType, constraint, 
 
     # start the middle part of backtracking
     for c in rewards_new:
-        if timestep % 100 == 0:
+        if timestep % 10000 == 0:
             print("Rewards: ", c, rewards_new[c])
             print("Timestep: ", timestep)
 

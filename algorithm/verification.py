@@ -24,7 +24,6 @@ def main():
 
     # Verify samples iteratively
     for s in samples:
-        print(s)
 
         # Load data and check if we can directly put all the nodes in one community
         G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, timestep = utils.loadData(s, settings)
@@ -42,7 +41,6 @@ def main():
         PendingCommunities = ccf.findPendingCommunities(G_primitive, CurrentVerifyResult, constraint)
         if len(PendingCommunities) == 0:
             iof.writeVerifySolution(out_path, G_primitive, CurrentVerifyResult)
-            print(CurrentVerifyResult)
             continue
         print("PendingCommunities: ", PendingCommunities)
 
@@ -54,12 +52,11 @@ def main():
         # Start to solve the worst case by enlarging its size
         VerifyResult, VerifyFlag, ErrorLog, timestep = ec.enlargeCommunity(G_primitive, PendingCommunity, S_bounds, ConstraintType,
                                                        constraint, loop_free, priority, timestep, CurrentVerifyResult)
-        if not VerifyFlag:
-            print("Error caused by: ", ErrorLog)
 
         # If VerifyFlag is false, that means the graph and constraints don't pass the verification, user should change
         # it later. If it is ture, save the result. Then we go to the merging stage.
         if VerifyFlag:
+            print("Verification passed!")
             iof.writeVerifySolution(out_path, G_primitive, VerifyResult)
         else:
             iof.reportIssue(out_path, G_primitive, VerifyResult, ErrorLog)

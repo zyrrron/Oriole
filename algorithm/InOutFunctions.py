@@ -17,10 +17,11 @@ def writeVerifySolution(out_path, G, CurrentVerifyResult):
 
 
 # If no solution find, return current best clustering solution, and the return the community caused the problem.
-def reportIssue(out_path, G_primitive, VerifyResult, ErrorLog):
-    pass
+def reportIssue(out_path, G, VerifyResult, ErrorLog):
+    print("Verification failed!")
+    print("Error caused by: ", ErrorLog)
 
 
 # Save current verification solution and send it to "merging.py"
-def saveSolution():
+def loadVerifySolution():
     pass
