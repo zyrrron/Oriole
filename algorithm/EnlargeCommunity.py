@@ -103,10 +103,11 @@ def enlargeCommunityMerge(G, Community, S_bounds, ConstraintType, constraint, lo
         Community = ccf.findNextMergeCommunity(G, MergeResult, constraint)
         enlargeCommunityMerge(G_primitive, Community, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, MergeResult, target_n)
 
-
     # If timestep is achieved, return false
     if timestep < 0:
         return MergeResult, False, {"Time runs out"}
+
+    # Start to merge neighbor communities to the current chosen merging community. Try all neighbor communities until it meets any condition above
 
 
 

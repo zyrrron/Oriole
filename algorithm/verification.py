@@ -18,7 +18,7 @@ import collections
 
 
 # If solution find, we return "verification passed" and save the current clustering solution.
-def main():
+def Verification():
     # Load samples and settings
     samples, settings = utils.loadSettings()
 
@@ -61,5 +61,5 @@ def main():
         else:
             iof.reportIssue(out_path, ErrorLog)
 
-main()
+Verification()
 
