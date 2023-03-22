@@ -85,21 +85,23 @@ def enlargeCommunity(G, Community, S_bounds, ConstraintType, constraint, loop_fr
 
 
 # Enlarge Communities in the Merge stage
-def enlargeCommunityMerge(G_primitive, Community, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, MergeResult, target_n):
+def enlargeCommunityMerge(G, Community, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, MergeResult, target_n):
 
     # If size is bigger than upper bound, return false
     if ccf.checkSize(MergeResult, Community) > S_bounds[1]:
         return MergeResult, False, {Community}, timestep
 
-    # If current merge can be accepted, check target n
-    if ccf.checkLoopComm(G, Community, CurrentResult) == 0 and ccf.checkInOutComm(G, Community, constraint, CurrentResult) == 0:
+    # If current merge operation can be accepted, check target n
+    if ccf.checkLoopComm(G, Community, MergeResult) == 0 and ccf.checkInOutComm(G, Community, constraint, MergeResult) == 0:
 
         # If target n is achieved, return true
         CurrentCommNum = len(set(MergeResult.values()))
         if CurrentCommNum <= target_n:
             return MergeResult, True, {"Merge succeed!"}
 
-        # If target n is not achieved, but current merge can be accepted
+        # If target n is not achieved, but current merge can be accepted, then we go to merge another community
+        Community = ccf.findNextMergeCommunity(G, MergeResult, constraint)
+        enlargeCommunityMerge(G_primitive, Community, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, MergeResult, target_n)
 
 
     # If timestep is achieved, return false

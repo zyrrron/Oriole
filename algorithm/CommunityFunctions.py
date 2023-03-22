@@ -8,12 +8,14 @@ import copy
 def checkInOutComm(G, community, constraint, CurrentResult):
     InEdges = findIncomingEdgesComm(G, community, CurrentResult)
     OutEdges = findOutgoingEdgesComm(G, community, CurrentResult)
+
     # check high constraint
     if len(constraint) == 2:
         if len(InEdges) <= constraint[0] and len(OutEdges) <= constraint[1]:
             return 0
         else:
             return max(0, len(InEdges)-constraint[0]) + max(0, len(OutEdges)-constraint[1])
+
     # check low constraint
     else:
         if len(InEdges) + len(OutEdges) <= constraint[0]:
@@ -54,6 +56,7 @@ def findAllNeighborsComm(G, c, CurrentResult):
 def findIncomingEdgesComm(G, c, CurrentResult):
     CommunityNumToNodes = uf.mapCommunityToNodes(CurrentResult)
     InEdges = []
+
     # Collect all incoming edges for the nodes in community c
     for node in CommunityNumToNodes[c]:
         tmp = ef.findIncomingEdges(G, node)
@@ -63,6 +66,7 @@ def findIncomingEdgesComm(G, c, CurrentResult):
     # select the Incoming edges for the community c
     InEdgesComm = []
     for ele in list(InEdges):
+
         # ele[1] must be in c, because it is an incoming edge, end node must in c.
         if ele[0] not in CommunityNumToNodes[c]:
             InEdgesComm.append(ele)
@@ -133,16 +137,17 @@ def findWorstCommunity(G, PendingCommunities, CurrentResult):
     maxKey = ''
     maxEdges = 0
     for key in PendingCommunities:
+
         # update the worst case when a community has bigger value
         if PendingCommunities[key] > maxVal:
             maxKey = key
-            maxEdges = findIncomingEdgesComm(G, key, CurrentResult) + findOutgoingEdgesComm(G, key, CurrentResult)
+            maxEdges = len(findIncomingEdgesComm(G, key, CurrentResult)) + len(findOutgoingEdgesComm(G, key, CurrentResult))
 
         # If the number of unmet constraints is equal, choose the one has more edges connected
         if PendingCommunities[key] == maxVal:
-            if findIncomingEdgesComm(G, key, CurrentResult) + findOutgoingEdgesComm(G, key, CurrentResult) > maxEdges:
+            if len(findIncomingEdgesComm(G, key, CurrentResult)) + len(findOutgoingEdgesComm(G, key, CurrentResult)) > maxEdges:
                 maxKey = key
-                maxEdges = findIncomingEdgesComm(G, key, CurrentResult) + findOutgoingEdgesComm(G, key, CurrentResult)
+                maxEdges = len(findIncomingEdgesComm(G, key, CurrentResult)) + len(findOutgoingEdgesComm(G, key, CurrentResult))
     return maxKey
 
 
@@ -154,3 +159,19 @@ def findPendingCommunities(G, result, constraint):
         if res != 0:
             PendingCommunities[key] = res
     return PendingCommunities
+
+
+# Find the next community to merge
+def findNextMergeCommunity(G, result, constraint):
+    NextMergeCommunity = '1'
+    CommunityNumToNodes = uf.mapCommunityToNodes(result)
+    min_Val = len(CommunityNumToNodes['1'])
+
+    # Find the Community with the least number of connections with other communities.
+    for Comm in CommunityNumToNodes:
+        tmp = len(findIncomingEdgesComm(G, Comm, result)) + len(findOutgoingEdgesComm(G, Comm, result))
+        if tmp < min_Val:
+            NextMergeCommunity = Comm
+            min_Val = tmp
+
+    return NextMergeCommunity

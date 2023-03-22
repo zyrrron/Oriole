@@ -21,7 +21,9 @@ for s in samples:
         print("Verification solution is good enough according to the target number of communities!")
         continue
 
-    # Start merging from the community '1'
+
+    # Start merging from the community with the least incoming or outgoing edges.
+
     MergeResult, MergeFlag, MergeErrorLog = ec.enlargeCommunityMerge(G_primitive, '1', S_bounds, ConstraintType,
                         constraint, loop_free, priority, timestep, VerifyResult, target_n)
 
