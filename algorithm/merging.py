@@ -24,6 +24,7 @@ def Merge():
 
         # Start merging from the community with the least incoming or outgoing edges.
         Community = ccf.findNextMergeCommunity(G, VerifyResult, constraint)
+        print("Now try merging the first community: ", Community)
         MergeResult, MergeFlag, MergeErrorLog = ec.enlargeCommunityMerge(G_primitive, Community, S_bounds, ConstraintType,
                             constraint, loop_free, priority, timestep, VerifyResult, target_n)
 
