@@ -99,9 +99,23 @@ def enlargeCommunityMerge(G, Community, S_bounds, ConstraintType, constraint, lo
         if CurrentCommNum <= target_n:
             return MergeResult, True, {"Merge succeed!"}
 
-        # If target n is not achieved, but current merge can be accepted, then we go to merge another community
+        # If target n is not achieved, but current merge can be accepted, then we try to merge another community to current one
         Community = ccf.findNextMergeCommunity(G, MergeResult, constraint)
-        enlargeCommunityMerge(G_primitive, Community, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, MergeResult, target_n)
+        MergeResult, MergeFlag, MergeErrorLog = enlargeCommunityMerge(G_primitive, Community, S_bounds, ConstraintType, constraint,
+                                                                      loop_free, priority, timestep, MergeResult, target_n)
+
+        # After merging other communities, if MergeFlag == True, we can directly return the current merge result as the final result
+        if MergeFlag:
+            return MergeResult, True, {}
+
+        # If it is False, that means all the possible merge operation for the given community (after merging a neighbor community) in the current graph failed
+        # So go back to the last level and try to merge other communities into the current one.
+        else:
+            return MergeResult, False, {Community}
+
+    # If the current merge operation cannot be accepted, return back to the last level
+    else:
+        return MergeResult, False, {Community}
 
     # If timestep is achieved, return false
     if timestep < 0:
