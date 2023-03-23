@@ -4,6 +4,7 @@ import NodeFunctions as nf
 import InOutFunctions as iof
 import CommunityFunctions as ccf
 import copy
+import UpdateFunctions as uf
 
 
 def prepareNeighborOrder(G, Community, CurrentResult, constraint):
@@ -41,7 +42,7 @@ def enlargeCommunity(G, Community, S_bounds, ConstraintType, constraint, loop_fr
         return CurrentResult, False, {"Time runs out"}, timestep
 
     # When the current community meets all constraints, transfer to the next one
-    if ccf.checkLoopComm(G, Community, CurrentResult) == 0 and ccf.checkInOutComm(G, Community, constraint, CurrentResult) == 0:
+    if ((loop_free and ccf.checkLoopComm(G, Community, CurrentResult) == 0) or not loop_free) and ccf.checkInOutComm(G, Community, constraint, CurrentResult) == 0:
 
         # Find other pending communities
         PendingCommunities = ccf.findPendingCommunities(G, CurrentResult, constraint)
@@ -91,59 +92,51 @@ def enlargeCommunity(G, Community, S_bounds, ConstraintType, constraint, loop_fr
 
 
 # Enlarge Communities in the Merge stage
-def enlargeCommunityMerge(G, Community, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, MergeResult, target_n):
+def enlargeCommunityMerge(G, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, MergeResult, target_n):
 
-    # There are 3 possible conditions to return back
-    # 1. meet size constraint
+    # There are 2 possible conditions to return back
+    # 1. meet target n constraint
     # 2. meet time constraint
-    # 3. merge can be accepted
-    # 3-1. if it also target n constraint, return the current merge result as the final solution
-    # 3-2. if not, keep merge the next community
+    while timestep >= 0 and len(uf.mapCommunityToNodes(MergeResult)) > target_n:
+        print("Current number of communities", len(uf.mapCommunityToNodes(MergeResult)))
 
-    # If size is bigger than upper bound, return false
-    if ccf.checkSize(MergeResult, Community) > S_bounds[1]:
-        return MergeResult, False, {1, Community}, timestep
+        # Find all possible to-be-merged communities and sort them with rewards. Scan them in this order.
+        MergeCommunities = ccf.findMergeCommunities(G, MergeResult, constraint)
 
-    # If current merge operation (added one neighbor community to current one in the last level) can be accepted, check target n
-    if ccf.checkLoopComm(G, Community, MergeResult) == 0 and ccf.checkInOutComm(G, Community, constraint, MergeResult) == 0:
+        # Try to merge the communities in the order of MergeCommunities
+        for Community in MergeCommunities:
 
-        # If target n is achieved, return true
-        CurrentCommNum = len(set(MergeResult.values()))
-        if CurrentCommNum <= target_n:
-            return MergeResult, True, {"Merge succeed!"}, timestep
+            print(MergeResult)
 
-        # If target n is not achieved, but current merge can be accepted, then we try to merge another community to current one
-        Community = ccf.findNextMergeCommunity(G, MergeResult, constraint)
-        print("This merge operation passed!")
-        print("Now try merging next community: ", Community)
-        MergeResult, MergeFlag, MergeErrorLog, timestep = enlargeCommunityMerge(G_primitive, Community, S_bounds, ConstraintType, constraint,
-                                                                      loop_free, priority, timestep-1, MergeResult, target_n)
+            # Find all neighbor communities around the chosen community.
+            # And get the sorted rewards dictionary for all the neighbor communities
+            rewards_sorted, _ = prepareNeighborOrder(G, Community, MergeResult, constraint)
 
-        # After merging other communities, if MergeFlag == True, we can directly return the current merge result as the final result
-        if MergeFlag:
-            return MergeResult, True, {"Merge succeed!"}, timestep
+            for key in rewards_sorted:
 
-        # If it is False, that means all the possible merge operation for the given community (after merging this neighbor community)
-        # in the current graph failed
-        # So go back to the last level and try to merge other communities into the current one.
-        else:
-            return MergeResult, False, {Community}, timestep
+                # Merge the neighbor community provide the current highest reward
+                MergeResult_updated = ccf.addNeighborComm(MergeResult, key, Community)
 
-    # If the current merge operation cannot be accepted, return back to the last level
+                # If size is bigger than upper bound, change to another community
+                if ccf.checkSize(MergeResult_updated, Community) > S_bounds[1]:
+                    continue
+
+                # If current merge operation (added one neighbor community to current one in the last level) can be accepted,
+                # update the current merge result to MergeResult and break the loop, go to the next merge community.
+                if ((loop_free and ccf.checkLoopComm(G, Community, MergeResult_updated) == 0) or not loop_free) and ccf.checkInOutComm(G, Community, constraint, MergeResult_updated) == 0:
+                    MergeResult = MergeResult_updated
+                    break
+
+            # After leaving from the for loop, we may has a successful merge or not.
+            # No matter if it is merged successfully, we will choose the next community to merge in the next step
+            timestep -= 1
+
+    if len(uf.mapCommunityToNodes(MergeResult)) <= target_n:
+        return MergeResult, True, {}
     else:
-        return MergeResult, False, {Community}, timestep
-
-    # If timestep is achieved, return false
-    if timestep < 0:
-        return MergeResult, False, {"Time runs out"}, timestep
-
-    # Start to merge neighbor communities to the current chosen merging community. Try all neighbor communities until it meets any condition above
-    rewards_new, MergeResult_new = prepareNeighborOrder(G, Community, MergeResult, constraint)
+        return MergeResult, False, {"Time runs out"}
 
 
-
-
-    # Here, we are not like verificaiton enlargecommunity part, we can accept all MergeResult if the number of total communities is decreasing.
 
 
 

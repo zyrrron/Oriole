@@ -153,7 +153,7 @@ def loadData(s, settings):
 	else:
 		constraint.append(int(settings[s]['low_constraint'].split(',')[0]))
 	loop_free = False
-	if settings[s]['loop_free'].lower == 'true':
+	if settings[s]['loop_free'].lower() == 'true':
 		loop_free = True
 	priority = settings[s]['priority']
 	trajectories = int(settings[s]['trajectories'])

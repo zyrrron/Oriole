@@ -30,7 +30,7 @@ def Verification():
 
         # If the max size for one community is bigger than the current total number of the nodes, output it and continue the next sample
         if len(G_primitive.nodes) < S_bounds[1]:
-            iof.writeVerifySolution(out_path, G_primitive, [])
+            iof.writeSolution(out_path, '/sol_after_verify.txt', G_primitive, [])
             print("All nodes can be put in one community!")
             continue
 
@@ -40,7 +40,7 @@ def Verification():
         # Find the pending community, if no pending community, save current cluster result.
         PendingCommunities = ccf.findPendingCommunities(G_primitive, CurrentVerifyResult, constraint)
         if len(PendingCommunities) == 0:
-            iof.writeVerifySolution(out_path, G_primitive, CurrentVerifyResult)
+            iof.writeSolution(out_path, '/sol_after_verify.txt', G_primitive, CurrentVerifyResult)
             continue
         print("PendingCommunities: ", PendingCommunities)
 
@@ -57,7 +57,9 @@ def Verification():
         # it later. If it is ture, save the result. Then we go to the merging stage.
         if VerifyFlag:
             print("Verification passed!")
-            iof.writeVerifySolution(out_path, G_primitive, VerifyResult)
+
+            # Write current verify solution into a output file
+            iof.writeSolution(out_path, '/sol_after_verify.txt', G_primitive, VerifyResult)
         else:
             iof.reportIssue(out_path, ErrorLog)
 

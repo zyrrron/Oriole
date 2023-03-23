@@ -22,10 +22,22 @@ def Merge():
             print("Verification solution is good enough according to the target number of communities!")
             continue
 
+        # If the number of target n can never achieve because S_bound[1] is too small, return error
+        if S_bounds[1] * target_n < len(G_primitive.nodes()):
+            print("The upper bound of one community make it impossible to get target_n communities to take all the nodes in this graph!")
+            continue
+
         # Start merging from the community with the least incoming or outgoing edges.
-        Community = ccf.findNextMergeCommunity(G, VerifyResult, constraint)
-        print("Now try merging the first community: ", Community)
-        MergeResult, MergeFlag, MergeErrorLog = ec.enlargeCommunityMerge(G_primitive, Community, S_bounds, ConstraintType,
+        print("Now try merging the communities!")
+        MergeResult, MergeFlag, MergeErrorLog = ec.enlargeCommunityMerge(G_primitive, S_bounds, ConstraintType,
                             constraint, loop_free, priority, timestep, VerifyResult, target_n)
 
+        print(MergeResult, MergeFlag, MergeErrorLog)
+        if MergeFlag:
+            print("Merge passed according to the target N!")
+
+            # Write current merge solution into a output file
+            iof.writeSolution(out_path, '/sol_after_merge.txt', G_primitive, MergeResult)
+        else:
+            iof.reportMergeIssue(out_path, MergeResult, ErrorLog, timestep, VerifyResult)
 Merge()

@@ -44,7 +44,7 @@ def findAllNeighborsComm(G, c, CurrentResult):
         for t in tmp:
             NeighborNodes.add(t)
 
-    # find the neighbor communities according to the NeiborNodes
+    # find the neighbor communities according to the NeighborNodes
     NeighborComm = set()
     for node in NeighborNodes:
         if CurrentResult[node] != c:
@@ -115,12 +115,12 @@ def checkLoopComm(G, c, CurrentResult):
     # Find all communities provide incoming edges to community c
     InEdgesComm = set()
     for edge in InEdges:
-        InEdgesComm.add(edge[0])
+        InEdgesComm.add(CurrentResult[edge[0]])
 
     # Find all communities provide outgoing edges from community c
     OutEdgesComm = set()
     for edge in OutEdges:
-        OutEdgesComm.add(edge[1])
+        OutEdgesComm.add(CurrentResult[edge[1]])
 
     # Compare InEdgesComm and OutEdgesComm, if they have same community b, that means loop between b and c.
     # Calculate the total number of cycles and return it.
@@ -162,16 +162,16 @@ def findPendingCommunities(G, result, constraint):
 
 
 # Find the next community to merge
-def findNextMergeCommunity(G, result, constraint):
-    NextMergeCommunity = '1'
+def findMergeCommunities(G, result, constraint):
+    MergeCommunities = {}
     CommunityNumToNodes = uf.mapCommunityToNodes(result)
-    min_Val = len(CommunityNumToNodes['1'])
 
-    # Find the Community with the least number of connections with other communities.
+    # Calculate the rewards for each community as the merging center
     for Comm in CommunityNumToNodes:
-        tmp = len(findIncomingEdgesComm(G, Comm, result)) + len(findOutgoingEdgesComm(G, Comm, result))
-        if tmp < min_Val:
-            NextMergeCommunity = Comm
-            min_Val = tmp
+        MergeCommunities[Comm] = sum(constraint) - len(findIncomingEdgesComm(G, Comm, result)) - len(findOutgoingEdgesComm(G, Comm, result))
 
-    return NextMergeCommunity
+    # Sort
+    tmp = sorted(MergeCommunities.items(), key=lambda x: x[1], reverse=True)
+    MergeCommunities = dict(tmp)
+
+    return MergeCommunities
