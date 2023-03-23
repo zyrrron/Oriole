@@ -272,10 +272,10 @@ def loadData(s, settings):
 	if settings[s]['loop_free'].lower() == 'true':
 		loop_free = True
 	priority = settings[s]['priority']
-	trajectories = int(settings[s]['trajectories'])
+	bio_flag = int(settings[s]['BioFlag'])
 	out_path = settings[s]['output_path']
 	timestep = 10000000000
-	timestep2 = 100
+	timestep2 = 10000
 	begin_time_current_step = time.time()
 
 	# load graph
@@ -289,4 +289,4 @@ def loadData(s, settings):
 	else:
 		G_primitive = copy.deepcopy(DAG)
 
-	return G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, timestep, target_n, timestep2
+	return G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, timestep, target_n, timestep2, bio_flag

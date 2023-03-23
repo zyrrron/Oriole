@@ -5,18 +5,18 @@ import copy
 
 
 # check indegree/outdegree constraints for a given community
-def checkInOutComm(G, community, constraint, CurrentResult):
-    InEdges = findIncomingEdgesComm(G, community, CurrentResult)
-    OutEdges = findOutgoingEdgesComm(G, community, CurrentResult)
+def checkInOutComm(G, community, constraint, CurrentResult, bio_flag):
+    InEdges = findIncomingEdgesComm(G, community, CurrentResult, bio_flag)
+    OutEdges = findOutgoingEdgesComm(G, community, CurrentResult, bio_flag)
 
-    # check high constraint
+    # Check high constraint
     if len(constraint) == 2:
         if len(InEdges) <= constraint[0] and len(OutEdges) <= constraint[1]:
             return 0
         else:
             return max(0, len(InEdges)-constraint[0]) + max(0, len(OutEdges)-constraint[1])
 
-    # check low constraint
+    # Check low constraint
     else:
         if len(InEdges) + len(OutEdges) <= constraint[0]:
             return 0
@@ -53,7 +53,7 @@ def findAllNeighborsComm(G, c, CurrentResult):
 
 
 # Find all incoming edges to Community C
-def findIncomingEdgesComm(G, c, CurrentResult):
+def findIncomingEdgesComm(G, c, CurrentResult, bio_flag):
     CommunityNumToNodes = uf.mapCommunityToNodes(CurrentResult)
     InEdges = []
 
@@ -65,17 +65,27 @@ def findIncomingEdgesComm(G, c, CurrentResult):
 
     # select the Incoming edges for the community c
     InEdgesComm = []
+    OutNodes = set()
     for ele in list(InEdges):
 
         # ele[1] must be in c, because it is an incoming edge, end node must in c.
         if ele[0] not in CommunityNumToNodes[c]:
-            InEdgesComm.append(ele)
+
+            # Only add one incoming edge for one outside node
+            if bio_flag:
+                if ele[0] not in OutNodes:
+                    InEdgesComm.append(ele)
+                    OutNodes.add(ele[0])
+
+            # Add all incoming edges from outside
+            else:
+                InEdgesComm.append(ele)
 
     return InEdgesComm
 
 
 # Find all outgoing edges from Community C
-def findOutgoingEdgesComm(G, c, CurrentResult):
+def findOutgoingEdgesComm(G, c, CurrentResult, bio_flag):
     CommunityNumToNodes = uf.mapCommunityToNodes(CurrentResult)
     OutEdges = []
 
@@ -87,10 +97,21 @@ def findOutgoingEdgesComm(G, c, CurrentResult):
 
     # select the Outgoing edges for the community c
     OutEdgesComm = []
+    InNodes = set()
     for ele in list(OutEdges):
+
         # ele[1] must be in c, because it is an incoming edge, end node must in c.
         if ele[1] not in CommunityNumToNodes[c]:
-            OutEdgesComm.append(ele)
+
+            # Only add one outgoing edge for one inside node
+            if bio_flag:
+                if ele[0] not in InNodes:
+                    OutEdgesComm.append(ele)
+                    InNodes.add(ele[0])
+
+            # Add all outgoing edges from inside
+            else:
+                OutEdgesComm.append(ele)
 
     return OutEdgesComm
 
@@ -108,9 +129,9 @@ def addNeighborComm(CurrentResult, NeighborComm, PendingCommunity):
 
 
 # Check loop caused by the current community c, if there is a loop, drop this try and back tracking to the last level.
-def checkLoopComm(G, c, CurrentResult):
-    InEdges = findIncomingEdgesComm(G, c, CurrentResult)
-    OutEdges = findOutgoingEdgesComm(G, c, CurrentResult)
+def checkLoopComm(G, c, CurrentResult, bio_flag):
+    InEdges = findIncomingEdgesComm(G, c, CurrentResult, bio_flag)
+    OutEdges = findOutgoingEdgesComm(G, c, CurrentResult, bio_flag)
 
     # Find all communities provide incoming edges to community c
     InEdgesComm = set()
@@ -132,7 +153,7 @@ def checkLoopComm(G, c, CurrentResult):
 # Check and find the worst case in PendingCommunities
 # There won't be any cycle when we get into this function, because we will not allow a community make cycles during the
 # community enlarge procedure. Every time when we try to run this function, the current graph should not have any cycle between communities.
-def findWorstCommunity(G, PendingCommunities, CurrentResult):
+def findWorstCommunity(G, PendingCommunities, CurrentResult, bio_flag):
     maxVal = 0
     maxKey = ''
     maxEdges = 0
@@ -141,34 +162,34 @@ def findWorstCommunity(G, PendingCommunities, CurrentResult):
         # update the worst case when a community has bigger value
         if PendingCommunities[key] > maxVal:
             maxKey = key
-            maxEdges = len(findIncomingEdgesComm(G, key, CurrentResult)) + len(findOutgoingEdgesComm(G, key, CurrentResult))
+            maxEdges = len(findIncomingEdgesComm(G, key, CurrentResult, bio_flag)) + len(findOutgoingEdgesComm(G, key, CurrentResult, bio_flag))
 
         # If the number of unmet constraints is equal, choose the one has more edges connected
         if PendingCommunities[key] == maxVal:
-            if len(findIncomingEdgesComm(G, key, CurrentResult)) + len(findOutgoingEdgesComm(G, key, CurrentResult)) > maxEdges:
+            if len(findIncomingEdgesComm(G, key, CurrentResult, bio_flag)) + len(findOutgoingEdgesComm(G, key, CurrentResult,bio_flag)) > maxEdges:
                 maxKey = key
-                maxEdges = len(findIncomingEdgesComm(G, key, CurrentResult)) + len(findOutgoingEdgesComm(G, key, CurrentResult))
+                maxEdges = len(findIncomingEdgesComm(G, key, CurrentResult, bio_flag)) + len(findOutgoingEdgesComm(G, key, CurrentResult, bio_flag))
     return maxKey
 
 
 # Find the communities that cannot meet all constraints, if there is no pending community exists, return -1, else return its community number
-def findPendingCommunities(G, result, constraint):
+def findPendingCommunities(G, result, constraint, bio_flag):
     PendingCommunities = {}
     for key in result:
-        res = checkInOutComm(G, key, constraint, result) + checkLoopComm(G, key, result)
+        res = checkInOutComm(G, key, constraint, result, bio_flag) + checkLoopComm(G, key, result, bio_flag)
         if res != 0:
             PendingCommunities[key] = res
     return PendingCommunities
 
 
 # Find the next community to merge
-def findMergeCommunities(G, result, constraint):
+def findMergeCommunities(G, result, constraint, bio_flag):
     MergeCommunities = {}
     CommunityNumToNodes = uf.mapCommunityToNodes(result)
 
     # Calculate the rewards for each community as the merging center
     for Comm in CommunityNumToNodes:
-        MergeCommunities[Comm] = sum(constraint) - len(findIncomingEdgesComm(G, Comm, result)) - len(findOutgoingEdgesComm(G, Comm, result))
+        MergeCommunities[Comm] = sum(constraint) - len(findIncomingEdgesComm(G, Comm, result, bio_flag)) - len(findOutgoingEdgesComm(G, Comm, result, bio_flag))
 
     # Sort
     tmp = sorted(MergeCommunities.items(), key=lambda x: x[1], reverse=True)

@@ -2,24 +2,24 @@ import EdgeFunctions as ef
 import CommunityFunctions as ccf
 
 
-def calculateDegreeAndCycle(G, C, R):
-    Indegree = len(ccf.findIncomingEdgesComm(G, C, R))
-    Outdegree = len(ccf.findOutgoingEdgesComm(G, C, R))
-    Cycle = ccf.checkLoopComm(G, C, R)
+def calculateDegreeAndCycle(G, C, R, bio_flag):
+    Indegree = len(ccf.findIncomingEdgesComm(G, C, R, bio_flag))
+    Outdegree = len(ccf.findOutgoingEdgesComm(G, C, R, bio_flag))
+    Cycle = ccf.checkLoopComm(G, C, R, bio_flag)
     return Indegree, Outdegree, Cycle
 
 
 # calculate the rewards that one node can provide after adding it to the community
-def calculateRewardComm(G, NeighborComm, PendingCommunity, CurrentResult, constraint):
+def calculateRewardComm(G, NeighborComm, PendingCommunity, CurrentResult, constraint, bio_flag):
 
     # Save original data
-    OriginalIndegree, OriginalOutdegree, OriginalCycle = calculateDegreeAndCycle(G, PendingCommunity, CurrentResult)
+    OriginalIndegree, OriginalOutdegree, OriginalCycle = calculateDegreeAndCycle(G, PendingCommunity, CurrentResult, bio_flag)
 
     # Update current verify result after adding this neighbor community
     CurrentResult_new = ccf.addNeighborComm(CurrentResult, NeighborComm, PendingCommunity)
 
     # Calculate the new data
-    NewIndegree, NewOutdegree, NewCycle = calculateDegreeAndCycle(G, PendingCommunity, CurrentResult_new)
+    NewIndegree, NewOutdegree, NewCycle = calculateDegreeAndCycle(G, PendingCommunity, CurrentResult_new, bio_flag)
 
     # r1: indegree gain; r2: outdegree gain; r3: cycle gain
     r1, r2, r3 = 0, 0, OriginalCycle - NewCycle

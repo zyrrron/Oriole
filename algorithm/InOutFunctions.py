@@ -55,6 +55,7 @@ def loadVerifySolution(path, s):
         CommunityNum += 1
     return VerifyResult
 
+
 # If current number of communities in the merge solution is bigger than target N, report issue
 def reportMergeIssue(out_path, MergeResult, ErrorLog, timestep, VerifyResult):
     outfile = out_path + '/error_report.txt'
@@ -66,7 +67,13 @@ def reportMergeIssue(out_path, MergeResult, ErrorLog, timestep, VerifyResult):
 
     f_out.write(f"Error caused by: {ErrorLog}. \n")
     f_out.write(f"After {timestep} steps merge attempts, we decrease the number of communities from {len(CommunityNumToNodesBeforeMerge)} to ")
-    f_out.write(f"{len(CommunityNumToNodesAfterMerge)}")
+    f_out.write(f"{len(CommunityNumToNodesAfterMerge)}\n")
     print("Merge failed in the current target N!")
     print("Error caused by: ", ErrorLog)
     print(f"Current number of communities is decreased from {len(CommunityNumToNodesBeforeMerge)} to {len(CommunityNumToNodesAfterMerge)}!")
+
+    NewCommunityNumToNodes, CurrentResult = uf.updateCommunityNum(MergeResult)
+
+    # Print and save the current solution
+    for key in NewCommunityNumToNodes:
+        f_out.write(f'Community {key}: {NewCommunityNumToNodes[key]}\n')
