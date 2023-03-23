@@ -71,7 +71,7 @@ def enlargeCommunity(G, Community, S_bounds, ConstraintType, constraint, loop_fr
 
     # start the middle part of backtracking
     for c in rewards_new:
-        if timestep % 10000 == 0:
+        if timestep % 100000 == 0:
             print("Rewards: ", c, rewards_new[c])
             print("Timestep: ", timestep)
 

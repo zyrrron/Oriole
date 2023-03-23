@@ -21,7 +21,7 @@ def checkInOutComm(G, community, constraint, CurrentResult):
         if len(InEdges) + len(OutEdges) <= constraint[0]:
             return 0
         else:
-            return len(InEdges) + len(OutEdges) - constraint
+            return len(InEdges) + len(OutEdges) - constraint[0]
 
 
 # check community size

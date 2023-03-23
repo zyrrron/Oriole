@@ -1,11 +1,13 @@
 import EdgeFunctions as ef
 import CommunityFunctions as ccf
 
+
 def calculateDegreeAndCycle(G, C, R):
     Indegree = len(ccf.findIncomingEdgesComm(G, C, R))
     Outdegree = len(ccf.findOutgoingEdgesComm(G, C, R))
     Cycle = ccf.checkLoopComm(G, C, R)
     return Indegree, Outdegree, Cycle
+
 
 # calculate the rewards that one node can provide after adding it to the community
 def calculateRewardComm(G, NeighborComm, PendingCommunity, CurrentResult, constraint):
@@ -29,6 +31,6 @@ def calculateRewardComm(G, NeighborComm, PendingCommunity, CurrentResult, constr
 
     # low constraint
     else:
-        r1 = max(OriginalIndegree + OriginalOutdegree, constraint) - NewIndegree - NewOutdegree
+        r1 = max(OriginalIndegree + OriginalOutdegree, constraint[0]) - NewIndegree - NewOutdegree
 
     return r1 + r2 + r3

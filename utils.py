@@ -26,14 +26,15 @@ import copy
 # import seaborn as sns
 # import shutil
 # from networkx.drawing.nx_agraph import graphviz_layout
-# import re
 # import ujson
 # from pycallgraph import PyCallGraph
 # from pycallgraph.output import GraphvizOutput
 # import numpy.linalg as la
 # import scipy.cluster.vq as vq
 # import scipy
+import re
 from pycallgraph2.output import GraphvizOutput
+
 
 ##########################################
 ### create file names                  ###
@@ -46,6 +47,117 @@ def edgelist_filename (settings, sample):
 ##########################################
 ### load files                         ###
 ##########################################
+
+def read_json(inputfile):
+	lines = [open(inputfile, 'r').read().strip("\n")][0].split('\n')
+	ports, gates = {}, {}
+	for idx, line in enumerate(lines):
+		line = line.strip()
+		if line.startswith('"ports"'):
+			p_s = idx
+			searchlines = lines[idx+1:]
+			for i, sl in enumerate(searchlines, idx):
+				if sl.strip().startswith('"cells"'):
+					p_e = i+1
+		if line.startswith('"cells"'):
+			g_s = idx
+			searchlines = lines[idx+1:]
+			for i, sl in enumerate(searchlines, idx):
+				if sl.strip().startswith('"netnames"'):
+					g_e = i
+	# get information of inputs and outputs
+	spacer = [idx+p_s+1 for idx, line in enumerate(lines[p_s+1:p_e]) if ': {' in line.strip()]
+	for i, v in enumerate(spacer):
+		# get names
+		s = lines[v].strip()
+		s = re.search('"(.*)"', s)
+		el = s.group(1)
+		ports[el] = {}
+		# get directions
+		s = lines[v+1].strip()
+		s = re.search('"direction": "(.*)"', s)
+		direction = s.group(1)
+		ports[el]['direction'] = direction
+		# get offset if it exists
+		s = lines[v + 2].strip()
+		if s[-1] == ',':
+			offset = s.split(':')[1].split(',')[0].strip()
+			ports[el]['offset'] = int(offset)
+			s = lines[v + 3].strip()
+		# get bits
+		bits = s.split('[')[1].split(']')[0].strip()
+		ports[el]['bits'] = int(bits)
+	# get information of gates
+	spacer = [idx+g_s+1 for idx, line in enumerate(lines[g_s+1:g_e]) if '$abc$' in line.strip()]
+	for i, v in enumerate(spacer):
+		# get names
+		s = int(lines[v].strip().split('"')[1].split('$')[-1])
+		gates[s] = {}
+		gates[s]['input'] = {}
+		gates[s]['output'] = {}
+		# search for attributes of this gate
+		if i != len(spacer)-1:
+			searchlines = lines[v:spacer[i+1]]
+		else:
+			searchlines = lines[v:]
+		for sl in searchlines:
+			# get gate type
+			if sl.strip().startswith('"type"'):
+				gatetype = re.search('_(.*)_', sl.strip())
+				gates[s]['type'] = gatetype.group(1)
+			# get input(s)
+			if sl.strip().startswith('"A": [') or sl.strip().startswith('"B": ['):
+				port = re.search('"(.*)"', sl).group(1)
+				bits = sl.split('[')[1].split(']')[0].strip()
+				gates[s]['input'][port] = int(bits)
+			# get output
+			if sl.strip().startswith('"Y": ['):
+				port = re.search('"(.*)"', sl).group(1)
+				bits = sl.split('[')[1].split(']')[0].strip()
+				gates[s]['output'][port] = int(bits)
+	return ports, gates
+
+
+def synthesize_graph(ports, gates, outdir, t):
+	G = nx.DiGraph()
+	# start from the output, add edges
+	edges = []
+	print(gates)
+	for p in ports:
+		if ports[p]['direction'] == 'output':
+			b = ports[p]['bits']
+			for g in gates:
+				if b == gates[g]['output']['Y']:
+					edges.append((g, p))
+
+	for p in ports:
+		if ports[p]['direction'] == 'input':
+			b = ports[p]['bits']
+			for g in gates:
+				if b == gates[g]['input']['A']:
+					edges.append((p, g))
+					# print('input', (p,g))
+				if gates[g]['type'] == 'NOR':
+					if b == gates[g]['input']['B']:
+						edges.append((p, g))
+						# print('input', (p,g))
+
+	for g in gates:
+		op = gates[g]['output']['Y']
+		for sg in gates:
+			if gates[sg]['type'] == 'NOT':
+				gin = [gates[sg]['input']['A']]
+			else:
+				gin = [gates[sg]['input']['A'], gates[sg]['input']['B']]
+			if op in gin:
+				edges.append((g, sg))
+				# print('internal', (g, sg))
+
+	for e in edges:
+		G.add_edge(*e)
+
+	nx.write_edgelist(G, outdir+'/DAG.edgelist')
+
 
 def load_settings (filename):
 	"""Load the settings file"""
@@ -71,6 +183,7 @@ def load_graph (settings, sample):
 	G = nx.read_edgelist (edgelist_filename (settings, sample), nodetype = str, create_using=nx.DiGraph())
 	return G
 
+
 def load_graph_undirected (settings, sample):
 	"""
 	read DAG edgelist, return UNDIRECTED graph, and input/output nodes
@@ -78,6 +191,7 @@ def load_graph_undirected (settings, sample):
 	G = nx.Graph()
 	G = nx.read_edgelist (edgelist_filename (settings, sample), nodetype=str)
 	return G
+
 
 def load_metis_part_sol (inputfile):
 	"""
@@ -93,6 +207,7 @@ def load_metis_part_sol (inputfile):
 		partDict[part] = nodes
 	# print(partDict)
 	return cut, partDict
+
 
 def get_nonprimitive_nodes (G):
 	"""
@@ -110,6 +225,7 @@ def get_nonprimitive_nodes (G):
 			in_nodes.append(node)
 	nonprimitives = in_nodes + out_nodes
 	return in_nodes, out_nodes, nonprimitives
+
 
 def get_G_primitive (G, nonprimitives):
 	"""
