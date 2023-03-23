@@ -39,5 +39,5 @@ def Merge():
             # Write current merge solution into a output file
             iof.writeSolution(out_path, '/sol_after_merge.txt', G_primitive, MergeResult)
         else:
-            iof.reportMergeIssue(out_path, MergeResult, ErrorLog, timestep, VerifyResult)
+            iof.reportMergeIssue(out_path, MergeResult, MergeErrorLog, timestep, VerifyResult)
 Merge()

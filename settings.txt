@@ -1,7 +1,7 @@
 sample	graph_path	lib_path	primitive_only	S_bounds	target_n	high_low_flag	high_constraint	low_constraint	loop_free	priority	trajectories	output_path
 test0	../benchmark/test/test0	./lib	TRUE	"1,3"	5	high	"2,2"	4	TRUE	C	1	../results/test/test0
-test1	../benchmark/test/test1	./lib	TRUE	"1,7"	5	high	"2,2"	4	TRUE	C	1	../results/test/test1
-test2	../benchmark/test/test2	./lib	TRUE	"1,4"	5	high	"2,2"	4	TRUE	C	1	../results/test/test2
+test1	../benchmark/test/test1	./lib	TRUE	"1,7"	4	high	"2,2"	4	TRUE	C	1	../results/test/test1
+test2	../benchmark/test/test2	./lib	TRUE	"1,4"	4	high	"2,2"	4	TRUE	C	1	../results/test/test2
 test3	../benchmark/test/test3	./lib	TRUE	"1,4"	5	high	"2,2"	4	TRUE	C	1	../results/test/test3
 test4	../benchmark/test/test4	./lib	TRUE	"1,5"	7	high	"2,2"	4	TRUE	C	1	../results/test/test4
 case1	../benchmark/bionetwork/lauren_group/case1	./lib	TRUE	"1,3"	2	low	"2,2"	4	TRUE	C	1	../results/bionetwork/lauren_group/case1

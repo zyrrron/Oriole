@@ -65,7 +65,7 @@ def reportMergeIssue(out_path, MergeResult, ErrorLog, timestep, VerifyResult):
     CommunityNumToNodesBeforeMerge = uf.mapCommunityToNodes(VerifyResult)
 
     f_out.write(f"Error caused by: {ErrorLog}. \n")
-    f_out.write(f"After {timestep} steps merge attempts, we decrease the number of communities from {len(CommunityNumToNodesBeforeMerge)} to")
+    f_out.write(f"After {timestep} steps merge attempts, we decrease the number of communities from {len(CommunityNumToNodesBeforeMerge)} to ")
     f_out.write(f"{len(CommunityNumToNodesAfterMerge)}")
     print("Merge failed in the current target N!")
     print("Error caused by: ", ErrorLog)
