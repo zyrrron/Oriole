@@ -41,7 +41,7 @@ from pycallgraph2.output import GraphvizOutput
 ##########################################
 
 def edgelist_filename (settings, sample):
-	return settings[sample]['graph_path']+'/DAG.edgelist'
+	return settings[sample]['graph_path']+'/DAG_jai.edgelist'
 
 
 ##########################################
@@ -156,7 +156,7 @@ def synthesize_graph(ports, gates, outdir, t):
 	for e in edges:
 		G.add_edge(*e)
 
-	nx.write_edgelist(G, outdir+'/DAG.edgelist')
+	nx.write_edgelist(G, outdir+'/DAG_jai.edgelist')
 
 
 def load_settings (filename):
