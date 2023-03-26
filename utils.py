@@ -41,7 +41,7 @@ from pycallgraph2.output import GraphvizOutput
 ##########################################
 
 def edgelist_filename (settings, sample):
-	return settings[sample]['graph_path']+'/DAG_jai.edgelist'
+	return settings[sample]['graph_path']+'/DAG.edgelist'
 
 
 ##########################################
@@ -156,7 +156,7 @@ def synthesize_graph(ports, gates, outdir, t):
 	for e in edges:
 		G.add_edge(*e)
 
-	nx.write_edgelist(G, outdir+'/DAG_jai.edgelist')
+	nx.write_edgelist(G, outdir+'/DAG.edgelist')
 
 
 def load_settings (filename):
@@ -275,7 +275,7 @@ def loadData(s, settings):
 	bio_flag = int(settings[s]['BioFlag'])
 	out_path = settings[s]['output_path']
 	timestep = 10000000000
-	timestep2 = 10000
+	timestep2 = 100000
 	begin_time_current_step = time.time()
 
 	# load graph
