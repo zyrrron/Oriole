@@ -31,10 +31,10 @@ def reportIssue(out_path, ErrorLog):
 
 
 # Save current verification solution and send it to "merging.py"
-def loadVerifySolution(path, s):
+def loadSolution(path, s):
 
     # read data from verification result
-    with open(f"{path}/sol_after_verify.txt") as f:
+    with open(path) as f:
         i = 0
         d = []
         for line in f:
@@ -57,7 +57,7 @@ def loadVerifySolution(path, s):
 
 
 # If current number of communities in the merge solution is bigger than target N, report issue
-def reportMergeIssue(out_path, MergeResult, ErrorLog, timestep, VerifyResult):
+def reportMergeIssue(G_primitive, out_path, MergeResult, ErrorLog, timestep, VerifyResult):
     outfile = out_path + '/error_report.txt'
     if not os.path.exists(out_path):
         os.makedirs(out_path)
@@ -75,5 +75,4 @@ def reportMergeIssue(out_path, MergeResult, ErrorLog, timestep, VerifyResult):
     NewCommunityNumToNodes, CurrentResult = uf.updateCommunityNum(MergeResult)
 
     # Print and save the current solution
-    for key in NewCommunityNumToNodes:
-        f_out.write(f'Community {key}: {NewCommunityNumToNodes[key]}\n')
+    writeSolution(out_path, '/sol_after_merge.txt', G_primitive, MergeResult)

@@ -14,7 +14,7 @@ def Merge():
 
         # Load verification result
         G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, _, target_n, timestep, bio_flag = utils.loadData(s, settings)
-        VerifyResult = iof.loadVerifySolution(out_path, s)
+        VerifyResult = iof.loadSolution(f"{out_path}/sol_after_verify.txt", s)
         CommunityNumToNodes = uf.mapCommunityToNodes(VerifyResult)
 
         # If the number of current communities is smaller than target number, return.
@@ -38,5 +38,5 @@ def Merge():
             # Write current merge solution into a output file
             iof.writeSolution(out_path, '/sol_after_merge.txt', G_primitive, MergeResult)
         else:
-            iof.reportMergeIssue(out_path, MergeResult, MergeErrorLog, timestep, VerifyResult)
+            iof.reportMergeIssue(G_primitive, out_path, MergeResult, MergeErrorLog, timestep, VerifyResult)
 Merge()
