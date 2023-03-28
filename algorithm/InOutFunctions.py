@@ -30,7 +30,8 @@ def reportIssue(out_path, ErrorLog):
     print("Error caused by: ", ErrorLog)
 
 
-# Save current verification solution and send it to "merging.py"
+# 1. Save current verification solution and send it to "merging.py"
+# 2. Save current merge solution and send it to "ColorAssignment.py"
 def loadSolution(path, s):
 
     # read data from verification result
@@ -46,7 +47,8 @@ def loadSolution(path, s):
             line = line.split(',')
             d.append(line)
 
-    # change it to the same format in verification stage CurrentResult
+    # 1. change it to the same format in verification stage CurrentResult
+    # 2. change it to the same format in merge stage CurrentResult
     VerifyResult = {}
     CommunityNum = 1
     for ele in d:
