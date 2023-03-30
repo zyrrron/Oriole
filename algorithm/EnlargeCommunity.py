@@ -124,6 +124,7 @@ def enlargeCommunityMerge(G, S_bounds, ConstraintType, constraint, loop_free, pr
 
                 # If current merge operation (added one neighbor community to current one in the last level) can be accepted,
                 # update the current merge result to MergeResult and break the loop, go to the next merge community.
+                # checkloop = 0 and checkInOutComm = 0 means the current community meets all the constraints
                 if ((loop_free and ccf.checkLoopComm(G, Community, MergeResult_updated, bio_flag) == 0) or not loop_free) and \
                         ccf.checkInOutComm(G, Community, constraint, MergeResult_updated, bio_flag) == 0:
                     MergeResult = MergeResult_updated
