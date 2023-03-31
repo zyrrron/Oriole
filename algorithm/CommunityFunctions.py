@@ -52,6 +52,27 @@ def findAllNeighborsComm(G, c, CurrentResult):
     return list(NeighborComm)
 
 
+# Find all neighbor communities and neighbor of neighbor communities
+def findPropagondizedNeighborComm(G, c, CurrentResult):
+
+    # save the first level neighbor communities
+    FirstLevelNeighbor = findAllNeighborsComm(G, c, CurrentResult)
+    res = {"first": FirstLevelNeighbor}
+    TwoLevelNeighbor = {}
+
+    # search the second level neighbor communities
+    for neighbor in FirstLevelNeighbor:
+
+        # Find all neighbor communities for the chosen first level neighbor community
+        tmp = findAllNeighborsComm(G, neighbor, CurrentResult)
+        tmp.remove(c)
+        TwoLevelNeighbor[neighbor] = tmp
+
+    # save the second level neighbor communities
+    res["second"] = TwoLevelNeighbor
+    return res
+
+
 # Find all incoming edges to Community C
 def findIncomingEdgesComm(G, c, CurrentResult, bio_flag):
     CommunityNumToNodes = uf.mapCommunityToNodes(CurrentResult)
@@ -121,9 +142,15 @@ def addNeighborComm(CurrentResult, NeighborComm, PendingCommunity):
     CurrentResult_new = copy.deepcopy(CurrentResult)
     CommunityNumToNodes = uf.mapCommunityToNodes(CurrentResult)
 
-    # update the nodes in neighbor Community to the pending community
-    for node in CommunityNumToNodes[NeighborComm]:
-        CurrentResult_new[node] = PendingCommunity
+    # Check the NeighborComm, if it includes two neighbor communities, split it and merge them one by one.
+    # If only one neighbor community, merge it directly.
+    NeighborComms = NeighborComm.split(',')
+
+    for tmp in NeighborComms:
+
+        # update the nodes in neighbor Community to the pending community
+        for node in CommunityNumToNodes[tmp]:
+            CurrentResult_new[node] = PendingCommunity
 
     return CurrentResult_new
 
@@ -182,7 +209,7 @@ def findPendingCommunities(G, result, constraint, bio_flag):
     return PendingCommunities
 
 
-# Find the next community to merge
+# Find the next community or communities to merge
 def findMergeCommunities(G, result, constraint, bio_flag):
     MergeCommunities = {}
     CommunityNumToNodes = uf.mapCommunityToNodes(result)

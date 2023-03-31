@@ -14,7 +14,6 @@ def findColor(ColorNum, ColorUsedInEachCommunity, ComU, ComV):
     return Color
 
 
-
 def ColorAssignment(ColorNum):
     # Load samples and settings
     samples, settings = utils.loadSettings()
@@ -44,7 +43,7 @@ def ColorAssignment(ColorNum):
                 else:
                     Color = findColor(ColorNum, ColorUsedInEachCommunity, MergeResult[u], MergeResult[v])
 
-                    # Data structure: ColorUsedInEachCommunity = {"1":{"input":["1", "2"], "output":["3"]}, ...}
+                    # Data structure: ColorUsedInEachCommunity = {"1":{"input":{"3":{"color":"red", "OutsideNode": "4"}}, "output":{...}}, ...}
                     if MergeResult[u] in ColorUsedInEachCommunity:
 
 

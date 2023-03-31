@@ -11,14 +11,34 @@ def prepareNeighborOrder(G, Community, CurrentResult, constraint, bio_flag):
 
     # Initiate the values we will return
     CurrentResult_new = copy.deepcopy(CurrentResult)
-    VerifyFlag = True
-    ErrorLog = {}
 
-    # calculate the rewards provided by all neighbor communities if we add them into the current community
-    NeighborComm = ccf.findAllNeighborsComm(G, Community, CurrentResult)
+    # calculate the rewards provided by all neighbor communities and the neighbors of the neighbors if we add them into the current community
+    # This procedure is called propagonda checking
+    PropagondizedNeighborComm = ccf.findPropagondizedNeighborComm(G, Community, CurrentResult)
     rewards = {}
-    for c in NeighborComm:
-        rewards[c] = calf.calculateRewardComm(G, c, Community, CurrentResult, constraint, bio_flag)
+
+    # calculate the rewards for first level neighbor communities.
+    for c in PropagondizedNeighborComm["first"]:
+        rewards[c] = calf.calculateRewardComm(G, c, Community, CurrentResult_new, constraint, bio_flag)
+
+    CommunityNumToNodes = uf.mapCommunityToNodes(CurrentResult)
+    # calculate the rewards for second level neighbor communities. c is a first level neighbor community
+    for c in PropagondizedNeighborComm["second"]:
+
+        # PropagondizedNeighborComm["second"][c] is a list of the neighbors of c
+        for SecondNeighbor in PropagondizedNeighborComm["second"][c]:
+
+            # Find all the nodes from the currently chosen SecondNeighbor community
+            NodesInSecondNeighbor = CommunityNumToNodes[SecondNeighbor]
+
+            # merge the nodes from SecondNeighbor into c, and use c in the same way as the first level neighbors
+            for node in NodesInSecondNeighbor:
+                CurrentResult_new[node] = c
+            rewards[f"{c},{SecondNeighbor}"] = calf.calculateRewardComm(G, c, Community, CurrentResult_new, constraint, bio_flag)
+
+            # backtracking
+            for node in NodesInSecondNeighbor:
+                CurrentResult_new[node] = SecondNeighbor
 
     # find the community provides the highest reward, sort this rewards dictionary first and try them in the order
     tmp = sorted(rewards.items(), key=lambda x: x[1], reverse=True)
@@ -115,7 +135,7 @@ def enlargeCommunityMerge(G, S_bounds, ConstraintType, constraint, loop_free, pr
 
             for key in rewards_sorted:
 
-                # Merge the neighbor community provide the current highest reward
+                # Merge the neighbor community providing the highest reward currently
                 MergeResult_updated = ccf.addNeighborComm(MergeResult, key, Community)
 
                 # If size is bigger than upper bound, change to another community
@@ -130,7 +150,7 @@ def enlargeCommunityMerge(G, S_bounds, ConstraintType, constraint, loop_free, pr
                     MergeResult = MergeResult_updated
                     break
 
-            # After leaving from the for loop, we may has a successful merge or not.
+            # After leaving from the for loop, we may have a successful merge or not.
             # No matter if it is merged successfully, we will choose the next community to merge in the next step
             timestep -= 1
 
