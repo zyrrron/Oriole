@@ -13,7 +13,7 @@ def prepareNeighborOrder(G, Community, CurrentResult, constraint, bio_flag):
     CurrentResult_new = copy.deepcopy(CurrentResult)
 
     # calculate the rewards provided by all neighbor communities and the neighbors of the neighbors if we add them into the current community
-    # This procedure is called propagonda checking
+    # This procedure is called propaganda checking
     PropagondizedNeighborComm = ccf.findPropagondizedNeighborComm(G, Community, CurrentResult)
     rewards = {}
 

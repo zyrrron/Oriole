@@ -10,7 +10,7 @@ import collections
 
 
 # Check next two level neighbor edges from the given one
-def PropagondaChecking(u, v, MergeResult, CommunityNumToNodes, CommEdgeColorInfo, ColorTmp):
+def PropagandaChecking(u, v, MergeResult, CommunityNumToNodes, CommEdgeColorInfo, ColorTmp):
     return True
 
 
@@ -32,7 +32,7 @@ def findColor(MergeResult, CommunityNumToNodes, DAG, ColorOptions, CommEdgeColor
         for Color in ColorOptions:
 
             # Check if the current color works for the chosen edge (u, v)
-            if PropagondaChecking(u, v, MergeResult, CommunityNumToNodes, CommEdgeColorInfo, Color):
+            if PropagandaChecking(u, v, MergeResult, CommunityNumToNodes, CommEdgeColorInfo, Color):
 
                 # Assign the color to the current edge, update CommEdgeColorInfo, go to the next edge
                 for tmp in CommEdgeColorInfo[ComU][u]:
