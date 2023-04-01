@@ -1,5 +1,6 @@
 import os
 import UpdateFunctions as uf
+import networkx as nx
 
 
 def writeSolution(out_path, filename, G, CurrentResult):
@@ -16,6 +17,14 @@ def writeSolution(out_path, filename, G, CurrentResult):
         print(NewCommunityNumToNodes)
         for key in NewCommunityNumToNodes:
             f_out.write(f'Community {key}: {NewCommunityNumToNodes[key]}\n')
+
+
+# Write edge list with color
+def writeColoredEdgeList(out_path, filename, G):
+    outfile = out_path + filename
+    if not os.path.exists(out_path):
+        os.makedirs(out_path)
+    nx.write_edgelist(G,outfile,data=["color"])
 
 
 # If no solution find, return the community caused the problem.
