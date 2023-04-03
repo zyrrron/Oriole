@@ -22,6 +22,7 @@ def prepareNeighborOrder(G, Community, CurrentResult, constraint, bio_flag):
         rewards[c] = calf.calculateRewardComm(G, c, Community, CurrentResult_new, constraint, bio_flag)
 
     CommunityNumToNodes = uf.mapCommunityToNodes(CurrentResult)
+
     # calculate the rewards for second level neighbor communities. c is a first level neighbor community
     for c in PropagondizedNeighborComm["second"]:
 

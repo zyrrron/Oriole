@@ -1,21 +1,37 @@
 # Set the number of cell-cell communication as the input parameters
 # Assign coloring remarks for each edge in a dictionary and save it.
 import copy
-
 import InOutFunctions as iof
 import UpdateFunctions as uf
 import utils
+import EdgeFunctions as ef
 import EnlargeCommunity as ec
 import collections
 
 
 # Check next two level neighbor edges from the given one
-def PropagandaChecking(u, v, MergeResult, CommunityNumToNodes, CommEdgeColorInfo, ColorTmp):
+def PropagandaChecking(u, v, MergeResult, CommunityNumToNodes, CommEdgeColorInfo, ColorTmp, bio_flag, depth):
+
+    # max depth is arrived, return back
+    if depth <= 0:
+        return True
+
+    ComU, ComV = MergeResult[u], MergeResult[v]
+    d = {}
+    FirstLevelNeighborEdges = ef.findNeighborEdges(u, v, MergeResult, CommunityNumToNodes, CommEdgeColorInfo, ColorTmp, bio_flag)
+
+    for u,v in FirstLevelNeighborEdges:
+        # Check the first level Neighbor Edges first.
+
+        # If no issue, go deeper
+        d[(u,v)] = PropagandaChecking(u, v, MergeResult, CommunityNumToNodes, CommEdgeColorInfo, ColorTmp, bio_flag, depth-1)
+
+
     return True
 
 
 # Find appropriate color for the given edge
-def findColor(MergeResult, CommunityNumToNodes, DAG, ColorOptions, CommEdgeColorInfo, CellToCellEdges, timestep):
+def findColor(MergeResult, CommunityNumToNodes, DAG, ColorOptions, CommEdgeColorInfo, CellToCellEdges, timestep, bio_flag):
 
     if timestep < 0:
         return CommEdgeColorInfo, False
@@ -23,50 +39,54 @@ def findColor(MergeResult, CommunityNumToNodes, DAG, ColorOptions, CommEdgeColor
     if not CellToCellEdges:
         return CommEdgeColorInfo, True
 
-    G = copy.deepcopy(DAG)
+    # Find the tail edge of the current CellToCellEdges list and their terminal nodes, terminal cell
+    u, v = CellToCellEdges[-1]
+    ComU, ComV = MergeResult[u], MergeResult[v]
+    ColorFlag = False
 
-    for u,v in CellToCellEdges:
-        ComU, ComV = MergeResult[u], MergeResult[v]
-        ColorFlag = False
+    # Assign a color
+    for Color in ColorOptions:
 
-        for Color in ColorOptions:
+        # Check if the current color works for the chosen edge (u, v), the depth of recursion in propaganda checking is set to 3
+        depth = 2
+        if PropagandaChecking(u, v, MergeResult, CommunityNumToNodes, CommEdgeColorInfo, Color, bio_flag, depth):
 
-            # Check if the current color works for the chosen edge (u, v)
-            if PropagandaChecking(u, v, MergeResult, CommunityNumToNodes, CommEdgeColorInfo, Color):
-
-                # Assign the color to the current edge, update CommEdgeColorInfo, go to the next edge
-                for tmp in CommEdgeColorInfo[ComU][u]:
-                    if tmp["Node"] == v:
-                        tmp["Color"] = Color
-                for tmp in CommEdgeColorInfo[ComV][v]:
-                    if tmp["Node"] == u:
-                        tmp["Color"] = Color
-                # Temporarily remove the edge from CellToCellEdges, if all edges can be colored correctly, it will be a empty list
-                # If the color assignment doesn't follow the constraints, we will add the edge back in the first backtracking step
-                CellToCellEdges.remove((u, v))
-                CommEdgeColorInfo, ColorFlag = findColor(MergeResult, CommunityNumToNodes, DAG, ColorOptions, CommEdgeColorInfo,
-                                                         CellToCellEdges, timestep - 1)
-
-                # If the current color cannot be assigned, go backtracking (first backtracking) and try another color
-                if ColorFlag:
-                    break
-                else:
-                    CellToCellEdges.append((u, v))
-        # If no color can be assigned to this edge, go backtracking (second backtracking)
-        if not ColorFlag:
-            # Change back the color for edge (u, v)
+            # Assign the color to the current edge, update CommEdgeColorInfo, go to the next edge
             for tmp in CommEdgeColorInfo[ComU][u]:
                 if tmp["Node"] == v:
-                    tmp["Color"] = "black"
+                    tmp["Color"] = Color
             for tmp in CommEdgeColorInfo[ComV][v]:
                 if tmp["Node"] == u:
-                    tmp["Color"] = "black"
+                    tmp["Color"] = Color
 
-            return CommEdgeColorInfo, False
+            # Temporarily remove the edge from CellToCellEdges, if all edges can be colored correctly, it will be an empty list
+            # If the color assignment doesn't follow the constraints, we will add the edge back in the first backtracking step
+            CellToCellEdges.pop()
+            CommEdgeColorInfo, ColorFlag = findColor(MergeResult, CommunityNumToNodes, DAG, ColorOptions, CommEdgeColorInfo,
+                                                     CellToCellEdges, timestep - 1, bio_flag)
 
-        # If ColorFlag == True, that means we find the color assignment solution, skip from the loop
-        else:
-            return CommEdgeColorInfo, True
+            # If the current color assignment can give us the solution for the whole graph, return back
+            # If the current color cannot be assigned, go backtracking (first backtracking) and try another color until all the colors used
+            if ColorFlag:
+                break
+            else:
+                CellToCellEdges.append((u, v))
+
+    # If no color can be assigned to this edge, go backtracking (second backtracking)
+    if not ColorFlag:
+        # Change back the color for edge (u, v)
+        for tmp in CommEdgeColorInfo[ComU][u]:
+            if tmp["Node"] == v:
+                tmp["Color"] = "black"
+        for tmp in CommEdgeColorInfo[ComV][v]:
+            if tmp["Node"] == u:
+                tmp["Color"] = "black"
+
+        return CommEdgeColorInfo, False
+
+    # If ColorFlag == True, that means we find the color assignment solution, return to the last level
+    else:
+        return CommEdgeColorInfo, True
 
 
 def createColorInfo(MergeResult, CommunityNumToNodes, G):
@@ -114,7 +134,7 @@ def ColorAssignment(ColorOptions):
 
         # Color the cell-cell edges
         timestep = 1000000
-        CommEdgeColorInfo, ColorFlag = findColor(MergeResult, CommunityNumToNodes, DAG, ColorOptions[2:], CommEdgeColorInfo, CellToCellEdges, timestep)
+        CommEdgeColorInfo, ColorFlag = findColor(MergeResult, CommunityNumToNodes, DAG, ColorOptions[2:], CommEdgeColorInfo, CellToCellEdges, timestep, bio_flag)
 
         for u,v in DAG.edges:
             Color = "black"

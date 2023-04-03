@@ -11,5 +11,9 @@ def findOutgoingEdges(G, n):
     return G.edges(n)
 
 
-
+# Find all neighbor edges of an edge.
+# Neighbor edge: a cell-cell edge sharing the same terminal cell with the given edeg.
+def findNeighborEdges(u, v, MergeResult, CommunityNumToNodes, CommEdgeColorInfo, ColorTmp, bio_flag):
+    l = []
+    return l
 
