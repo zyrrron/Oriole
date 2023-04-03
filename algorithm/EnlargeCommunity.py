@@ -128,8 +128,6 @@ def enlargeCommunityMerge(G, S_bounds, ConstraintType, constraint, loop_free, pr
         # Try to merge the communities in the order of MergeCommunities
         for Community in MergeCommunities:
 
-            # print("Working on Community: ", Community)
-
             # Find all neighbor communities around the chosen community.
             # And get the sorted rewards dictionary for all the neighbor communities
             rewards_sorted, _ = prepareNeighborOrder(G, Community, MergeResult, constraint, bio_flag)
