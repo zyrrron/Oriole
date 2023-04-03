@@ -1,0 +1,2 @@
+Error caused by: {'Time runs out'}. 
+After 1000 steps merge attempts, we decrease the number of communities from 131 to 64

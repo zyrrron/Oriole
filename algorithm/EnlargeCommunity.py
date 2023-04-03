@@ -120,7 +120,7 @@ def enlargeCommunityMerge(G, S_bounds, ConstraintType, constraint, loop_free, pr
     # 1. meet target n constraint
     # 2. meet time constraint
     while timestep >= 0 and len(uf.mapCommunityToNodes(MergeResult)) > target_n:
-        print("Current number of communities", len(uf.mapCommunityToNodes(MergeResult)))
+        # print("Current number of communities", len(uf.mapCommunityToNodes(MergeResult)))
 
         # Find all possible to-be-merged communities and sort them with rewards. Scan them in this order.
         MergeCommunities = ccf.findMergeCommunities(G, MergeResult, constraint, bio_flag)
@@ -128,7 +128,7 @@ def enlargeCommunityMerge(G, S_bounds, ConstraintType, constraint, loop_free, pr
         # Try to merge the communities in the order of MergeCommunities
         for Community in MergeCommunities:
 
-            print("Working on Community: ", Community)
+            # print("Working on Community: ", Community)
 
             # Find all neighbor communities around the chosen community.
             # And get the sorted rewards dictionary for all the neighbor communities
