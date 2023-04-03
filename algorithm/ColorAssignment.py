@@ -10,7 +10,7 @@ import collections
 
 
 # Check next two level neighbor edges from the given one
-def PropagandaChecking(u, v, MergeResult, CommunityNumToNodes, CommEdgeColorInfo, ColorTmp, bio_flag, depth):
+def PropagandaChecking(u, v, MergeResult, CommunityNumToNodes, CommEdgeColorInfo, CellToCellEdges, Color, bio_flag, depth):
 
     # max depth is arrived, return back
     if depth <= 0:
@@ -18,13 +18,17 @@ def PropagandaChecking(u, v, MergeResult, CommunityNumToNodes, CommEdgeColorInfo
 
     ComU, ComV = MergeResult[u], MergeResult[v]
     d = {}
-    FirstLevelNeighborEdges = ef.findNeighborEdges(u, v, MergeResult, CommunityNumToNodes, CommEdgeColorInfo, ColorTmp, bio_flag)
+    FirstLevelNeighborEdges = ef.findNeighborEdges(u, v, MergeResult, CommunityNumToNodes, CommEdgeColorInfo, Color, bio_flag)
 
-    for u,v in FirstLevelNeighborEdges:
+    for uu, vv in FirstLevelNeighborEdges:
+
         # Check the first level Neighbor Edges first.
+        ComUU, ComVV = MergeResult[uu], MergeResult[vv]
+        if CommEdgeColorInfo[ComUU]:
+            return
 
         # If no issue, go deeper
-        d[(u,v)] = PropagandaChecking(u, v, MergeResult, CommunityNumToNodes, CommEdgeColorInfo, ColorTmp, bio_flag, depth-1)
+        d[(u,v)] = PropagandaChecking(uu, vv, MergeResult, CommunityNumToNodes, CommEdgeColorInfo, Color, bio_flag, depth-1)
 
 
     return True
@@ -49,7 +53,7 @@ def findColor(MergeResult, CommunityNumToNodes, DAG, ColorOptions, CommEdgeColor
 
         # Check if the current color works for the chosen edge (u, v), the depth of recursion in propaganda checking is set to 3
         depth = 2
-        if PropagandaChecking(u, v, MergeResult, CommunityNumToNodes, CommEdgeColorInfo, Color, bio_flag, depth):
+        if PropagandaChecking(u, v, MergeResult, CommunityNumToNodes, CommEdgeColorInfo, CellToCellEdges, Color, bio_flag, depth):
 
             # Assign the color to the current edge, update CommEdgeColorInfo, go to the next edge
             for tmp in CommEdgeColorInfo[ComU][u]:
@@ -114,6 +118,7 @@ def createColorInfo(MergeResult, CommunityNumToNodes, G):
                     D[ComV][v] = [{"Type": "Incoming", "Node": u, "Color": "black"}]
 
     return D, CellToCellEdges
+
 
 def ColorAssignment(ColorOptions):
     # Load samples and settings
