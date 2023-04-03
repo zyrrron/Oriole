@@ -30,10 +30,9 @@ def PropagandaChecking(u, v, MergeResult, CommunityNumToNodes, CommEdgeColorInfo
 
         # Get the colors of all the neighbor edges.
         NeighborEdges = ef.findNeighborEdges(uu, vv, MergeResult, CommunityNumToNodes, CommEdgeColorInfo, bio_flag)
+        NeighborColor = []
         for nu, nv in NeighborEdges:
-
-
-            NeighborColor = CommEdgeColorInfo[MergeResult[nu]][nv]
+            NeighborColor.append(CommEdgeColorInfo[MergeResult[nu]][nv])
 
         # Assign a color for edge (uu, vv)
         for color in ColorOptions:

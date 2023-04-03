@@ -16,6 +16,8 @@ def findOutgoingEdges(G, n):
 def findNeighborEdges(u, v, MergeResult, CommunityNumToNodes, CommEdgeColorInfo, bio_flag):
 
     l = []
+    ComU, ComV = MergeResult[u], MergeResult[v]
+
 
     return l
 
