@@ -68,7 +68,7 @@ def loadSolution(path, s):
 
 
 # If current number of communities in the merge solution is bigger than target N, report issue
-def reportMergeIssue(G_primitive, out_path, MergeResult, ErrorLog, timestep, VerifyResult):
+def reportMergeIssue(G_primitive, out_path, solutionfile, MergeResult, ErrorLog, timestep, VerifyResult):
     outfile = out_path + '/error_report.txt'
     if not os.path.exists(out_path):
         os.makedirs(out_path)
@@ -86,4 +86,4 @@ def reportMergeIssue(G_primitive, out_path, MergeResult, ErrorLog, timestep, Ver
     NewCommunityNumToNodes, CurrentResult = uf.updateCommunityNum(MergeResult)
 
     # Print and save the current solution
-    writeSolution(out_path, '/sol_after_merge.txt', G_primitive, MergeResult)
+    writeSolution(out_path, solutionfile, G_primitive, MergeResult)

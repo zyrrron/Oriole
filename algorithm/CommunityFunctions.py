@@ -53,23 +53,39 @@ def findAllNeighborsComm(G, c, CurrentResult):
 
 
 # Find all neighbor communities and neighbor of neighbor communities
-def findPropagondizedNeighborComm(G, c, CurrentResult):
+def findPropagandizedNeighborComm(G, c, CurrentResult, height, res, path, S_bound, size):
 
-    # save the first level neighbor communities
-    FirstLevelNeighbor = findAllNeighborsComm(G, c, CurrentResult)
-    res = {"first": FirstLevelNeighbor}
-    TwoLevelNeighbor = {}
+    if height <= 0:
+        return res
 
-    # search the second level neighbor communities
-    for neighbor in FirstLevelNeighbor:
+    CommunityNumToNodes = uf.mapCommunityToNodes(CurrentResult)
+    if size + len(CommunityNumToNodes[c]) > S_bound[1]: return res
 
-        # Find all neighbor communities for the chosen first level neighbor community
-        tmp = findAllNeighborsComm(G, neighbor, CurrentResult)
-        tmp.remove(c)
-        TwoLevelNeighbor[neighbor] = tmp
+    # save the neighbor communities in this height, format is "path,current comm"
+    Neighbors = findAllNeighborsComm(G, c, CurrentResult)
+    MergeCommListStr = []
+    MergeCommList = []
+    for com in Neighbors:
+        if com not in path:
+            tmp = ""
+            for p in path:
+                tmp += f"{p},"
+            tmp += str(com)
+            MergeCommListStr.append(tmp)
+            MergeCommList.append(com)
 
-    # save the second level neighbor communities
-    res["second"] = TwoLevelNeighbor
+    # If this height exits, append. Otherwise, create a new one
+    if height in res:
+        res[height] += MergeCommListStr
+    elif MergeCommListStr:
+        res[height] = MergeCommListStr
+
+    # Search for the next level neighbors from this level neighbors one by one
+    for com in MergeCommList:
+        path.append(com)
+        res = findPropagandizedNeighborComm(G, com, CurrentResult, height-1, res, path, S_bound, size + len(CommunityNumToNodes[com]))
+        path.pop()
+
     return res
 
 
@@ -216,10 +232,10 @@ def findMergeCommunities(G, result, constraint, bio_flag):
 
     # Calculate the rewards for each community as the merging center
     for Comm in CommunityNumToNodes:
-        MergeCommunities[Comm] = sum(constraint) - len(findIncomingEdgesComm(G, Comm, result, bio_flag)) - len(findOutgoingEdgesComm(G, Comm, result, bio_flag))
+        MergeCommunities[Comm] = len(CommunityNumToNodes[Comm]) + sum(constraint) - len(findIncomingEdgesComm(G, Comm, result, bio_flag)) - len(findOutgoingEdgesComm(G, Comm, result, bio_flag))
 
     # Sort
-    tmp = sorted(MergeCommunities.items(), key=lambda x: x[1], reverse=True)
+    tmp = sorted(MergeCommunities.items(), key=lambda x: (x[1], x[0]), reverse=True)
     MergeCommunities = dict(tmp)
 
     return MergeCommunities

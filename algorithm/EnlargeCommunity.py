@@ -7,42 +7,48 @@ import copy
 import UpdateFunctions as uf
 
 
-def prepareNeighborOrder(G, Community, CurrentResult, constraint, bio_flag):
+# propaganda checking stop after the given depth
+
+
+
+def prepareNeighborOrder(G, CenterCommunity, CurrentResult, constraint, bio_flag, height, S_bound):
 
     # Initiate the values we will return
     CurrentResult_new = copy.deepcopy(CurrentResult)
 
-    # calculate the rewards provided by all neighbor communities and the neighbors of the neighbors if we add them into the current community
+    # calculate the rewards provided by all neighbor communities and the n-height neighbors of the neighbors if we add them into the current community
     # This procedure is called propaganda checking
-    PropagondizedNeighborComm = ccf.findPropagondizedNeighborComm(G, Community, CurrentResult)
+    CommunityNumToNodes = uf.mapCommunityToNodes(CurrentResult)
+    PropagandizedNeighborComm = ccf.findPropagandizedNeighborComm(G, CenterCommunity, CurrentResult, height-1, {height: CenterCommunity}, [CenterCommunity], S_bound, len(CommunityNumToNodes[CenterCommunity]))
     rewards = {}
 
-    # calculate the rewards for first level neighbor communities.
-    for c in PropagondizedNeighborComm["first"]:
-        rewards[c] = calf.calculateRewardComm(G, c, Community, CurrentResult_new, constraint, bio_flag)
 
-    CommunityNumToNodes = uf.mapCommunityToNodes(CurrentResult)
+    # calculate the rewards for neighbor communities for each neighbor Community.
+    for h in PropagandizedNeighborComm.keys():
+        if height == h: continue
+        for s in PropagandizedNeighborComm[h]:
 
-    # calculate the rewards for second level neighbor communities. c is a first level neighbor community
-    for c in PropagondizedNeighborComm["second"]:
+            # Get all the communities and nodes in this path.
+            path = s.split(',')
+            NeighborComm = path[1]
+            NodesToBeMerged = []
+            for p in path:
+                NodesToBeMerged += CommunityNumToNodes[p]
 
-        # PropagondizedNeighborComm["second"][c] is a list of the neighbors of c
-        for SecondNeighbor in PropagondizedNeighborComm["second"][c]:
+            # merge the nodes from NodesToBeMerged into the first neighbor Community, and use it in the same way as the normal neighbors
+            for node in NodesToBeMerged:
+                CurrentResult_new[node] = NeighborComm
 
-            # Find all the nodes from the currently chosen SecondNeighbor community
-            NodesInSecondNeighbor = CommunityNumToNodes[SecondNeighbor]
-
-            # merge the nodes from SecondNeighbor into c, and use c in the same way as the first level neighbors
-            for node in NodesInSecondNeighbor:
-                CurrentResult_new[node] = c
-            rewards[f"{c},{SecondNeighbor}"] = calf.calculateRewardComm(G, c, Community, CurrentResult_new, constraint, bio_flag)
+            rewards[s] = calf.calculateRewardComm(G, NeighborComm, CenterCommunity, CurrentResult_new, constraint, bio_flag)
+            if rewards[s] < 0: del rewards[s]
 
             # backtracking
-            for node in NodesInSecondNeighbor:
-                CurrentResult_new[node] = SecondNeighbor
+            for p in path:
+                for node in CommunityNumToNodes[p]:
+                    CurrentResult_new[node] = p
 
     # find the community provides the highest reward, sort this rewards dictionary first and try them in the order
-    tmp = sorted(rewards.items(), key=lambda x: x[1], reverse=True)
+    tmp = sorted(rewards.items(), key=lambda x: (x[1], x[0]), reverse=True)
     rewards_new = dict(tmp)
 
     return rewards_new, CurrentResult_new
@@ -55,7 +61,7 @@ def prepareNeighborOrder(G, Community, CurrentResult, constraint, bio_flag):
 # Check if current community i meets all constraints every time when we move node j into community i.
 # Record it if meets all constraints.
 # Better use recursion here.
-def enlargeCommunity(G, Community, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, CurrentResult, bio_flag):
+def enlargeCommunity(G, Community, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, CurrentResult, bio_flag, height):
 
     # Return to the last level if it arrives to the size constraints, time constraint or current community meets all constraints
     if ccf.checkSize(CurrentResult, Community) > S_bounds[1]:
@@ -80,7 +86,7 @@ def enlargeCommunity(G, Community, S_bounds, ConstraintType, constraint, loop_fr
 
         # Start solving the new pending community
         CurrentResult, VerifyFlag, ErrorLog, timestep = enlargeCommunity(G, Community, S_bounds, ConstraintType,
-                                                                               constraint, loop_free, priority, timestep-1, CurrentResult, bio_flag)
+                                                                               constraint, loop_free, priority, timestep-1, CurrentResult, bio_flag, height)
 
         # If the current pending community is solved, then we choose the next one to deal with
         # If not, we backtrack to the last level and try the other neighbor nodes
@@ -89,7 +95,7 @@ def enlargeCommunity(G, Community, S_bounds, ConstraintType, constraint, loop_fr
         else:
             return CurrentResult, False, {Community}, timestep
 
-    rewards_new, CurrentResult_new = prepareNeighborOrder(G, Community, CurrentResult, constraint, bio_flag)
+    rewards_new, CurrentResult_new = prepareNeighborOrder(G, Community, CurrentResult, constraint, bio_flag, height, S_bounds)
 
     # start the middle part of backtracking
     for c in rewards_new:
@@ -101,7 +107,7 @@ def enlargeCommunity(G, Community, S_bounds, ConstraintType, constraint, loop_fr
         # Here we create a new variable C_updated, because we can use C_new as the original data in the 3rd stage of backtracking
         CurrentResult_updated = ccf.addNeighborComm(CurrentResult_new, c, Community)
         CurrentResult_updated, VerifyFlag, ErrorLog, timestep = enlargeCommunity(G, Community, S_bounds, ConstraintType,
-                                                                         constraint, loop_free, priority, timestep-1,  CurrentResult_updated, bio_flag)
+                                                                         constraint, loop_free, priority, timestep-1,  CurrentResult_updated, bio_flag, height)
 
         # If the current pending community is solved, then we choose the next one to deal with
         # If not, we backtrack to the scenario before adding the current neighbor node
@@ -114,13 +120,21 @@ def enlargeCommunity(G, Community, S_bounds, ConstraintType, constraint, loop_fr
 
 
 # Merging Method 1: Enlarge Communities in the Merge stage using two level neighbor propaganda checking. (every time merge one or two communities)
-def enlargeCommunityMerge(G, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, MergeResult, target_n, bio_flag):
+def enlargeCommunityMerge(G, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, MergeResult, target_n, bio_flag, height):
 
     # There are 2 possible conditions to return back
     # 1. meet target n constraint
     # 2. meet time constraint
+    totalNum = 0
+    count = 1
     while timestep >= 0 and len(uf.mapCommunityToNodes(MergeResult)) > target_n:
-        # print("Current number of communities", len(uf.mapCommunityToNodes(MergeResult)))
+        if totalNum == len(uf.mapCommunityToNodes(MergeResult)):
+            count += 1
+        else:
+            count = 1
+            totalNum = len(uf.mapCommunityToNodes(MergeResult))
+        if count == 2: break
+        print(f"Current number of communities: {len(uf.mapCommunityToNodes(MergeResult))}, stay in this number for {count} times")
 
         # Find all possible to-be-merged communities and sort them with rewards. Scan them in this order.
         MergeCommunities = ccf.findMergeCommunities(G, MergeResult, constraint, bio_flag)
@@ -130,7 +144,7 @@ def enlargeCommunityMerge(G, S_bounds, ConstraintType, constraint, loop_free, pr
 
             # Find all neighbor communities around the chosen community.
             # And get the sorted rewards dictionary for all the neighbor communities
-            rewards_sorted, _ = prepareNeighborOrder(G, Community, MergeResult, constraint, bio_flag)
+            rewards_sorted, _ = prepareNeighborOrder(G, Community, MergeResult, constraint, bio_flag, height, S_bounds)
 
             for key in rewards_sorted:
 
@@ -150,17 +164,12 @@ def enlargeCommunityMerge(G, S_bounds, ConstraintType, constraint, loop_free, pr
                     break
 
             # After leaving from the for loop, we may have a successful merge or not.
-            # No matter if it is merged successfully, we will choose the next community to merge in the next step
+            # Keep checking until all communities are checked.
             timestep -= 1
+
 
     if len(uf.mapCommunityToNodes(MergeResult)) <= target_n:
         return MergeResult, True, {}
     else:
         return MergeResult, False, {"Time runs out"}
-
-
-# Merging Method 2: Keep merging until all the communities unmeet the size constraints, then go backtracking and collect the solution with the highest
-# reward.
-
-
 

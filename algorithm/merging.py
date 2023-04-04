@@ -13,7 +13,7 @@ def Merge():
     for s in samples:
 
         # Load verification result
-        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, _, target_n, timestep, bio_flag = utils.loadData(s, settings)
+        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, _, target_n, timestep, bio_flag, height = utils.loadData(s, settings)
         VerifyResult = iof.loadSolution(f"{out_path}/sol_after_verify.txt", s)
         CommunityNumToNodes = uf.mapCommunityToNodes(VerifyResult)
 
@@ -30,7 +30,7 @@ def Merge():
         # Start merging from the community with the least incoming or outgoing edges.
         print("Now try merging the communities!")
         MergeResult, MergeFlag, MergeErrorLog = ec.enlargeCommunityMerge(G_primitive, S_bounds, ConstraintType,
-                            constraint, loop_free, priority, timestep, VerifyResult, target_n, bio_flag)
+                            constraint, loop_free, priority, timestep, VerifyResult, target_n, bio_flag, height)
 
         if MergeFlag:
             print("Merge passed according to the target N!")
@@ -38,5 +38,5 @@ def Merge():
             # Write current merge solution into a output file
             iof.writeSolution(out_path, '/sol_after_merge.txt', G_primitive, MergeResult)
         else:
-            iof.reportMergeIssue(G_primitive, out_path, MergeResult, MergeErrorLog, timestep, VerifyResult)
+            iof.reportMergeIssue(G_primitive, out_path, '/sol_after_merge.txt', MergeResult, MergeErrorLog, timestep, VerifyResult)
 Merge()
