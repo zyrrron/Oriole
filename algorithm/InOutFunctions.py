@@ -14,7 +14,7 @@ def writeSolution(out_path, filename, G, CurrentResult):
         NewCommunityNumToNodes, CurrentResult = uf.updateCommunityNum(CurrentResult)
 
         # Print and save the current solution
-        print(NewCommunityNumToNodes)
+        # print(NewCommunityNumToNodes)
         for key in NewCommunityNumToNodes:
             f_out.write(f'Community {key}: {NewCommunityNumToNodes[key]}\n')
 

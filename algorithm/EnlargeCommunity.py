@@ -113,7 +113,7 @@ def enlargeCommunity(G, Community, S_bounds, ConstraintType, constraint, loop_fr
     return CurrentResult_new, VerifyFlag, ErrorLog, timestep
 
 
-# Enlarge Communities in the Merge stage
+# Merging Method 1: Enlarge Communities in the Merge stage using two level neighbor propaganda checking. (every time merge one or two communities)
 def enlargeCommunityMerge(G, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, MergeResult, target_n, bio_flag):
 
     # There are 2 possible conditions to return back
@@ -159,7 +159,8 @@ def enlargeCommunityMerge(G, S_bounds, ConstraintType, constraint, loop_free, pr
         return MergeResult, False, {"Time runs out"}
 
 
-
+# Merging Method 2: Keep merging until all the communities unmeet the size constraints, then go backtracking and collect the solution with the highest
+# reward.
 
 
 

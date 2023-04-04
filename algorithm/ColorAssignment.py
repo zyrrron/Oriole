@@ -17,35 +17,29 @@ def PropagandaChecking(u, v, MergeResult, CommunityNumToNodes, CommEdgeColorInfo
         return True
 
     ComU, ComV = MergeResult[u], MergeResult[v]
-    d = {}
     FirstLevelNeighborEdges = ef.findNeighborEdges(u, v, MergeResult, CommunityNumToNodes, CommEdgeColorInfo, bio_flag)
     flag = False
 
+    # Check the first level Neighbor Edges one by one.
     for uu, vv in FirstLevelNeighborEdges:
-
         flag = False
-
-        # Check the first level Neighbor Edges one by one.
         ComUU, ComVV = MergeResult[uu], MergeResult[vv]
 
         # Get the colors of all the neighbor edges.
-        NeighborEdges = ef.findNeighborEdges(uu, vv, MergeResult, CommunityNumToNodes, CommEdgeColorInfo, bio_flag)
-        NeighborColor = []
-        for nu, nv in NeighborEdges:
-            NeighborColor.append(CommEdgeColorInfo[MergeResult[nu]][nv])
+        NeighborColor = CommEdgeColorInfo[MergeResult[uu]][vv]["color"]
 
         # Assign a color for edge (uu, vv)
         for color in ColorOptions:
 
-            # If color is used in a neighbor edge, continue to the next color
+            # If the color is used in a neighbor edge, continue to the next color
             if color in NeighborColor: continue
 
             # Assign the color to the current edge, update CommEdgeColorInfo
-            CommEdgeColorInfo = assignColorForEdge(u, v, CommEdgeColorInfo, ComU, Color)
+            CommEdgeColorInfo = assignColorForEdge(u, v, CommEdgeColorInfo, ComU, ComV, color)
 
             # Check one more depth neighbor edges
             if PropagandaChecking(uu, vv, MergeResult, CommunityNumToNodes, CommEdgeColorInfo, CellToCellEdges, ColorOptions, bio_flag, depth-1):
-                CommEdgeColorInfo = assignColorForEdge(u, v, CommEdgeColorInfo, ComU, "black")
+                CommEdgeColorInfo = assignColorForEdge(u, v, CommEdgeColorInfo, ComU, ComV, "black")
 
                 # If there is no issue, break the color assignment loop.
                 # Otherwise, change the color to the next one (no extra operation to do, because we are in a for loop)
@@ -59,7 +53,7 @@ def PropagandaChecking(u, v, MergeResult, CommunityNumToNodes, CommEdgeColorInfo
 
 
 # Assign the color to the current edge, update CommEdgeColorInfo, go to the next edge
-def assignColorForEdge(u, v, CommEdgeColorInfo, ComU, Color):
+def assignColorForEdge(u, v, CommEdgeColorInfo, ComU, ComV, Color):
     CommEdgeColorInfo[ComU][u][v]["Color"] = Color
     CommEdgeColorInfo[ComV][v][u]["Color"] = Color
     return CommEdgeColorInfo
@@ -83,7 +77,7 @@ def findColor(MergeResult, CommunityNumToNodes, DAG, ColorOptions, CommEdgeColor
     for Color in ColorOptions:
 
         # Assign the color to the current edge, update CommEdgeColorInfo, go to the next edge
-        CommEdgeColorInfo = assignColorForEdge(u, v, CommEdgeColorInfo, ComU, Color)
+        CommEdgeColorInfo = assignColorForEdge(u, v, CommEdgeColorInfo, ComU, ComV, Color)
 
         # Check if the current color works for the chosen edge (u, v), the depth of recursion in propaganda checking is set to 3
         depth = 2
@@ -106,7 +100,7 @@ def findColor(MergeResult, CommunityNumToNodes, DAG, ColorOptions, CommEdgeColor
     if not ColorFlag:
 
         # Change back the color for edge (u, v)
-        CommEdgeColorInfo = assignColorForEdge(u, v, CommEdgeColorInfo, ComU, "black")
+        CommEdgeColorInfo = assignColorForEdge(u, v, CommEdgeColorInfo, ComU, ComV, "black")
 
         return CommEdgeColorInfo, False
 

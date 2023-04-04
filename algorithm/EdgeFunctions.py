@@ -15,9 +15,22 @@ def findOutgoingEdges(G, n):
 # Neighbor edge: a cell-cell edge sharing the same terminal cell with the given edeg.
 def findNeighborEdges(u, v, MergeResult, CommunityNumToNodes, CommEdgeColorInfo, bio_flag):
 
-    l = []
+    edges = set()
     ComU, ComV = MergeResult[u], MergeResult[v]
+    for tmp in CommEdgeColorInfo[ComU].keys():
+        for node in CommEdgeColorInfo[ComU][tmp]:
+            if CommEdgeColorInfo[ComU][tmp][node]["Type"] == "Outgoing":
+                edges.add((tmp, node))
+            else:
+                edges.add((node, tmp))
 
+    for tmp in CommEdgeColorInfo[ComV].keys():
+        for node in CommEdgeColorInfo[ComV][tmp].keys():
+            if CommEdgeColorInfo[ComV][tmp][node]["Type"] == "Outgoing":
+                edges.add((tmp, node))
+            else:
+                edges.add((node, tmp))
 
-    return l
+    edges.remove((u,v))
+    return list(edges)
 
