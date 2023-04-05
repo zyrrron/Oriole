@@ -26,7 +26,7 @@ def Verification():
     for s in samples:
 
         # Load data and check if we can directly put all the nodes in one community
-        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, timestep, _, _, bio_flag = utils.loadData(s, settings)
+        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, timestep, _, _, bio_flag, _ = utils.loadData(s, settings)
 
         # If the max size for one community is bigger than the current total number of the nodes, output it and continue the next sample
         if len(G_primitive.nodes) < S_bounds[1]:
