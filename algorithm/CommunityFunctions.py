@@ -85,8 +85,8 @@ def findPropagandizedNeighborComm(G, c, CurrentResult, height, res, path, S_boun
             tmp += str(path_sorted[-1])
             if tmp not in path_set:
                 path_set.add(tmp)
-                if len(path_set) % 10000 == 1:
-                    print(len(path_set) // 10000)
+                if len(path_set) % 1000000 == 1:
+                    print(len(path_set) // 1000000)
             else: continue
 
             reward_path_current = copy.deepcopy(reward_path)
