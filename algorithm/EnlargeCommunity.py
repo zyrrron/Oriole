@@ -8,9 +8,6 @@ import UpdateFunctions as uf
 
 
 # propaganda checking stop after the given depth
-
-
-
 def prepareNeighborOrder(G, CenterCommunity, CurrentResult, constraint, bio_flag, height, S_bound):
 
     # Initiate the values we will return
@@ -19,33 +16,9 @@ def prepareNeighborOrder(G, CenterCommunity, CurrentResult, constraint, bio_flag
     # calculate the rewards provided by all neighbor communities and the n-height neighbors of the neighbors if we add them into the current community
     # This procedure is called propaganda checking
     CommunityNumToNodes = uf.mapCommunityToNodes(CurrentResult)
-    PropagandizedNeighborComm = ccf.findPropagandizedNeighborComm(G, CenterCommunity, CurrentResult, height-1, {height: CenterCommunity}, [CenterCommunity], S_bound, len(CommunityNumToNodes[CenterCommunity]))
-    rewards = {}
-
-
-    # calculate the rewards for neighbor communities for each neighbor Community.
-    for h in PropagandizedNeighborComm.keys():
-        if height == h: continue
-        for s in PropagandizedNeighborComm[h]:
-
-            # Get all the communities and nodes in this path.
-            path = s.split(',')
-            NeighborComm = path[1]
-            NodesToBeMerged = []
-            for p in path:
-                NodesToBeMerged += CommunityNumToNodes[p]
-
-            # merge the nodes from NodesToBeMerged into the first neighbor Community, and use it in the same way as the normal neighbors
-            for node in NodesToBeMerged:
-                CurrentResult_new[node] = NeighborComm
-
-            rewards[s] = calf.calculateRewardComm(G, NeighborComm, CenterCommunity, CurrentResult_new, constraint, bio_flag)
-            if rewards[s] < 0: del rewards[s]
-
-            # backtracking
-            for p in path:
-                for node in CommunityNumToNodes[p]:
-                    CurrentResult_new[node] = p
+    PropagandizedNeighborComm, rewards, path_set = ccf.findPropagandizedNeighborComm(G, CenterCommunity, CurrentResult, height-1, {height: CenterCommunity},
+                                                                           [CenterCommunity], S_bound, len(CommunityNumToNodes[CenterCommunity]),
+                                                                           [0], {}, constraint, bio_flag, set())
 
     # find the community provides the highest reward, sort this rewards dictionary first and try them in the order
     tmp = sorted(rewards.items(), key=lambda x: (x[1], x[0]), reverse=True)
@@ -120,7 +93,8 @@ def enlargeCommunity(G, Community, S_bounds, ConstraintType, constraint, loop_fr
 
 
 # Merging Method 1: Enlarge Communities in the Merge stage using two level neighbor propaganda checking. (every time merge one or two communities)
-def enlargeCommunityMerge(G, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, MergeResult, target_n, bio_flag, height):
+def enlargeCommunityMerge(G, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, Result, target_n, bio_flag, height):
+    MergeResult = copy.deepcopy(Result)
 
     # There are 2 possible conditions to return back
     # 1. meet target n constraint

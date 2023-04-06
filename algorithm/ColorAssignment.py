@@ -144,7 +144,7 @@ def ColorAssignment(ColorOptions):
     for s in samples:
 
         # Load merge result
-        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, _, target_n, _, bio_flag = utils.loadData(s, settings)
+        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, _, target_n, _, bio_flag, _ = utils.loadData(s, settings)
         MergeResult = iof.loadSolution(f"{out_path}/sol_after_merge.txt", s)
         DAG = utils.load_graph(settings, s)
         CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)

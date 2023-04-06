@@ -11,7 +11,7 @@ def Merge():
 
     # Verify samples iteratively
     for s in samples:
-        for upperbound in [8]:
+        for upperbound in [131, 130, 60, 8]:
             cell = 1
 
             # Load verification result
@@ -19,6 +19,12 @@ def Merge():
             S_bounds[1] = upperbound
             VerifyResult = iof.loadSolution(f"{out_path}/sol_after_verify.txt", s)
             CommunityNumToNodes = uf.mapCommunityToNodes(VerifyResult)
+
+            # If S_bound[1] is big enough to take all the nodes in one community
+            if S_bounds[1] >= len(G_primitive.nodes):
+                iof.writeSolution(out_path, f'/sol_after_merge_{upperbound}.txt', G_primitive, [])
+                print("All nodes can be put in one community!")
+                continue
 
             # Start merging from the community with the least incoming or outgoing edges.
             MergeResult, MergeFlag, MergeErrorLog = ec.enlargeCommunityMerge(G_primitive, S_bounds, ConstraintType,

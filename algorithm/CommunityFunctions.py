@@ -2,6 +2,7 @@ import EdgeFunctions as ef
 import networkx as nx
 import UpdateFunctions as uf
 import copy
+import CalculationFunctions as calf
 
 
 # check indegree/outdegree constraints for a given community
@@ -53,25 +54,82 @@ def findAllNeighborsComm(G, c, CurrentResult):
 
 
 # Find all neighbor communities and neighbor of neighbor communities
-def findPropagandizedNeighborComm(G, c, CurrentResult, height, res, path, S_bound, size):
+def findPropagandizedNeighborComm(G, c, CurrentResult, height, res, path, S_bound, size, reward_path, rewards, constraint, bio_flag, path_set):
 
+    NegativeUpperBound = 20
     if height <= 0:
-        return res
+        return res, rewards, path_set
 
     CommunityNumToNodes = uf.mapCommunityToNodes(CurrentResult)
-    if size + len(CommunityNumToNodes[c]) > S_bound[1]: return res
+    if size + len(CommunityNumToNodes[c]) > S_bound[1]:
+        return res, rewards, path_set
 
     # save the neighbor communities in this height, format is "path,current comm"
     Neighbors = findAllNeighborsComm(G, c, CurrentResult)
     MergeCommListStr = []
     MergeCommList = []
+    reward_Neighbors = {}
+
+    # calculate the rewards for neighbor communities for current Community c.
+    # If it keeps negative for more than 5 times continuously, stop this path.
     for com in Neighbors:
         if com not in path:
+            save_reward = True
+
+            # Check if we have had this cell combination in path_set yet. If so, go to the other Neighbor.
+            # This can save a lot of time on calculating the same to-be-merged cell combination with different searching order.
+            path_sorted = sorted(path + [com])
             tmp = ""
-            for p in path:
+            for p in path_sorted[:-1]:
                 tmp += f"{p},"
-            tmp += str(com)
-            MergeCommListStr.append(tmp)
+            tmp += str(path_sorted[-1])
+            if tmp not in path_set:
+                path_set.add(tmp)
+                if len(path_set) % 10000 == 1:
+                    print(len(path_set) // 10000)
+            else: continue
+
+            reward_path_current = copy.deepcopy(reward_path)
+
+            # Get all the communities and nodes in this path.
+            CommsToBeMerged = path[1:] + [com]
+            NeighborComm = CommsToBeMerged[0]
+
+            # merge the nodes from NodesToBeMerged into the first neighbor Community, and use it in the same way as the normal neighbors
+            for cc in CommsToBeMerged:
+                for node in CommunityNumToNodes[cc]:
+                    CurrentResult[node] = NeighborComm
+
+            # calculate reward for current searching path and add it into the reward_path
+            reward_current = calf.calculateRewardComm(G, NeighborComm, path[0], CurrentResult, constraint, bio_flag)
+            reward_path_current.append(reward_current)
+            reward_Neighbors[com] = reward_path_current
+
+            # backtracking
+            for p in CommsToBeMerged:
+                for node in CommunityNumToNodes[p]:
+                    CurrentResult[node] = p
+
+            # If there are more than NegativeUpperBound times negative rewards continuously, stop searching in this path.
+            if reward_current < 0:
+                save_reward = False
+                count = 0
+                for i in range(len(reward_path)-1,-1,-1):
+                    if reward_path[i] < 0:
+                        count += 1
+                    if reward_path[i] >= 0:
+                        break
+                if count >= NegativeUpperBound:
+                    if len(path) > 50: print(path)
+                    continue
+
+            if save_reward:
+                rewards[tmp] = reward_current
+
+                # If the reward is negative, we don't save it into rewards
+                MergeCommListStr.append(tmp)
+
+            # But we will save all the path has less than NegativeUpperBound continuous negative rewards
             MergeCommList.append(com)
 
     # If this height exits, append. Otherwise, create a new one
@@ -83,10 +141,11 @@ def findPropagandizedNeighborComm(G, c, CurrentResult, height, res, path, S_boun
     # Search for the next level neighbors from this level neighbors one by one
     for com in MergeCommList:
         path.append(com)
-        res = findPropagandizedNeighborComm(G, com, CurrentResult, height-1, res, path, S_bound, size + len(CommunityNumToNodes[com]))
+        res, rewards, path_set = findPropagandizedNeighborComm(G, com, CurrentResult, height-1, res, path, S_bound, size + len(CommunityNumToNodes[com]),
+                                            reward_Neighbors[com], rewards, constraint, bio_flag, path_set)
         path.pop()
 
-    return res
+    return res, rewards, path_set
 
 
 # Find all incoming edges to Community C

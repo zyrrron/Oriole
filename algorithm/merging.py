@@ -27,6 +27,12 @@ def Merge():
             print("The upper bound of one community make it impossible to get target_n communities to take all the nodes in this graph!")
             continue
 
+        # If S_bound[1] is big enough to take all the nodes in one community
+        if S_bounds[1] >= len(G_primitive.nodes):
+            iof.writeSolution(out_path, '/sol_after_merge.txt', G_primitive, [])
+            print("All nodes can be put in one community!")
+            continue
+
         # Start merging from the community with the least incoming or outgoing edges.
         print("Now try merging the communities!")
         MergeResult, MergeFlag, MergeErrorLog = ec.enlargeCommunityMerge(G_primitive, S_bounds, ConstraintType,
