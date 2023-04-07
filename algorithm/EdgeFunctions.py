@@ -32,5 +32,5 @@ def findNeighborEdges(u, v, MergeResult, CommunityNumToNodes, CommEdgeColorInfo,
                 edges.add((node, tmp))
 
     edges.remove((u,v))
-    return list(edges)
+    return sorted(list(edges))
 
