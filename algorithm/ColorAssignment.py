@@ -10,57 +10,56 @@ import collections
 
 
 # Check next two level neighbor edges from the given one
-def PropagandaChecking(u, v, Color, MergeResult, CommunityNumToNodes, CommEdgeColorInfo, CellToCellEdges, ColorOptions, bio_flag, depth, edgepath):
+def PropagandaChecking(u, v, MergeResult, CommunityNumToNodes, ColorInfo, ColorOptions, bio_flag, depth):
 
     # max depth is arrived, return back
     if depth <= 0:
-        # print("depth = 0")
         return True
+    CenterColor = ColorInfo[MergeResult[u]][u][v]["Color"]
+    NeighborEdges = ef.findNeighborEdges(u, v, MergeResult, CommunityNumToNodes, ColorInfo, bio_flag)
 
-    ComU, ComV = MergeResult[u], MergeResult[v]
-    FirstLevelNeighborEdges = ef.findNeighborEdges(u, v, MergeResult, CommunityNumToNodes, CommEdgeColorInfo, bio_flag)
-    # print(u, v, FirstLevelNeighborEdges, edgepath, Color)
-    flag = False
-
-    # Get the colors of all the neighbor edges for (uu,vv).
+    # Get the colors of all the neighbor edges for (u,v).
     # Check the Neighbor Edges one by one.
     # Constraint 1: neighbor edges can share the same color if they are from the same node.
     # Constraint 2: neighbor edges cannot share the same color unless they are from the same node.
     # Constraint 3: edges can share the same color if they are not neighbor edges.
     # Step 1: If the edge is colored and use the same with the given checking edge, then return False
     # Step 2: If the edge is not colored, choose one color from currently optional color domain.
-    for uu, vv in FirstLevelNeighborEdges:
+    for uu, vv in NeighborEdges:
+
+        # If there is an edge cannot be assigned to any color, flag = false, and return it
         flag = False
         ComUU, ComVV = MergeResult[uu], MergeResult[vv]
-        # print(uu, vv, CommEdgeColorInfo[ComUU][uu][vv]["Color"])
+        if ColorInfo[ComUU][uu][vv]["Color"] != "black":
 
-        if CommEdgeColorInfo[ComUU][uu][vv]["Color"] != "black":
-            if CommEdgeColorInfo[ComUU][uu][vv]["Color"] == Color:
-                if uu != u:
-                    # print("Bad try")
-                    return False
             # Because this neighbor edge has color, we don't need to do anything. Its color must have been checked before.
-        else:
+            if ColorInfo[ComUU][uu][vv]["Color"] == CenterColor and uu != u:
+                    return False
 
-            # Here it is more complex, because we need to think about which color can be assigned to this neighbor edge.
+        # Here it is more complex, because we need to think about which color can be assigned to this neighbor edge.
+        else:
             Colors = []
-            edgepath.append((uu, vv))
-            if uu == u:
-                Colors = [Color]
+            if bio_flag == 1 and uu == u:
+                Colors.append(CenterColor)
             else:
                 Colors = copy.deepcopy(ColorOptions)
-                Colors.remove(Color)
+                Colors.remove(CenterColor)
+
+            # Try to assign colors to this edge (uu, vv)
             for ColorNew in Colors:
-                # print(uu, vv, ColorNew)
-                flag = PropagandaChecking(uu, vv, ColorNew, MergeResult, CommunityNumToNodes, CommEdgeColorInfo, CellToCellEdges, ColorOptions,
-                                          bio_flag, depth - 1, edgepath)
+
+                # Assign the color to the current edge, update CommEdgeColorInfo, go to the next edge
+                ColorInfo = assignColorForEdge(uu, vv, ColorInfo, ComUU, ComVV, ColorNew)
+                flag = PropagandaChecking(uu, vv, MergeResult, CommunityNumToNodes, ColorInfo, ColorOptions, bio_flag, depth)
 
                 # If there is a way to assign the color to a neighbor edge (uu, vv), break the color assignment loop.
+                # And check the next neighbor edge
                 if flag:
                     break
-            edgepath.pop()
+
             if not flag: return False
-    return flag
+
+    return True
 
 
 # Assign the color to the current edge, update CommEdgeColorInfo, go to the next edge
@@ -94,10 +93,11 @@ def findColor(MergeResult, CommunityNumToNodes, DAG, ColorOptions, CommEdgeColor
         CommEdgeColorInfo = assignColorForEdge(u, v, CommEdgeColorInfo, ComU, ComV, Color)
 
         # Check if the current color works for the chosen edge (u, v), the depth of recursion in propaganda checking is set to 3
-        depth = 3
-        edgepath = [(u,v)]
-        # print(u, v, CommEdgeColorInfo[ComU][u][v]["Color"])
-        if PropagandaChecking(u, v, Color, MergeResult, CommunityNumToNodes, CommEdgeColorInfo, CellToCellEdges, ColorOptions, bio_flag, depth, edgepath):
+        depth = 2
+        NeighborEdges = [(u,v)]
+        NewColorInfo = copy.deepcopy(CommEdgeColorInfo)
+
+        if PropagandaChecking(u, v, MergeResult, CommunityNumToNodes, NewColorInfo, ColorOptions, bio_flag, depth):
 
             # Temporarily remove the edge from CellToCellEdges, if all edges can be colored correctly, it will be an empty list
             # If the color assignment doesn't follow the constraints, we will add the edge back in the first backtracking step
@@ -196,6 +196,6 @@ def ColorAssignment(ColorOptions):
 
 
 # Assume we have totally 4 different cell-cell communication molecular, set 4 as the input parameter. Then we will give the solution with numbers.
-ColorOptions = ["black", "gray", "purple", "blue", "green", "orange"]
+ColorOptions = ["black", "gray", "red", "blue", "green", "orange"]
 ColorAssignment(ColorOptions)
 
