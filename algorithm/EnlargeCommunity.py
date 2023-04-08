@@ -21,7 +21,7 @@ def prepareNeighborOrder(G, CenterCommunity, CurrentResult, constraint, bio_flag
                                                                            [0], {}, constraint, bio_flag, path_set, ub)
 
     # find the community provides the highest reward, sort this rewards dictionary first and try them in the order
-    tmp = sorted(rewards.items(), key=lambda x: (x[1], len(x[0])), reverse=True)
+    tmp = sorted(rewards.items(), key=lambda x: (x[1], len(x[0]), x[0]), reverse=True)
     rewards_new = dict(tmp)
 
     return rewards_new, CurrentResult_new, path_set
