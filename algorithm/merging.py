@@ -3,6 +3,7 @@ import InOutFunctions as iof
 import UpdateFunctions as uf
 import utils
 import EnlargeCommunity as ec
+import CommunityFunctions as ccf
 
 
 def Merge():
@@ -41,8 +42,24 @@ def Merge():
         if MergeFlag:
             print("Merge passed according to the target N!")
 
-            # Write current merge solution into a output file
+            # Write current merge solution into an output file
             iof.writeSolution(out_path, '/sol_after_merge.txt', G_primitive, MergeResult)
         else:
+            MergeResult = merge_final_check(G_primitive, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, MergeResult, target_n, bio_flag)
             iof.reportMergeIssue(G_primitive, out_path, '/sol_after_merge.txt', MergeResult, MergeErrorLog, timestep, VerifyResult)
+
+def merge_final_check(G, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, MergeResult, target_n, bio_flag):
+    CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
+    maxCommLen, maxComm = 0, ''
+    for tmp in CommunityNumToNodes:
+        if len(CommunityNumToNodes[tmp]) > maxCommLen:
+            maxCommLen = len(CommunityNumToNodes[tmp])
+            maxComm = tmp
+
+    if len(G.nodes) - S_bounds[1] <= maxCommLen:
+        for node in MergeResult:
+            if MergeResult[node] != maxComm:
+                MergeResult[node] = maxComm + "1"
+
+    return MergeResult
 Merge()

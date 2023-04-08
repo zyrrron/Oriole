@@ -54,9 +54,9 @@ def findAllNeighborsComm(G, c, CurrentResult):
 
 
 # Find all neighbor communities and neighbor of neighbor communities
-def findPropagandizedNeighborComm(G, c, CurrentResult, height, res, path, S_bound, size, reward_path, rewards, constraint, bio_flag, path_set):
+def findPropagandizedNeighborComm(G, c, CurrentResult, height, res, path, S_bound, size, reward_path, rewards, constraint, bio_flag, path_set, ub):
 
-    NegativeUpperBound = 20
+    NegativeUpperBound = ub
     if height <= 0:
         return res, rewards, path_set
 
@@ -85,8 +85,6 @@ def findPropagandizedNeighborComm(G, c, CurrentResult, height, res, path, S_boun
             tmp += str(path_sorted[-1])
             if tmp not in path_set:
                 path_set.add(tmp)
-                if len(path_set) % 1000000 == 1:
-                    print(len(path_set) // 1000000)
             else: continue
 
             reward_path_current = copy.deepcopy(reward_path)
@@ -111,7 +109,7 @@ def findPropagandizedNeighborComm(G, c, CurrentResult, height, res, path, S_boun
                     CurrentResult[node] = p
 
             # If there are more than NegativeUpperBound times negative rewards continuously, stop searching in this path.
-            if reward_current < 0:
+            if reward_current < -1:
                 save_reward = False
                 count = 0
                 for i in range(len(reward_path)-1,-1,-1):
@@ -120,7 +118,6 @@ def findPropagandizedNeighborComm(G, c, CurrentResult, height, res, path, S_boun
                     if reward_path[i] >= 0:
                         break
                 if count >= NegativeUpperBound:
-                    if len(path) > 50: print(path)
                     continue
 
             if save_reward:
@@ -142,7 +139,7 @@ def findPropagandizedNeighborComm(G, c, CurrentResult, height, res, path, S_boun
     for com in MergeCommList:
         path.append(com)
         res, rewards, path_set = findPropagandizedNeighborComm(G, com, CurrentResult, height-1, res, path, S_bound, size + len(CommunityNumToNodes[com]),
-                                            reward_Neighbors[com], rewards, constraint, bio_flag, path_set)
+                                            reward_Neighbors[com], rewards, constraint, bio_flag, path_set, ub)
         path.pop()
 
     return res, rewards, path_set

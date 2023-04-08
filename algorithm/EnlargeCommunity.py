@@ -8,7 +8,7 @@ import UpdateFunctions as uf
 
 
 # propaganda checking stop after the given depth
-def prepareNeighborOrder(G, CenterCommunity, CurrentResult, constraint, bio_flag, height, S_bound):
+def prepareNeighborOrder(G, CenterCommunity, CurrentResult, constraint, bio_flag, height, S_bound, ub, path_set):
 
     # Initiate the values we will return
     CurrentResult_new = copy.deepcopy(CurrentResult)
@@ -18,13 +18,13 @@ def prepareNeighborOrder(G, CenterCommunity, CurrentResult, constraint, bio_flag
     CommunityNumToNodes = uf.mapCommunityToNodes(CurrentResult)
     PropagandizedNeighborComm, rewards, path_set = ccf.findPropagandizedNeighborComm(G, CenterCommunity, CurrentResult, height-1, {height: CenterCommunity},
                                                                            [CenterCommunity], S_bound, len(CommunityNumToNodes[CenterCommunity]),
-                                                                           [0], {}, constraint, bio_flag, set())
+                                                                           [0], {}, constraint, bio_flag, path_set, ub)
 
     # find the community provides the highest reward, sort this rewards dictionary first and try them in the order
-    tmp = sorted(rewards.items(), key=lambda x: (x[1], x[0]), reverse=True)
+    tmp = sorted(rewards.items(), key=lambda x: (x[1], len(x[0])), reverse=True)
     rewards_new = dict(tmp)
 
-    return rewards_new, CurrentResult_new
+    return rewards_new, CurrentResult_new, path_set
 
 
 # Try to enlarge the given community i.
@@ -68,7 +68,7 @@ def enlargeCommunity(G, Community, S_bounds, ConstraintType, constraint, loop_fr
         else:
             return CurrentResult, False, {Community}, timestep
 
-    rewards_new, CurrentResult_new = prepareNeighborOrder(G, Community, CurrentResult, constraint, bio_flag, height, S_bounds)
+    rewards_new, CurrentResult_new, path_set = prepareNeighborOrder(G, Community, CurrentResult, constraint, bio_flag, height, S_bounds, 2, {})
 
     # start the middle part of backtracking
     for c in rewards_new:
@@ -101,7 +101,10 @@ def enlargeCommunityMerge(G, S_bounds, ConstraintType, constraint, loop_free, pr
     # 2. meet time constraint
     totalNum = 0
     count = 1
+
     while timestep >= 0 and len(uf.mapCommunityToNodes(MergeResult)) > target_n:
+        path_set = set()
+        CommunityNumToNodes1 = uf.mapCommunityToNodes(MergeResult)
         if totalNum == len(uf.mapCommunityToNodes(MergeResult)):
             count += 1
         else:
@@ -118,7 +121,7 @@ def enlargeCommunityMerge(G, S_bounds, ConstraintType, constraint, loop_free, pr
 
             # Find all neighbor communities around the chosen community.
             # And get the sorted rewards dictionary for all the neighbor communities
-            rewards_sorted, _ = prepareNeighborOrder(G, Community, MergeResult, constraint, bio_flag, height, S_bounds)
+            rewards_sorted, _, path_set = prepareNeighborOrder(G, Community, MergeResult, constraint, bio_flag, height, S_bounds, 50, path_set)
 
             for key in rewards_sorted:
 
@@ -139,8 +142,8 @@ def enlargeCommunityMerge(G, S_bounds, ConstraintType, constraint, loop_free, pr
 
             # After leaving from the for loop, we may have a successful merge or not.
             # Keep checking until all communities are checked.
+            CommunityNumToNodes2 = uf.mapCommunityToNodes(MergeResult)
             timestep -= 1
-
 
     if len(uf.mapCommunityToNodes(MergeResult)) <= target_n:
         return MergeResult, True, {}
