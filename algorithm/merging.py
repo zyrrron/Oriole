@@ -45,10 +45,11 @@ def Merge():
             # Write current merge solution into an output file
             iof.writeSolution(out_path, '/sol_after_merge.txt', G_primitive, MergeResult)
         else:
-            MergeResult = merge_final_check(G_primitive, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, MergeResult, target_n, bio_flag)
+            MergeResult = merge_final_check(G_primitive, S_bounds, MergeResult)
             iof.reportMergeIssue(G_primitive, out_path, '/sol_after_merge.txt', MergeResult, MergeErrorLog, timestep, VerifyResult)
 
-def merge_final_check(G, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, MergeResult, target_n, bio_flag):
+
+def merge_final_check(G, S_bounds, MergeResult):
     CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
     maxCommLen, maxComm = 0, ''
     for tmp in CommunityNumToNodes:
@@ -60,6 +61,7 @@ def merge_final_check(G, S_bounds, ConstraintType, constraint, loop_free, priori
         for node in MergeResult:
             if MergeResult[node] != maxComm:
                 MergeResult[node] = maxComm + "1"
-
     return MergeResult
+
+
 Merge()

@@ -121,7 +121,7 @@ def enlargeCommunityMerge(G, S_bounds, ConstraintType, constraint, loop_free, pr
 
             # Find all neighbor communities around the chosen community.
             # And get the sorted rewards dictionary for all the neighbor communities
-            rewards_sorted, _, path_set = prepareNeighborOrder(G, Community, MergeResult, constraint, bio_flag, height, S_bounds, 50, path_set)
+            rewards_sorted, _, path_set = prepareNeighborOrder(G, Community, MergeResult, constraint, bio_flag, height, S_bounds, 3, path_set)
 
             for key in rewards_sorted:
 
