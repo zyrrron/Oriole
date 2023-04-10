@@ -12,7 +12,7 @@ def Merge():
 
     # Verify samples iteratively
     for s in samples:
-        for upperbound in [8, 5, 3, 1]:
+        for upperbound in [131, 120, 100, 80, 60, 40, 20, 15, 10, 8, 5, 3, 1]:
             cell = 1
 
             # Load verification result
