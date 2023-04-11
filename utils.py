@@ -275,7 +275,7 @@ def loadData(s, settings):
 	bio_flag = int(settings[s]['BioFlag'])
 	out_path = settings[s]['output_path']
 	timestep = 10000000000
-	timestep2 = 1000000
+	timestep2 = 1000000000
 	height = 300
 	begin_time_current_step = time.time()
 
