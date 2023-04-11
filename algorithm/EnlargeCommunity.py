@@ -104,11 +104,9 @@ def enlargeCommunityMerge(G, S_bounds, ConstraintType, constraint, loop_free, pr
 
     while timestep >= 0 and len(uf.mapCommunityToNodes(MergeResult)) > target_n:
         path_set = set()
-        ub = 8
         CommunityNumToNodes1 = uf.mapCommunityToNodes(MergeResult)
         if totalNum == len(uf.mapCommunityToNodes(MergeResult)):
             count += 1
-            ub = 60
         else:
             count = 1
             totalNum = len(uf.mapCommunityToNodes(MergeResult))
@@ -123,7 +121,7 @@ def enlargeCommunityMerge(G, S_bounds, ConstraintType, constraint, loop_free, pr
 
             # Find all neighbor communities around the chosen community.
             # And get the sorted rewards dictionary for all the neighbor communities
-            rewards_sorted, _, path_set = prepareNeighborOrder(G, Community, MergeResult, constraint, bio_flag, height, S_bounds, ub, path_set)
+            rewards_sorted, _, path_set = prepareNeighborOrder(G, Community, MergeResult, constraint, bio_flag, height, S_bounds, 3, path_set)
 
             for key in rewards_sorted:
 

@@ -196,6 +196,6 @@ def ColorAssignment(ColorOptions):
 
 
 # Assume we have totally 4 different cell-cell communication molecular, set 4 as the input parameter. Then we will give the solution with numbers.
-ColorOptions = ["black", "gray", "red", "blue", "green", "orange"]
+ColorOptions = ["black", "gray", "red", "blue", "green", "orange", "yellow", "aaa", "bbb", "ccc","ddd","eee"]
 ColorAssignment(ColorOptions)
 
