@@ -275,7 +275,7 @@ def loadData(s, settings):
 	bio_flag = int(settings[s]['BioFlag'])
 	out_path = settings[s]['output_path']
 	timestep = 10000000000
-	timestep2 = 1000000000
+	timestep2 = 100000
 	height = 300
 	begin_time_current_step = time.time()
 
@@ -290,4 +290,4 @@ def loadData(s, settings):
 	else:
 		G_primitive = copy.deepcopy(DAG)
 
-	return G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, timestep, target_n, timestep2, bio_flag, height
+	return G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, timestep, target_n, timestep2, bio_flag, height, DAG

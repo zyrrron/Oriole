@@ -73,13 +73,11 @@ def assignColorForEdge(u, v, CommEdgeColorInfo, ComU, ComV, Color):
 def findColor(MergeResult, CommunityNumToNodes, DAG, ColorOptions, CommEdgeColorInfo, CellToCellEdges, timestep, bio_flag):
 
     if timestep < 0:
-        print("time runs out!")
-        return CommEdgeColorInfo, False
+        # print("time runs out!")
+        return CommEdgeColorInfo, False, timestep
 
     if not CellToCellEdges:
-        return CommEdgeColorInfo, True
-
-    print(len(CellToCellEdges))
+        return CommEdgeColorInfo, True, timestep
 
     # Find the tail edge of the current CellToCellEdges list and their terminal nodes, terminal cell
     u, v = CellToCellEdges[-1]
@@ -93,7 +91,7 @@ def findColor(MergeResult, CommunityNumToNodes, DAG, ColorOptions, CommEdgeColor
         CommEdgeColorInfo = assignColorForEdge(u, v, CommEdgeColorInfo, ComU, ComV, Color)
 
         # Check if the current color works for the chosen edge (u, v), the depth of recursion in propaganda checking is set to 3
-        depth = 2
+        depth = 3
         NeighborEdges = [(u,v)]
         NewColorInfo = copy.deepcopy(CommEdgeColorInfo)
 
@@ -102,7 +100,7 @@ def findColor(MergeResult, CommunityNumToNodes, DAG, ColorOptions, CommEdgeColor
             # Temporarily remove the edge from CellToCellEdges, if all edges can be colored correctly, it will be an empty list
             # If the color assignment doesn't follow the constraints, we will add the edge back in the first backtracking step
             CellToCellEdges.pop()
-            CommEdgeColorInfo, ColorFlag = findColor(MergeResult, CommunityNumToNodes, DAG, ColorOptions, CommEdgeColorInfo,
+            CommEdgeColorInfo, ColorFlag, timestep = findColor(MergeResult, CommunityNumToNodes, DAG, ColorOptions, CommEdgeColorInfo,
                                                      CellToCellEdges, timestep - 1, bio_flag)
 
             # If the current color assignment can give us the solution for the whole graph, return back
@@ -117,11 +115,11 @@ def findColor(MergeResult, CommunityNumToNodes, DAG, ColorOptions, CommEdgeColor
 
         # Change back the color for edge (u, v)
         CommEdgeColorInfo = assignColorForEdge(u, v, CommEdgeColorInfo, ComU, ComV, "black")
-        return CommEdgeColorInfo, False
+        return CommEdgeColorInfo, False, timestep
 
     # If ColorFlag == True, that means we find the color assignment solution, return to the last level
     else:
-        return CommEdgeColorInfo, True
+        return CommEdgeColorInfo, True, timestep
 
 
 def createColorInfo(MergeResult, CommunityNumToNodes, G):
@@ -151,7 +149,35 @@ def createColorInfo(MergeResult, CommunityNumToNodes, G):
     return D, CellToCellEdges
 
 
-def ColorAssignment(ColorOptions):
+def ColorAssignment(MergeResult, CommunityNumToNodes, G_primitive, DAG, bio_flag, ColorOptions):
+    # Create a dictionary, key is the community number, value is a dictionary.
+    # The inner dictionary, key is an edge connecting to the community in the last level, value is its color
+    CommEdgeColorInfo, CellToCellEdges = createColorInfo(MergeResult, CommunityNumToNodes, G_primitive)
+
+    # Color the cell-cell edges
+    timestep = 1000
+    CommEdgeColorInfo, ColorFlag, _ = findColor(MergeResult, CommunityNumToNodes, DAG, ColorOptions[2:], CommEdgeColorInfo, CellToCellEdges, timestep,
+                                             bio_flag)
+
+    for u, v in DAG.edges:
+        Color = "black"
+
+        # If the edge doesn't exist in G_primitive, set it as "black"
+        if u in MergeResult and v in MergeResult:
+
+            # If the edge is inside a community, set it "gray"
+            if MergeResult[u] == MergeResult[v]:
+                Color = "gray"
+
+            # Otherwise, it is cell-cell edge. change the color for the edge
+            else:
+                Color = CommEdgeColorInfo[MergeResult[u]][u][v]["Color"]
+        DAG.add_edge(u, v, color=Color)
+
+    return ColorFlag
+
+
+def startColoring(ColorOptions):
     # Load samples and settings
     samples, settings = utils.loadSettings()
 
@@ -159,33 +185,12 @@ def ColorAssignment(ColorOptions):
     for s in samples:
 
         # Load merge result
-        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, _, target_n, _, bio_flag, _ = utils.loadData(s, settings)
+        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, _, target_n, _, bio_flag, _, _ = utils.loadData(s, settings)
         MergeResult = iof.loadSolution(f"{out_path}/sol_after_merge.txt", s)
         DAG = utils.load_graph(settings, s)
         CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
 
-        # Create a dictionary, key is the community number, value is a dictionary.
-        # The inner dictionary, key is an edge connecting to the community in the last level, value is its color
-        CommEdgeColorInfo, CellToCellEdges = createColorInfo(MergeResult, CommunityNumToNodes, G_primitive)
-
-        # Color the cell-cell edges
-        timestep = 1000000
-        CommEdgeColorInfo, ColorFlag = findColor(MergeResult, CommunityNumToNodes, DAG, ColorOptions[2:], CommEdgeColorInfo, CellToCellEdges, timestep, bio_flag)
-
-        for u,v in DAG.edges:
-            Color = "black"
-
-            # If the edge doesn't exist in G_primitive, set it as "black"
-            if u in MergeResult and v in MergeResult:
-
-                # If the edge is inside a community, set it "gray"
-                if MergeResult[u] == MergeResult[v]:
-                    Color = "gray"
-
-                # Otherwise, it is cell-cell edge. change the color for the edge
-                else:
-                    Color = CommEdgeColorInfo[MergeResult[u]][u][v]["Color"]
-            DAG.add_edge(u, v, color=Color)
+        ColorFlag = ColorAssignment(MergeResult, CommunityNumToNodes, G_primitive, DAG, bio_flag, ColorOptions)
 
         if ColorFlag:
             # Write edge list with color
@@ -196,6 +201,6 @@ def ColorAssignment(ColorOptions):
 
 
 # Assume we have totally 4 different cell-cell communication molecular, set 4 as the input parameter. Then we will give the solution with numbers.
-ColorOptions = ["black", "gray", "red", "blue", "green", "orange", "yellow", "aaa", "bbb", "ccc","ddd","eee"]
-ColorAssignment(ColorOptions)
+ColorOptions = ["black", "gray", "color1", "color2"]
+startColoring(ColorOptions)
 
