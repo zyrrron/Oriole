@@ -34,7 +34,7 @@ def PropagandaChecking(u, v, MergeResult, CommunityNumToNodes, ColorInfo, ColorO
 
             # Because this neighbor edge has color, we don't need to do anything. Its color must have been checked before.
             if ColorInfo[ComUU][uu][vv]["Color"] == CenterColor and uu != u:
-                    return False
+                return False
 
         # Here it is more complex, because we need to think about which color can be assigned to this neighbor edge.
         else:
@@ -203,4 +203,5 @@ def startColoring(ColorOptions):
 # Assume we have totally 4 different cell-cell communication molecular, set 4 as the input parameter. Then we will give the solution with numbers.
 ColorOptions = ["black", "gray", "color1", "color2"]
 startColoring(ColorOptions)
+print(1)
 
