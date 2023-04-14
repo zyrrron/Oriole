@@ -12,7 +12,7 @@ import InOutFunctions as iof
 import InitiateFunctions as inf
 import collections
 import csv
-import ColorAssignment as ca
+import EdgeColoring as ca
 
 
 def VerifyAndMerge():
@@ -28,8 +28,7 @@ def VerifyAndMerge():
         # Run and load verification result
         G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, timestep1, target_n, timestep2, bio_flag, height, DAG = utils.loadData(
             s, settings)
-
-
+        print(f"Current max gate per cell is {S_bounds[1]}")
         # If the max size for one community is bigger than the current total number of the nodes, output it and continue the next sample
         if len(G_primitive.nodes) < S_bounds[1]:
             iof.writeSolution(out_path, f'/sol_after_verify_{S_bounds[1]}.txt', G_primitive, [])
@@ -39,9 +38,8 @@ def VerifyAndMerge():
         # Initiate communities
         VerifyResult = inf.createInitialCommunities(G_primitive)
 
-
         # Start to merge in different max channels for cell-cell communication
-        for upperbound in range(1, 6):
+        for upperbound in range(3, 6):
             constraint[0] = upperbound
             ColorOptions = ["black", "gray"]
             for i in range(upperbound):
@@ -58,20 +56,22 @@ def VerifyAndMerge():
             else:
 
                 # Start merging from the community with the least incoming or outgoing edges.
-                MergeResult, MergeFlag, MergeErrorLog = ec.enlargeCommunityMerge_chris(G_primitive, S_bounds,
-                                    constraint, loop_free, timestep2, VerifyResult, target_n, bio_flag, height, DAG, ColorOptions)
+                # Try different searching order may find more optimal solution and get rid of the local optimal
+                attempts = 10
+                MergeResult, MergeFlag, MergeErrorLog, ColorFlag = ec.enlargeCommunityMerge_chris(G_primitive, S_bounds,
+                                    constraint, loop_free, timestep2, VerifyResult, target_n, bio_flag, height, DAG, ColorOptions, attempts)
 
                 if MergeFlag:
                     # Write current merge solution into a output file
                     iof.writeSolution(out_path, f'/sol_after_merge_{S_bounds[1]}_{upperbound}.txt', G_primitive, MergeResult)
+                    iof.writeColoredEdgeList(out_path, '/sol_after_merge_colored.txt', DAG)
                 else:
                     MergeResult = MG.merge_final_check(G_primitive, S_bounds, MergeResult)
-                    iof.reportMergeIssue(G_primitive, out_path, f'/sol_after_merge_{S_bounds[1]}_{upperbound}.txt', MergeResult, MergeErrorLog, timestep2, VerifyResult)
-
-                CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
-
-                ColorFlag = ca.ColorAssignment(MergeResult, CommunityNumToNodes, G_primitive, DAG, bio_flag, ColorOptions)
-
+                    CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
+                    ColorFlag = ca.ColorAssignment(MergeResult, CommunityNumToNodes, G_primitive, DAG, bio_flag, ColorOptions)
+                    if ColorFlag:
+                        iof.reportMergeIssue(G_primitive, out_path, f'/sol_after_merge_{S_bounds[1]}_{upperbound}.txt', MergeResult, MergeErrorLog, timestep2, VerifyResult)
+                        iof.writeColoredEdgeList(out_path, '/sol_after_merge_colored.txt', DAG)
                 if ColorFlag:
                     res.append(len(uf.mapCommunityToNodes(MergeResult)))
                 else:

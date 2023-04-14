@@ -282,7 +282,7 @@ def findPendingCommunities(G, result, constraint, bio_flag):
 
 
 # Find the next community or communities to merge
-def findMergeCommunities(G, result, constraint, bio_flag):
+def findMergeCommunities(G, result, constraint, bio_flag, SearchStep = 1):
     MergeCommunities = {}
     CommunityNumToNodes = uf.mapCommunityToNodes(result)
 
@@ -293,5 +293,8 @@ def findMergeCommunities(G, result, constraint, bio_flag):
     # Sort
     tmp = sorted(MergeCommunities.items(), key=lambda x: (x[1], x[0]), reverse=True)
     MergeCommunities = dict(tmp)
+
+    # Make some changes on the sorted MergeCommunities
+    changeMergeCommunities
 
     return MergeCommunities

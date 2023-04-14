@@ -1,2 +1,2 @@
-Error caused by: {'Time runs out'}. 
-After 100000 steps merge attempts, we decrease the number of communities from 131 to 90
+Error caused by: {'No solution can satisfy our edge coloring assignment!'}. 
+After 100000 steps merge attempts, we decrease the number of communities from 131 to 72

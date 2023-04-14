@@ -155,7 +155,7 @@ def ColorAssignment(MergeResult, CommunityNumToNodes, G_primitive, DAG, bio_flag
     CommEdgeColorInfo, CellToCellEdges = createColorInfo(MergeResult, CommunityNumToNodes, G_primitive)
 
     # Color the cell-cell edges
-    timestep = 1000
+    timestep = 10000
     CommEdgeColorInfo, ColorFlag, _ = findColor(MergeResult, CommunityNumToNodes, DAG, ColorOptions[2:], CommEdgeColorInfo, CellToCellEdges, timestep,
                                              bio_flag)
 
@@ -201,7 +201,7 @@ def startColoring(ColorOptions):
 
 
 # Assume we have totally 4 different cell-cell communication molecular, set 4 as the input parameter. Then we will give the solution with numbers.
-ColorOptions = ["black", "gray", "color1", "color2"]
-startColoring(ColorOptions)
-print(1)
+# ColorOptions = ["black", "gray", "color1", "color2"]
+# startColoring(ColorOptions)
+
 

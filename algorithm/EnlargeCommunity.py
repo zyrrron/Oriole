@@ -2,7 +2,7 @@ import InitiateFunctions as inf
 import CalculationFunctions as calf
 import NodeFunctions as nf
 import InOutFunctions as iof
-import ColorAssignment
+import EdgeColoring
 import CommunityFunctions as ccf
 import copy
 import UpdateFunctions as uf
@@ -94,7 +94,7 @@ def enlargeCommunity(G, Community, S_bounds, ConstraintType, constraint, loop_fr
 
 
 # Merging Method 1: Enlarge Communities in the Merge stage using two level neighbor propaganda checking. (every time merge one or two communities)
-def enlargeCommunityMerge(G, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, Result, target_n, bio_flag, height):
+def enlargeCommunityMerge(G, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, Result, target_n, bio_flag, height, attempts):
     MergeResult = copy.deepcopy(Result)
 
     # There are 2 possible conditions to return back
@@ -155,7 +155,7 @@ def enlargeCommunityMerge(G, S_bounds, ConstraintType, constraint, loop_free, pr
 
 
 # Merging for Chris group: Every time when we decide to merge, do edge-coloring assignment first. If it fails, drop it and try next one.
-def enlargeCommunityMerge_chris(G, S_bounds, constraint, loop_free, timestep, Result, target_n, bio_flag, height, DAG, ColorOptions):
+def enlargeCommunityMerge_chris(G, S_bounds, constraint, loop_free, timestep, Result, target_n, bio_flag, height, DAG, ColorOptions, attempts):
     MergeResult = copy.deepcopy(Result)
 
     # There are 2 possible conditions to return back
@@ -163,8 +163,10 @@ def enlargeCommunityMerge_chris(G, S_bounds, constraint, loop_free, timestep, Re
     # 2. meet time constraint
     totalNum = 0
     count = 1
+    MergeResultList =[]
+    SearchStep = 1
 
-    while timestep >= 0 and len(uf.mapCommunityToNodes(MergeResult)) > target_n:
+    while timestep >= 0 and len(uf.mapCommunityToNodes(MergeResult)) > target_n and attempts >= 0:
         path_set = set()
         ub = 10
         CommunityNumToNodes1 = uf.mapCommunityToNodes(MergeResult)
@@ -174,12 +176,16 @@ def enlargeCommunityMerge_chris(G, S_bounds, constraint, loop_free, timestep, Re
         else:
             count = 1
             totalNum = len(uf.mapCommunityToNodes(MergeResult))
+
+        print(f"There are {attempts} attempts left: Current number of communities: {len(uf.mapCommunityToNodes(MergeResult))}!")
         if count == 2:
-            break
-        print(f"Current number of communities: {len(uf.mapCommunityToNodes(MergeResult))}, stay in this number for {count} times")
+            attempts -= 1
+            totalNum = len(uf.mapCommunityToNodes(Result))
+            MergeResult = copy.deepcopy(Result)
+            SearchStep += 1
 
         # Find all possible to-be-merged communities and sort them with rewards. Scan them in this order.
-        MergeCommunities = ccf.findMergeCommunities(G, MergeResult, constraint, bio_flag)
+        MergeCommunities = ccf.findMergeCommunities(G, MergeResult, constraint, bio_flag, SearchStep)
 
         # Try to merge the communities in the order of MergeCommunities
         for Community in MergeCommunities:
@@ -197,17 +203,12 @@ def enlargeCommunityMerge_chris(G, S_bounds, constraint, loop_free, timestep, Re
                 if ccf.checkSize(MergeResult_updated, Community) > S_bounds[1]:
                     continue
 
-                # If edge coloring assignment failed, change to another community
-                CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
-                ColorFlag = ColorAssignment.ColorAssignment(MergeResult, CommunityNumToNodes, G, DAG, bio_flag, ColorOptions)
-                if not ColorFlag:
-                    continue
-
                 # If current merge operation (added one neighbor community to current one in the last level) can be accepted,
                 # update the current merge result to MergeResult and break the loop, go to the next merge community.
                 # checkloop = 0 and checkInOutComm = 0 means the current community meets all the constraints
                 if ((loop_free and ccf.checkLoopComm(G, Community, MergeResult_updated, bio_flag) == 0) or not loop_free) and \
                         ccf.checkInOutComm(G, Community, constraint, MergeResult_updated, bio_flag) == 0:
+                    MergeResultList.append(MergeResult_updated)
                     MergeResult = MergeResult_updated
                     break
 
@@ -216,7 +217,30 @@ def enlargeCommunityMerge_chris(G, S_bounds, constraint, loop_free, timestep, Re
 
             timestep -= 1
 
-    if len(uf.mapCommunityToNodes(MergeResult)) <= target_n:
-        return MergeResult, True, {}
+    # If edge coloring assignment failed, change to another community
+    CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
+    ColorFlag = EdgeColoring.ColorAssignment(MergeResult, CommunityNumToNodes, G, DAG, bio_flag, ColorOptions)
+
+    # If we can find a solution with all edge colored correctly, then return the merge result. Otherwise, try another one in the merge result list
+    if ColorFlag:
+        if len(uf.mapCommunityToNodes(MergeResult)) <= target_n:
+            return MergeResult, True, {}, ColorFlag
+        elif timestep < 0:
+            return MergeResult, False, {"Time runs out"}, ColorFlag
+        else:
+            return MergeResult, False, {f"Cannot find better solution after {attempts} attempts"}, ColorFlag
     else:
-        return MergeResult, False, {"Time runs out"}
+        for res in MergeResultList[::-1]:
+            CommunityNumToNodes = uf.mapCommunityToNodes(res)
+            ColorFlag = EdgeColoring.ColorAssignment(MergeResult, CommunityNumToNodes, G, DAG, bio_flag, ColorOptions)
+            if ColorFlag:
+                if len(CommunityNumToNodes) <= target_n:
+                    return res, True, {}, ColorFlag
+                elif timestep < 0:
+                    return MergeResult, False, {"Time runs out"}, ColorFlag
+                else:
+                    return MergeResult, False, {f"Cannot find better solution after {attempts} attempts"}, ColorFlag
+
+        # If all the results cannot give correct edge coloring assignment
+        print("No solution can be found")
+        return MergeResult, False, {"No solution can satisfy our edge coloring assignment!"}, ColorFlag

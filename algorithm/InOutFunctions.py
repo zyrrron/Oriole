@@ -41,7 +41,7 @@ def reportIssue(out_path, ErrorLog):
 
 
 # 1. Save current verification solution and send it to "merging.py"
-# 2. Save current merge solution and send it to "ColorAssignment.py"
+# 2. Save current merge solution and send it to "EdgeColoring.py"
 def loadSolution(path, s):
 
     # read data from verification result
