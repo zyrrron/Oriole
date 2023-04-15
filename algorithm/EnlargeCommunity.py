@@ -233,7 +233,7 @@ def enlargeCommunityMerge_chris(G, S_bounds, constraint, loop_free, timestep, Re
     d = {}
     for i in range(len(MergeResultList)):
         ll = len(collections.Counter(list(MergeResultList[i].values())))
-        if ll < 70:
+        if ll < 90:
             d[i] = ll
 
     print(f"{len(d)} possible solutions to be checked for edge coloring assignment!")

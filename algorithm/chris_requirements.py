@@ -41,7 +41,7 @@ def VerifyAndMerge():
         VerifyResult = inf.createInitialCommunities(G_primitive)
 
         # Start to merge in different max channels for cell-cell communication
-        for upperbound in range(5, 6):
+        for upperbound in range(4, 6):
             constraint[0] = upperbound
             ColorOptions = ["black", "gray"]
             for i in range(upperbound):
