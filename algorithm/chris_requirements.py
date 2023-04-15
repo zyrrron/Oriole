@@ -59,7 +59,7 @@ def VerifyAndMerge():
 
                 # Start merging from the community with the least incoming or outgoing edges.
                 # Try different searching order may find more optimal solution and get rid of the local optimal
-                attempts = 130
+                attempts = 1
                 MergeResult, MergeFlag, MergeErrorLog, ColorFlag, DAG_new = ec.enlargeCommunityMerge_chris(G_primitive, S_bounds,
                                     constraint, loop_free, timestep2, VerifyResult, target_n, bio_flag, height, DAG, ColorOptions, attempts)
 
@@ -79,9 +79,10 @@ def VerifyAndMerge():
                     res.append(len(uf.mapCommunityToNodes(MergeResult)))
                 else:
                     res.append('inf')
+        ress.append(res)
 
     # Save the result into a csv file
-    outfile = out_path + "/plot_data.csv"
+    outfile = "../results/bionetwork/chris_group/chris_new_requirement/" + "/plot_data.csv"
     if not os.path.exists(out_path):
         os.makedirs(out_path)
     with open(outfile, 'w') as f:
@@ -89,7 +90,7 @@ def VerifyAndMerge():
         csv_head = [x for x in range(1, 6)]
         csv_w.writerow(csv_head)
         for i in range(len(ress)):
-            data_r = [i] + ress[i]
+            data_r = [i+1] + ress[i]
             csv_w.writerow(data_r)
 
     print()

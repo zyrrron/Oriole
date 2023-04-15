@@ -225,7 +225,7 @@ def enlargeCommunityMerge_chris(G, S_bounds, constraint, loop_free, timestep, Re
                                                 attempts)
 
     # reduce duplication in the list
-    if len(MergeResult) != len(Result):
+    if len(MergeResult) != len(Result) or S_bounds[1] == 1:
         MergeResultList.append(MergeResult)
     MergeResultList = [dict(t) for t in set([tuple(d.items()) for d in MergeResultList])]
 
@@ -233,8 +233,7 @@ def enlargeCommunityMerge_chris(G, S_bounds, constraint, loop_free, timestep, Re
     d = {}
     for i in range(len(MergeResultList)):
         ll = len(collections.Counter(list(MergeResultList[i].values())))
-        if ll < 90:
-            d[i] = ll
+        d[i] = ll
 
     print(f"{len(d)} possible solutions to be checked for edge coloring assignment!")
     tmp = sorted(d.items(), key=lambda x: (x[1], x[0]), reverse=False)
