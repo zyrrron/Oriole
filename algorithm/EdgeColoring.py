@@ -3,9 +3,9 @@
 import copy
 import InOutFunctions as iof
 import UpdateFunctions as uf
+import math
 import utils
 import EdgeFunctions as ef
-import EnlargeCommunity as ec
 import collections
 
 
@@ -50,14 +50,15 @@ def PropagandaChecking(u, v, MergeResult, CommunityNumToNodes, ColorInfo, ColorO
 
                 # Assign the color to the current edge, update CommEdgeColorInfo, go to the next edge
                 ColorInfo = assignColorForEdge(uu, vv, ColorInfo, ComUU, ComVV, ColorNew)
-                flag = PropagandaChecking(uu, vv, MergeResult, CommunityNumToNodes, ColorInfo, ColorOptions, bio_flag, depth)
+                flag = PropagandaChecking(uu, vv, MergeResult, CommunityNumToNodes, ColorInfo, ColorOptions, bio_flag, depth-1)
 
                 # If there is a way to assign the color to a neighbor edge (uu, vv), break the color assignment loop.
                 # And check the next neighbor edge
                 if flag:
                     break
 
-            if not flag: return False
+            if not flag:
+                return False
 
     return True
 
@@ -90,9 +91,8 @@ def findColor(MergeResult, CommunityNumToNodes, DAG, ColorOptions, CommEdgeColor
         # Assign the color to the current edge, update CommEdgeColorInfo, go to the next edge
         CommEdgeColorInfo = assignColorForEdge(u, v, CommEdgeColorInfo, ComU, ComV, Color)
 
-        # Check if the current color works for the chosen edge (u, v), the depth of recursion in propaganda checking is set to 3
-        depth = 3
-        NeighborEdges = [(u,v)]
+        # Check if the current color works for the chosen edge (u, v), the depth of recursion in propaganda checking is set to 10
+        depth = 10
         NewColorInfo = copy.deepcopy(CommEdgeColorInfo)
 
         if PropagandaChecking(u, v, MergeResult, CommunityNumToNodes, NewColorInfo, ColorOptions, bio_flag, depth):
@@ -155,7 +155,7 @@ def ColorAssignment(MergeResult, CommunityNumToNodes, G_primitive, DAG, bio_flag
     CommEdgeColorInfo, CellToCellEdges = createColorInfo(MergeResult, CommunityNumToNodes, G_primitive)
 
     # Color the cell-cell edges
-    timestep = 10000
+    timestep = 1000
     CommEdgeColorInfo, ColorFlag, _ = findColor(MergeResult, CommunityNumToNodes, DAG, ColorOptions[2:], CommEdgeColorInfo, CellToCellEdges, timestep,
                                              bio_flag)
 
@@ -174,7 +174,7 @@ def ColorAssignment(MergeResult, CommunityNumToNodes, G_primitive, DAG, bio_flag
                 Color = CommEdgeColorInfo[MergeResult[u]][u][v]["Color"]
         DAG.add_edge(u, v, color=Color)
 
-    return ColorFlag
+    return ColorFlag, DAG
 
 
 def startColoring(ColorOptions):
@@ -185,12 +185,13 @@ def startColoring(ColorOptions):
     for s in samples:
 
         # Load merge result
-        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, _, target_n, _, bio_flag, _, _ = utils.loadData(s, settings)
+        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, _, _, bio_flag, _, _ = utils.loadData(s, settings)
+        target_n = math.ceil(len(G_primitive.nodes) / S_bounds[1])
         MergeResult = iof.loadSolution(f"{out_path}/sol_after_merge.txt", s)
         DAG = utils.load_graph(settings, s)
         CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
 
-        ColorFlag = ColorAssignment(MergeResult, CommunityNumToNodes, G_primitive, DAG, bio_flag, ColorOptions)
+        ColorFlag, DAG = ColorAssignment(MergeResult, CommunityNumToNodes, G_primitive, DAG, bio_flag, ColorOptions)
 
         if ColorFlag:
             # Write edge list with color
@@ -201,7 +202,7 @@ def startColoring(ColorOptions):
 
 
 # Assume we have totally 4 different cell-cell communication molecular, set 4 as the input parameter. Then we will give the solution with numbers.
-# ColorOptions = ["black", "gray", "color1", "color2"]
+# ColorOptions = ["black", "gray", "color1", "color2", "color3","color4"]
 # startColoring(ColorOptions)
 
 

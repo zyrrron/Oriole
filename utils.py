@@ -290,4 +290,4 @@ def loadData(s, settings):
 	else:
 		G_primitive = copy.deepcopy(DAG)
 
-	return G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, timestep, target_n, timestep2, bio_flag, height, DAG
+	return G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, timestep, timestep2, bio_flag, height, DAG

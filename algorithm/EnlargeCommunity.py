@@ -2,14 +2,25 @@ import InitiateFunctions as inf
 import CalculationFunctions as calf
 import NodeFunctions as nf
 import InOutFunctions as iof
-import EdgeColoring
+import collections
+import EdgeColoring as eco
 import CommunityFunctions as ccf
 import copy
 import UpdateFunctions as uf
 
 
 # propaganda checking stop after the given depth
-def prepareNeighborOrder(G, CenterCommunity, CurrentResult, constraint, bio_flag, height, S_bound, ub, path_set):
+def prepareNeighborOrder(G, CenterCommunity, CurrentResult, constraint, bio_flag, height, S_bound, ub, path_set, count=0):
+
+    # No more neighbors can be added into this centercommunity. So try the communities without connected edges
+    if count == 2:
+        rewards_new = {}
+        CommunityNumToNodes = uf.mapCommunityToNodes(CurrentResult)
+        if CenterCommunity in CommunityNumToNodes:
+            for c in CommunityNumToNodes:
+                if CenterCommunity != c and len(CommunityNumToNodes[c]) + len(CommunityNumToNodes[CenterCommunity]) <= S_bound[1]:
+                    rewards_new[c] = calf.calculateRewardComm(G, c, CenterCommunity, CurrentResult, constraint, bio_flag)
+        return rewards_new, CurrentResult, {}
 
     # Initiate the values we will return
     CurrentResult_new = copy.deepcopy(CurrentResult)
@@ -36,6 +47,7 @@ def prepareNeighborOrder(G, CenterCommunity, CurrentResult, constraint, bio_flag
 # Record it if meets all constraints.
 # Better use recursion here.
 def enlargeCommunity(G, Community, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, CurrentResult, bio_flag, height):
+    VerifyFlag, ErrorLog = True, {}
 
     # Return to the last level if it arrives to the size constraints, time constraint or current community meets all constraints
     if ccf.checkSize(CurrentResult, Community) > S_bounds[1]:
@@ -93,108 +105,76 @@ def enlargeCommunity(G, Community, S_bounds, ConstraintType, constraint, loop_fr
     return CurrentResult_new, VerifyFlag, ErrorLog, timestep
 
 
-# Merging Method 1: Enlarge Communities in the Merge stage using two level neighbor propaganda checking. (every time merge one or two communities)
-def enlargeCommunityMerge(G, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, Result, target_n, bio_flag, height, attempts):
-    MergeResult = copy.deepcopy(Result)
+def prepareMerge(totalNum, count, SearchStep, MergeResult, attempts, Result, constraint, bio_flag, G, S_bounds):
 
-    # There are 2 possible conditions to return back
-    # 1. meet target n constraint
-    # 2. meet time constraint
-    totalNum = 0
-    count = 1
-
-    while timestep >= 0 and len(uf.mapCommunityToNodes(MergeResult)) > target_n:
-        path_set = set()
-        ub = 8
-        CommunityNumToNodes1 = uf.mapCommunityToNodes(MergeResult)
-        if totalNum == len(uf.mapCommunityToNodes(MergeResult)):
-            count += 1
-            ub = 60
-        else:
-            count = 1
-            totalNum = len(uf.mapCommunityToNodes(MergeResult))
-        if count == 2: break
-        print(f"Current number of communities: {len(uf.mapCommunityToNodes(MergeResult))}, stay in this number for {count} times")
-
-        # Find all possible to-be-merged communities and sort them with rewards. Scan them in this order.
-        MergeCommunities = ccf.findMergeCommunities(G, MergeResult, constraint, bio_flag)
-
-        # Try to merge the communities in the order of MergeCommunities
-        for Community in MergeCommunities:
-
-            # Find all neighbor communities around the chosen community.
-            # And get the sorted rewards dictionary for all the neighbor communities
-            rewards_sorted, _, path_set = prepareNeighborOrder(G, Community, MergeResult, constraint, bio_flag, height, S_bounds, ub, path_set)
-
-            for key in rewards_sorted:
-
-                # Merge the neighbor community providing the highest reward currently
-                MergeResult_updated = ccf.addNeighborComm(MergeResult, key, Community)
-
-                # If size is bigger than upper bound, change to another community
-                if ccf.checkSize(MergeResult_updated, Community) > S_bounds[1]:
-                    continue
-
-                # If current merge operation (added one neighbor community to current one in the last level) can be accepted,
-                # update the current merge result to MergeResult and break the loop, go to the next merge community.
-                # checkloop = 0 and checkInOutComm = 0 means the current community meets all the constraints
-                if ((loop_free and ccf.checkLoopComm(G, Community, MergeResult_updated, bio_flag) == 0) or not loop_free) and \
-                        ccf.checkInOutComm(G, Community, constraint, MergeResult_updated, bio_flag) == 0:
-                    MergeResult = MergeResult_updated
-                    break
-
-            # After leaving from the for loop, we may have a successful merge or not.
-            # Keep checking until all communities are checked.
-            CommunityNumToNodes2 = uf.mapCommunityToNodes(MergeResult)
-            timestep -= 1
-
-    if len(uf.mapCommunityToNodes(MergeResult)) <= target_n:
-        return MergeResult, True, {}
+    ub = 10
+    initial_flag = False
+    CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
+    ll = len(CommunityNumToNodes)
+    MergeCommunities = {}
+    if totalNum == ll:
+        count += 1
+        for c in CommunityNumToNodes:
+            if len(CommunityNumToNodes[c]) < S_bounds[1]:
+                MergeCommunities[c] = len(CommunityNumToNodes[c]) + sum(constraint) - len(ccf.findIncomingEdgesComm(G, c, MergeResult, bio_flag)) -\
+                                      len(ccf.findOutgoingEdgesComm(G, c, MergeResult, bio_flag))
     else:
-        return MergeResult, False, {"Time runs out"}
+        count = 1
+        totalNum = ll
+
+    print(f"There are {attempts} attempts left: Current number of communities: {ll}!")
+    print(f"Current number of communities: {totalNum}, stay in this number for {count} times")
+    # If no change has been done to the MergeResult after this loop, then it will go to the same merging solution as the SearchStep=1.
+    # We can skip this attempt because we have known the answer yet.
+    if count == 3:
+        attempts -= 1
+        MergeResult = copy.deepcopy(Result)
+        totalNum = len(uf.mapCommunityToNodes(MergeResult))
+        count = 1
+        SearchStep += 1
+        initial_flag = True
+        if attempts>0:
+            print(attempts, "Try another way to merge!")
+        else:
+            print("No more attempts left!")
+            return {}, ub, totalNum, count, SearchStep, attempts, MergeResult
+
+    if count == 1:
+        # Find all possible to-be-merged communities and sort them with rewards. Scan them in this order.
+        # In the initial step, searchstep will determine the communities to be merged in this step.
+        # if SearchStep == 1, all communities will be in the to-be-merged list, if it is 5, findMergeCommunities() will only return 5th, 10th, 15th,...
+        # (products of 5) elements in the original dictionary.
+        MergeCommunities = ccf.findMergeCommunities(G, MergeResult, constraint, bio_flag, initial_flag, SearchStep)
+
+    return MergeCommunities, ub, totalNum, count, SearchStep, attempts, MergeResult
 
 
-# Merging for Chris group: Every time when we decide to merge, do edge-coloring assignment first. If it fails, drop it and try next one.
-def enlargeCommunityMerge_chris(G, S_bounds, constraint, loop_free, timestep, Result, target_n, bio_flag, height, DAG, ColorOptions, attempts):
-    MergeResult = copy.deepcopy(Result)
+def tryMerge(G, MergeResult, constraint, bio_flag, height, S_bounds, timestep, loop_free,target_n, Result, attempts):
+    totalNum = 0
+    count = 1
+    MergeResultList = []
+    SearchStep = 1
+    ll = len(uf.mapCommunityToNodes(MergeResult))
+    if attempts > ll:
+        attempts = ll
+    attempts -= 1
 
     # There are 2 possible conditions to return back
     # 1. meet target n constraint
     # 2. meet time constraint
-    totalNum = 0
-    count = 1
-    MergeResultList =[]
-    SearchStep = 1
-
-    while timestep >= 0 and len(uf.mapCommunityToNodes(MergeResult)) > target_n and attempts >= 0:
+    while timestep >= 0 and attempts >= 0:
         path_set = set()
-        ub = 10
-        CommunityNumToNodes1 = uf.mapCommunityToNodes(MergeResult)
-        if totalNum == len(uf.mapCommunityToNodes(MergeResult)):
-            count += 1
-            ub = 60
-        else:
-            count = 1
-            totalNum = len(uf.mapCommunityToNodes(MergeResult))
-
-        print(f"There are {attempts} attempts left: Current number of communities: {len(uf.mapCommunityToNodes(MergeResult))}!")
-        if count == 2:
-            attempts -= 1
-            totalNum = len(uf.mapCommunityToNodes(Result))
-            MergeResult = copy.deepcopy(Result)
-            SearchStep += 1
-
-        # Find all possible to-be-merged communities and sort them with rewards. Scan them in this order.
-        MergeCommunities = ccf.findMergeCommunities(G, MergeResult, constraint, bio_flag, SearchStep)
+        MergeCommunities, ub, totalNum, count, SearchStep, attempts, MergeResult = prepareMerge(totalNum, count, SearchStep, MergeResult, attempts, Result, constraint, bio_flag, G, S_bounds)
 
         # Try to merge the communities in the order of MergeCommunities
         for Community in MergeCommunities:
-
             # Find all neighbor communities around the chosen community.
             # And get the sorted rewards dictionary for all the neighbor communities
-            rewards_sorted, _, path_set = prepareNeighborOrder(G, Community, MergeResult, constraint, bio_flag, height, S_bounds, ub, path_set)
+            rewards_sorted, _, path_set = prepareNeighborOrder(G, Community, MergeResult, constraint, bio_flag, height, S_bounds, ub, path_set, count)
 
             for key in rewards_sorted:
+                if count == 2 and key not in MergeResult.values():
+                    continue
 
                 # Merge the neighbor community providing the highest reward currently
                 MergeResult_updated = ccf.addNeighborComm(MergeResult, key, Community)
@@ -211,36 +191,70 @@ def enlargeCommunityMerge_chris(G, S_bounds, constraint, loop_free, timestep, Re
                     MergeResultList.append(MergeResult_updated)
                     MergeResult = MergeResult_updated
                     break
+        # After leaving from the for loop, we may have a successful merge or not.
+        # Keep checking until all communities are checked.
+        timestep -= 1
+        ll = len(uf.mapCommunityToNodes(MergeResult))
+    return MergeResultList, MergeResult, ll
 
-            # After leaving from the for loop, we may have a successful merge or not.
-            # Keep checking until all communities are checked.
+# Merging Method 1: Enlarge Communities in the Merge stage using two level neighbor propaganda checking. (every time merge one or two communities)
+def enlargeCommunityMerge(G, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, Result, target_n, bio_flag, height, attempts):
+    MergeResult = copy.deepcopy(Result)
+    MergeResultList, MergeResult, ll = tryMerge(G, MergeResult, constraint, bio_flag, height, S_bounds, timestep, loop_free,target_n, Result, attempts)
 
-            timestep -= 1
+    # reduce duplication in the list
+    MergeResultList = [dict(t) for t in set([tuple(d.items()) for d in MergeResultList])]
+    minval = ll
+    for res in MergeResultList:
+        tmp = uf.mapCommunityToNodes(res)
+        if len(tmp) < minval:
+            minval = len(tmp)
+            MergeResult = res
+
+    if len(uf.mapCommunityToNodes(MergeResult)) <= target_n:
+        return MergeResult, True, {}
+    else:
+        return MergeResult, False, {"Time runs out"}
+
+
+# Merging for Chris group: Every time when we decide to merge, do edge-coloring assignment first. If it fails, drop it and try next one.
+def enlargeCommunityMerge_chris(G, S_bounds, constraint, loop_free, timestep, Result, target_n, bio_flag, height, DAG_original, ColorOptions, attempts):
+    DAG = copy.deepcopy(DAG_original)
+    MergeResult = copy.deepcopy(Result)
+    MergeResultList, MergeResult, ll = tryMerge(G, MergeResult, constraint, bio_flag, height, S_bounds, timestep, loop_free, target_n, Result,
+                                                attempts)
+
+    # reduce duplication in the list
+    if len(MergeResult) != len(Result):
+        MergeResultList.append(MergeResult)
+    MergeResultList = [dict(t) for t in set([tuple(d.items()) for d in MergeResultList])]
 
     # If edge coloring assignment failed, change to another community
-    CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
-    ColorFlag = EdgeColoring.ColorAssignment(MergeResult, CommunityNumToNodes, G, DAG, bio_flag, ColorOptions)
+    d = {}
+    for i in range(len(MergeResultList)):
+        ll = len(collections.Counter(list(MergeResultList[i].values())))
+        if ll < 70:
+            d[i] = ll
+
+    print(f"{len(d)} possible solutions to be checked for edge coloring assignment!")
+    tmp = sorted(d.items(), key=lambda x: (x[1], x[0]), reverse=False)
+    tmp = dict(tmp)
 
     # If we can find a solution with all edge colored correctly, then return the merge result. Otherwise, try another one in the merge result list
-    if ColorFlag:
-        if len(uf.mapCommunityToNodes(MergeResult)) <= target_n:
-            return MergeResult, True, {}, ColorFlag
-        elif timestep < 0:
-            return MergeResult, False, {"Time runs out"}, ColorFlag
-        else:
-            return MergeResult, False, {f"Cannot find better solution after {attempts} attempts"}, ColorFlag
-    else:
-        for res in MergeResultList[::-1]:
-            CommunityNumToNodes = uf.mapCommunityToNodes(res)
-            ColorFlag = EdgeColoring.ColorAssignment(MergeResult, CommunityNumToNodes, G, DAG, bio_flag, ColorOptions)
-            if ColorFlag:
-                if len(CommunityNumToNodes) <= target_n:
-                    return res, True, {}, ColorFlag
-                elif timestep < 0:
-                    return MergeResult, False, {"Time runs out"}, ColorFlag
-                else:
-                    return MergeResult, False, {f"Cannot find better solution after {attempts} attempts"}, ColorFlag
+    for i in tmp:
+        res = MergeResultList[i]
+        CommunityNumToNodes = uf.mapCommunityToNodes(res)
+        print(i, len(CommunityNumToNodes))
+        ColorFlag, DAG = eco.ColorAssignment(res, CommunityNumToNodes, G, DAG, bio_flag, ColorOptions)
+        if ColorFlag:
+            print("Find solution can be colored correctly!")
+            if len(CommunityNumToNodes) <= target_n:
+                return res, True, {}, ColorFlag, DAG
+            elif timestep < 0:
+                return res, False, {"Time runs out"}, ColorFlag, DAG
+            else:
+                return res, False, {f"{attempts} attempts runs out"}, ColorFlag, DAG
 
-        # If all the results cannot give correct edge coloring assignment
-        print("No solution can be found")
-        return MergeResult, False, {"No solution can satisfy our edge coloring assignment!"}, ColorFlag
+    # If all the results cannot give correct edge coloring assignment
+    print("No solution can be found")
+    return {}, False, {"No solution can satisfy our edge coloring assignment!"}, False, DAG

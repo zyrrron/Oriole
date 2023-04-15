@@ -69,7 +69,7 @@ def loadSolution(path, s):
 
 
 # If current number of communities in the merge solution is bigger than target N, report issue
-def reportMergeIssue(G_primitive, out_path, solutionfile, MergeResult, ErrorLog, timestep, VerifyResult):
+def reportMergeIssue(G_primitive, out_path, solutionfile, MergeResult, ErrorLog, timestep, VerifyResult, target_n):
     outfile = out_path + '/error_report.txt'
     if not os.path.exists(out_path):
         os.makedirs(out_path)
@@ -77,10 +77,14 @@ def reportMergeIssue(G_primitive, out_path, solutionfile, MergeResult, ErrorLog,
     CommunityNumToNodesAfterMerge = uf.mapCommunityToNodes(MergeResult)
     CommunityNumToNodesBeforeMerge = uf.mapCommunityToNodes(VerifyResult)
 
-    f_out.write(f"Error caused by: {ErrorLog}. \n")
+    if len(CommunityNumToNodesAfterMerge) == 0:
+        print("No solution can satisfy our edge coloring assignment!")
+        return
+
+    f_out.write(f"Target N is: {target_n}. Stop caused by: {ErrorLog}. \n")
     f_out.write(f"After {timestep} steps merge attempts, we decrease the number of communities from {len(CommunityNumToNodesBeforeMerge)} to ")
     f_out.write(f"{len(CommunityNumToNodesAfterMerge)}\n")
-    print("Error caused by: ", ErrorLog)
+    print(f"Target N is: {target_n}. Stop caused by: {ErrorLog}.")
     print(f"Current number of communities is decreased from {len(CommunityNumToNodesBeforeMerge)} to {len(CommunityNumToNodesAfterMerge)}!")
 
     NewCommunityNumToNodes, CurrentResult = uf.updateCommunityNum(MergeResult)

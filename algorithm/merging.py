@@ -3,6 +3,7 @@ import InOutFunctions as iof
 import UpdateFunctions as uf
 import utils
 import EnlargeCommunity as ec
+import math
 import CommunityFunctions as ccf
 
 
@@ -14,7 +15,8 @@ def Merge():
     for s in samples:
 
         # Load verification result
-        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, _, target_n, timestep, bio_flag, height, DAG = utils.loadData(s, settings)
+        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, _, timestep, bio_flag, height, DAG = utils.loadData(s, settings)
+        target_n = math.ceil(len(G_primitive.nodes) / S_bounds[1])
         VerifyResult = iof.loadSolution(f"{out_path}/sol_after_verify.txt", s)
         CommunityNumToNodes = uf.mapCommunityToNodes(VerifyResult)
 
@@ -36,23 +38,24 @@ def Merge():
 
         # Start merging from the community with the least incoming or outgoing edges.
         print("Now try merging the communities!")
-        attempts = 10
+        attempts = 100
         MergeResult, MergeFlag, MergeErrorLog = ec.enlargeCommunityMerge(G_primitive, S_bounds, ConstraintType,
                             constraint, loop_free, priority, timestep, VerifyResult, target_n, bio_flag, height, attempts)
 
         if MergeFlag:
-            print("Merge passed according to the target N!")
+            print(f"Merge passed according to the target N: {target_n}!")
 
             # Write current merge solution into an output file
             iof.writeSolution(out_path, '/sol_after_merge.txt', G_primitive, MergeResult)
         else:
-            MergeResult = merge_final_check(G_primitive, S_bounds, MergeResult)
-            iof.reportMergeIssue(G_primitive, out_path, '/sol_after_merge.txt', MergeResult, MergeErrorLog, timestep, VerifyResult)
+            MergeResult, flag = merge_final_check(G_primitive, S_bounds, MergeResult)
+            iof.reportMergeIssue(G_primitive, out_path, '/sol_after_merge.txt', MergeResult, MergeErrorLog, timestep, VerifyResult, target_n)
 
 
 def merge_final_check(G, S_bounds, MergeResult):
     CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
     maxCommLen, maxComm = 0, ''
+    flag = False
     for tmp in CommunityNumToNodes:
         if len(CommunityNumToNodes[tmp]) > maxCommLen:
             maxCommLen = len(CommunityNumToNodes[tmp])
@@ -62,7 +65,8 @@ def merge_final_check(G, S_bounds, MergeResult):
         for node in MergeResult:
             if MergeResult[node] != maxComm:
                 MergeResult[node] = maxComm + "1"
-    return MergeResult
+        flag = True
+    return MergeResult, flag
 
 
 # Merge()
