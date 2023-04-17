@@ -122,8 +122,8 @@ def prepareMerge(totalNum, count, SearchStep, MergeResult, attempts, Result, con
         count = 1
         totalNum = ll
 
-    print(f"There are {attempts} attempts left: Current number of communities: {ll}!")
-    print(f"Current number of communities: {totalNum}, stay in this number for {count} times")
+    # print(f"There are {attempts} attempts left: Current number of communities: {ll}!")
+    # print(f"Current number of communities: {totalNum}, stay in this number for {count} times")
     # If no change has been done to the MergeResult after this loop, then it will go to the same merging solution as the SearchStep=1.
     # We can skip this attempt because we have known the answer yet.
     if count == 3:
@@ -133,7 +133,7 @@ def prepareMerge(totalNum, count, SearchStep, MergeResult, attempts, Result, con
         count = 1
         SearchStep += 1
         initial_flag = True
-        if attempts>0:
+        if attempts > 0:
             print(attempts, "Try another way to merge!")
         else:
             print("No more attempts left!")
@@ -197,6 +197,7 @@ def tryMerge(G, MergeResult, constraint, bio_flag, height, S_bounds, timestep, l
         ll = len(uf.mapCommunityToNodes(MergeResult))
     return MergeResultList, MergeResult, ll
 
+
 # Merging Method 1: Enlarge Communities in the Merge stage using two level neighbor propaganda checking. (every time merge one or two communities)
 def enlargeCommunityMerge(G, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, Result, target_n, bio_flag, height, attempts):
     MergeResult = copy.deepcopy(Result)
@@ -233,7 +234,10 @@ def enlargeCommunityMerge_chris(G, S_bounds, constraint, loop_free, timestep, Re
     d = {}
     for i in range(len(MergeResultList)):
         ll = len(collections.Counter(list(MergeResultList[i].values())))
-        d[i] = ll
+        if S_bounds[1] == 3 and ll < 80:
+            d[i] = ll
+        if S_bounds[1] == 4 and ll < 75:
+            d[i] = ll
 
     print(f"{len(d)} possible solutions to be checked for edge coloring assignment!")
     tmp = sorted(d.items(), key=lambda x: (x[1], x[0]), reverse=False)

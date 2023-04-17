@@ -41,7 +41,12 @@ def VerifyAndMerge():
         VerifyResult = inf.createInitialCommunities(G_primitive)
 
         # Start to merge in different max channels for cell-cell communication
-        for upperbound in range(4, 6):
+        minx, maxx = 5, 6
+        if S_bounds[1] == 3:
+            minx, maxx = 4, 9
+        if S_bounds[1] == 4:
+            minx, maxx = 4, 9
+        for upperbound in range(minx, maxx):
             constraint[0] = upperbound
             ColorOptions = ["black", "gray"]
             for i in range(upperbound):
@@ -59,7 +64,7 @@ def VerifyAndMerge():
 
                 # Start merging from the community with the least incoming or outgoing edges.
                 # Try different searching order may find more optimal solution and get rid of the local optimal
-                attempts = 1
+                attempts = 150
                 MergeResult, MergeFlag, MergeErrorLog, ColorFlag, DAG_new = ec.enlargeCommunityMerge_chris(G_primitive, S_bounds,
                                     constraint, loop_free, timestep2, VerifyResult, target_n, bio_flag, height, DAG, ColorOptions, attempts)
 
