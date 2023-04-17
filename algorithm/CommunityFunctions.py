@@ -3,6 +3,7 @@ import networkx as nx
 import UpdateFunctions as uf
 import copy
 import CalculationFunctions as calf
+import random
 
 
 # check indegree/outdegree constraints for a given community
@@ -304,11 +305,22 @@ def findMergeCommunities(G, result, constraint, bio_flag, initial_flag, SearchSt
 # Change the order of the sorted merge communities list
 def changeOrder(l, step):
     ll = {}
+    N = len(l) // 5
     count = 1
     for ele in l:
-        if count == step:
+        # if reward is too small, don't add it.
+        if count == step and l[ele] > 3:
             ll[ele] = l[ele]
             count = 1
         else:
             count += 1
+    # If the total number of ll is smaller than N, add element with positive reward to achieve N.
+    if len(ll) < N:
+        i = len(ll)
+        while i < N:
+            rv = str(random.randint(1, len(l)))
+            if rv not in ll.keys():
+                ll[rv] = l[rv]
+                i += 1
+
     return ll

@@ -41,12 +41,10 @@ def VerifyAndMerge():
         VerifyResult = inf.createInitialCommunities(G_primitive)
 
         # Start to merge in different max channels for cell-cell communication
-        minx, maxx = 5, 6
+        urange = range(4, 10)
         if S_bounds[1] == 3:
-            minx, maxx = 4, 9
-        if S_bounds[1] == 4:
-            minx, maxx = 4, 9
-        for upperbound in range(minx, maxx):
+            urange = range(9, 10)
+        for upperbound in urange:
             constraint[0] = upperbound
             ColorOptions = ["black", "gray"]
             for i in range(upperbound):
@@ -60,30 +58,39 @@ def VerifyAndMerge():
                 print("All nodes can be put in one community!")
                 print(upperbound, 1)
                 print()
+
             else:
 
                 # Start merging from the community with the least incoming or outgoing edges.
                 # Try different searching order may find more optimal solution and get rid of the local optimal
-                attempts = 150
+                attempts = 130
                 MergeResult, MergeFlag, MergeErrorLog, ColorFlag, DAG_new = ec.enlargeCommunityMerge_chris(G_primitive, S_bounds,
                                     constraint, loop_free, timestep2, VerifyResult, target_n, bio_flag, height, DAG, ColorOptions, attempts)
 
+                # Check if the new result is better than the previous one, if not, don't save it and go to the next one
+                if len(res) > 0 and res[-1] != 'inf' and len(collections.Counter(list(MergeResult.values()))) >= res[-1]:
+                    continue
                 if MergeFlag:
+
                     # Write current merge solution into an output file
                     iof.writeSolution(out_path, f'/sol_after_merge_{S_bounds[1]}_{upperbound}.txt', G_primitive, MergeResult)
                     iof.writeColoredEdgeList(out_path, f'/sol_after_merge_{S_bounds[1]}_{upperbound}_colored.txt', DAG_new)
                 else:
                     MergeResult, flag = MG.merge_final_check(G_primitive, S_bounds, MergeResult)
-                    # if flag:
-                    CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
-                    ColorFlag, DAG_new = ca.ColorAssignment(MergeResult, CommunityNumToNodes, G_primitive, DAG, bio_flag, ColorOptions)
+                    if flag:
+                        CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
+                        ColorFlag, DAG_new = ca.ColorAssignment(MergeResult, CommunityNumToNodes, G_primitive, DAG, bio_flag, ColorOptions)
                     if ColorFlag:
                         iof.reportMergeIssue(G_primitive, out_path, f'/sol_after_merge_{S_bounds[1]}_{upperbound}.txt', MergeResult, MergeErrorLog, timestep2, VerifyResult, target_n)
                         iof.writeColoredEdgeList(out_path, f'/sol_after_merge_{S_bounds[1]}_{upperbound}_colored.txt', DAG_new)
+
                 if ColorFlag:
                     res.append(len(uf.mapCommunityToNodes(MergeResult)))
                 else:
                     res.append('inf')
+            if target_n == res[-1]:
+                print("Target Achieved! Here is the descending total number path:", res)
+                break
         ress.append(res)
 
     # Save the result into a csv file

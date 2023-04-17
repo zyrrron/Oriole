@@ -91,8 +91,8 @@ def findColor(MergeResult, CommunityNumToNodes, DAG, ColorOptions, CommEdgeColor
         # Assign the color to the current edge, update CommEdgeColorInfo, go to the next edge
         CommEdgeColorInfo = assignColorForEdge(u, v, CommEdgeColorInfo, ComU, ComV, Color)
 
-        # Check if the current color works for the chosen edge (u, v), the depth of recursion in propaganda checking is set to 10
-        depth = 10
+        # Check if the current color works for the chosen edge (u, v), the depth of recursion in propaganda checking is set to 20
+        depth = 20
         NewColorInfo = copy.deepcopy(CommEdgeColorInfo)
 
         if PropagandaChecking(u, v, MergeResult, CommunityNumToNodes, NewColorInfo, ColorOptions, bio_flag, depth):
@@ -155,7 +155,7 @@ def ColorAssignment(MergeResult, CommunityNumToNodes, G_primitive, DAG, bio_flag
     CommEdgeColorInfo, CellToCellEdges = createColorInfo(MergeResult, CommunityNumToNodes, G_primitive)
 
     # Color the cell-cell edges
-    timestep = 100000
+    timestep = 1000
     CommEdgeColorInfo, ColorFlag, _ = findColor(MergeResult, CommunityNumToNodes, DAG, ColorOptions[2:], CommEdgeColorInfo, CellToCellEdges, timestep,
                                              bio_flag)
 
