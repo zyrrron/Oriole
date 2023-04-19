@@ -135,7 +135,7 @@ def enlargeCommunity(G, Community, S_bounds, ConstraintType, constraint, loop_fr
 
 def prepareMerge(totalNum, count, SearchStep, MergeResult, attempts, Result, constraint, bio_flag, G, S_bounds):
 
-    ub = 10
+    ub = 5
     initial_flag = False
     CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
     ll = len(CommunityNumToNodes)
