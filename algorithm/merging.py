@@ -39,8 +39,9 @@ def Merge():
         # Start merging from the community with the least incoming or outgoing edges.
         print("Now try merging the communities!")
         attempts = 5
+        height2 = 2
         MergeResult, MergeFlag, MergeErrorLog = ec.enlargeCommunityMerge(G_primitive, S_bounds, ConstraintType,
-                            constraint, loop_free, priority, timestep, VerifyResult, target_n, bio_flag, height, attempts)
+                            constraint, loop_free, priority, timestep, VerifyResult, target_n, bio_flag, height, height2, attempts)
 
         if MergeFlag:
             print(f"Merge passed according to the target N: {target_n}!")

@@ -202,7 +202,7 @@ def startColoring(ColorOptions):
 
 
 # Assume we have totally 4 different cell-cell communication molecular, set 4 as the input parameter. Then we will give the solution with numbers.
-# ColorOptions = ["black", "gray", "color1", "color2", "color3","color4"]
-# startColoring(ColorOptions)
+ColorOptions = ["black", "gray", "color1", "color2", "color3","color4"]
+startColoring(ColorOptions)
 
 

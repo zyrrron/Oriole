@@ -61,9 +61,11 @@ def VerifyAndMerge():
 
                 # Start merging from the community with the least incoming or outgoing edges.
                 # Try different searching order may find more optimal solution and get rid of the local optimal
-                attempts = 20
+                # height2 is used for combining the unconnected cells, stop in a limited searching height.
+                attempts = 1
+                height2 = 5
                 MergeResult, MergeFlag, MergeErrorLog, ColorFlag, DAG_new = ec.enlargeCommunityMerge_chris(G_primitive, S_bounds,
-                                    constraint, loop_free, timestep2, VerifyResult, target_n, bio_flag, height, DAG, ColorOptions, attempts)
+                                    constraint, loop_free, timestep2, VerifyResult, target_n, bio_flag, height, height2, DAG, ColorOptions, attempts)
 
                 # Check if the new result is better than the previous one, if not, don't save it and go to the next one
                 if len(res) > 0 and res[-1] != 'inf' and len(collections.Counter(list(MergeResult.values()))) >= res[-1]:

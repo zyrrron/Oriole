@@ -276,7 +276,7 @@ def loadData(s, settings):
 	out_path = settings[s]['output_path']
 	timestep = 10000000000
 	timestep2 = 100000
-	height = 300
+	height = 50
 	begin_time_current_step = time.time()
 
 	# load graph
