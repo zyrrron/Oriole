@@ -1,2 +1,2 @@
-Target N is: 17. Error caused by: {'Time runs out'}. 
-After 100000 steps merge attempts, we decrease the number of communities from 131 to 63
+Target N is: 17. Stop caused by: {'Time runs out'}. 
+After 100000 steps merge attempts, we decrease the number of communities from 131 to 62

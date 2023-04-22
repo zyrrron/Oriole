@@ -190,8 +190,6 @@ def tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, ti
     MergeResultList = []
     SearchStep = 1
     ll = len(uf.mapCommunityToNodes(MergeResult))
-    if attempts > ll:
-        attempts = ll
 
     # There are 2 possible conditions to return back
     # 1. meet target n constraint
@@ -224,7 +222,7 @@ def tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, ti
                     MergeResult = MergeResult_updated
                     break
 
-            timestep -= 1
+        timestep -= 1
         # After leaving from the for loop, we may have a successful merge or not.
         # Keep checking until all communities are checked.
 
@@ -233,7 +231,7 @@ def tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, ti
 
 
 # Merging Method 1: Enlarge Communities in the Merge stage using two level neighbor propaganda checking. (every time merge one or two communities)
-def enlargeCommunityMerge(G, S_bounds, ConstraintType, constraint, loop_free, priority, timestep, Result, target_n, bio_flag, height, height2, attempts):
+def enlargeCommunityMerge(G, S_bounds, constraint, loop_free, priority, timestep, Result, target_n, bio_flag, height, height2, attempts):
     MergeResult = copy.deepcopy(Result)
     MergeResultList, MergeResult, ll = tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, timestep, loop_free,target_n, Result, attempts)
 
@@ -271,7 +269,11 @@ def enlargeCommunityMerge_chris(G, S_bounds, constraint, loop_free, timestep, Re
 
         # calculate the number of cells now
         ll = len(collections.Counter(list(MergeResultList[i].values())))
-        d[i] = ll
+        if S_bounds[1] == 8:
+            if 60 < ll < 64:
+                d[i] = ll
+        elif ll < 80:
+            d[i] = ll
 
     # Sort the given dictionary
     print(f"{len(d)} possible solutions to be checked for edge coloring assignment!")

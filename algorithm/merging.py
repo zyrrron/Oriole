@@ -40,7 +40,7 @@ def Merge():
         print("Now try merging the communities!")
         attempts = 5
         height2 = 2
-        MergeResult, MergeFlag, MergeErrorLog = ec.enlargeCommunityMerge(G_primitive, S_bounds, ConstraintType,
+        MergeResult, MergeFlag, MergeErrorLog = ec.enlargeCommunityMerge(G_primitive, S_bounds,
                             constraint, loop_free, priority, timestep, VerifyResult, target_n, bio_flag, height, height2, attempts)
 
         if MergeFlag:
