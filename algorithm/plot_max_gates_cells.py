@@ -47,9 +47,9 @@ for i in range(len(transposed_y)):
     plt.plot(range(1,132), transposed_y[i], color=colors[i], label=f'Max cell-cell edges: {i+1}')
 
 # Adding labels to the graph
-plt.xlabel('Max cell-cell edges')
+plt.xlabel('Max gates per cell')
 plt.ylabel('cells')
-plt.title('cell-cell edge <-> cells')
+plt.title('max gate <-> cells')
 
 # Adding a legend
 plt.legend()
