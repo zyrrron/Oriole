@@ -41,7 +41,7 @@ plt.figure(1)
 plt.figure(figsize=(20,10))
 # Plotting the graph: color means gate number, x means max cell-cell edge
 n = len(transposed_y)
-colors = plt.cm.Set1(np.linspace(0, 1, n))
+colors = plt.cm.Set3(np.linspace(0, 1, n))
 for i in range(len(transposed_y)):
 
     plt.plot(range(1,132), transposed_y[i], color=colors[i], label=f'Max cell-cell edges: {i+1}')
