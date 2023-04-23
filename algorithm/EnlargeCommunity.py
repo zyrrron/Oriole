@@ -165,7 +165,8 @@ def prepareMerge(totalNum, count, SearchStep, MergeResult, attempts, Result, con
         if attempts > 0:
             totalNum = len(uf.mapCommunityToNodes(MergeResult))
             attempts -= 1
-            print(f"There are {attempts} attempts left. ", f"{totalNum} cells in total. ", "Try another way to merge!")
+            if (attempts+1) % 100 == 0:
+                print(f"There are {attempts} attempts left. ", f"{totalNum} cells in total. ", "Try another way to merge!")
             if attempts <= 0:
                 print("No more attempts left!")
             else:
@@ -269,11 +270,9 @@ def enlargeCommunityMerge_chris(G, S_bounds, constraint, loop_free, timestep, Re
 
         # calculate the number of cells now
         ll = len(collections.Counter(list(MergeResultList[i].values())))
-        if S_bounds[1] == 8:
-            if 60 < ll < 64:
-                d[i] = ll
-        elif ll < 80:
+        if 60 < ll < 64:
             d[i] = ll
+
 
     # Sort the given dictionary
     print(f"{len(d)} possible solutions to be checked for edge coloring assignment!")
@@ -281,11 +280,14 @@ def enlargeCommunityMerge_chris(G, S_bounds, constraint, loop_free, timestep, Re
     tmp = dict(tmp)
 
     # If we can find a solution with all edge colored correctly, then return the merge result. Otherwise, try another one in the merge result list
+    currentlengh = len(CommunityNumToNodes)
     for i in tmp:
         res = MergeResultList[i]
         CommunityNumToNodes = uf.mapCommunityToNodes(res)
 
-        print(i, len(CommunityNumToNodes))
+        if currentlengh != len(CommunityNumToNodes):
+            currentlengh = len(CommunityNumToNodes)
+            print(f"Now check the result with {len(CommunityNumToNodes)} communities")
         ColorFlag, DAG = eco.ColorAssignment(res, CommunityNumToNodes, G, DAG, bio_flag, ColorOptions)
         if ColorFlag:
             print("Find solution can be colored correctly!")
