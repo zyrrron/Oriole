@@ -44,14 +44,14 @@ n = len(transposed_y)
 colors = plt.cm.Set3(np.linspace(0, 1, n))
 for i in range(len(transposed_y)):
 
-    plt.plot(range(1,132), transposed_y[i], color=colors[i], label=f'Max cell-cell edges: {i+1}')
+    plt.plot(range(1,132), transposed_y[i], color=colors[i], label=f'Max intercellular edges per cell: {i+1}')
 
 # Adding labels to the graph
 plt.xlabel('Max gates per cell')
 plt.ylabel('cells')
-plt.title('max gate <-> cells')
+plt.title('Max gate <-> cells')
 
 # Adding a legend
-plt.legend()
+plt.legend(bbox_to_anchor=(0.9, 1.0), loc='upper left')
 plt.savefig('../results/bionetwork/chris_group/chris_new_requirement/Max gates per cell.png')
 plt.show()
