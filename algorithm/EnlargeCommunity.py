@@ -270,7 +270,7 @@ def enlargeCommunityMerge_chris(G, S_bounds, constraint, loop_free, timestep, Re
 
         # calculate the number of cells now
         ll = len(collections.Counter(list(MergeResultList[i].values())))
-        if 60 < ll < 64:
+        if ll < 64:
             d[i] = ll
 
 
