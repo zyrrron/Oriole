@@ -276,6 +276,7 @@ def loadData(s, settings):
 	out_path = settings[s]['output_path']
 	timestep = 10000000000
 	timestep2 = 10000
+	# height: searching depth for each community merging propaganda checking
 	height = 50
 	begin_time_current_step = time.time()
 

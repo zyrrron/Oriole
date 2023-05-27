@@ -38,6 +38,8 @@ def Merge():
 
         # Start merging from the community with the least incoming or outgoing edges.
         print("Now try merging the communities!")
+        # "attempts" means the number of possible merging paths we will collect, note that each path includes multiple partition results
+        # "height2": the depth of searching possible merging solution for un-neighbor communities in every propaganda checking
         attempts = 5
         height2 = 2
         MergeResult, MergeFlag, MergeErrorLog = ec.enlargeCommunityMerge(G_primitive, S_bounds,
