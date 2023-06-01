@@ -1,4 +1,5 @@
 import networkx as nx
+import utils
 
 
 # Find all incoming edges to node N
@@ -33,4 +34,12 @@ def findNeighborEdges(u, v, MergeResult, CommunityNumToNodes, CommEdgeColorInfo,
 
     edges.remove((u,v))
     return sorted(list(edges))
+
+
+def findIOEdges(G_primitive, DAG):
+
+    edges1 = set(G_primitive.edges())
+    edges2 = set(DAG.edges())
+    different_edges = edges1.symmetric_difference(edges2)
+    return different_edges
 
