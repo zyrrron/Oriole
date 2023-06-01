@@ -1,0 +1,14 @@
+read_verilog ./Circuits/Parity/parity8.v
+flatten
+splitnets -ports
+hierarchy -auto-top
+proc
+techmap
+opt
+abc -g NOR
+opt
+hierarchy -auto-top
+opt_clean -purge
+show -format pdf -prefix ./Circuits/Parity/parity8/parity8_yosys
+write_edif ./Circuits/Parity/parity8/parity8.edif
+write_json ./Circuits/Parity/parity8/parity8.json

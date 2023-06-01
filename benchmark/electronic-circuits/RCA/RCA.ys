@@ -1,0 +1,14 @@
+read_verilog ./Circuits/RCA/RCA.v
+flatten
+splitnets -ports
+hierarchy -auto-top
+proc
+techmap
+opt
+abc -g NOR
+opt
+hierarchy -auto-top
+opt_clean -purge
+show -format pdf -prefix ./Circuits/RCA/RCA/RCA_yosys
+write_edif ./Circuits/RCA/RCA/RCA.edif
+write_json ./Circuits/RCA/RCA/RCA.json

@@ -1,0 +1,14 @@
+read_verilog 7input_45.v
+flatten
+splitnets -ports
+hierarchy -auto-top
+proc
+techmap
+opt
+abc -g NOR
+opt
+hierarchy -auto-top
+opt_clean -purge
+show -format pdf -prefix ./45/7input_45_yosys
+write_edif ./45/7input_45.edif
+write_json ./45/7input_45.json

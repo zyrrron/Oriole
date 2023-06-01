@@ -1,0 +1,14 @@
+read_verilog 7input_85.v
+flatten
+splitnets -ports
+hierarchy -auto-top
+proc
+techmap
+opt
+abc -g NOR
+opt
+hierarchy -auto-top
+opt_clean -purge
+show -format pdf -prefix ./85/7input_85_yosys
+write_edif ./85/7input_85.edif
+write_json ./85/7input_85.json

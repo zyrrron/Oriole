@@ -1,0 +1,14 @@
+read_verilog 6input_87.v
+flatten
+splitnets -ports
+hierarchy -auto-top
+proc
+techmap
+opt
+abc -g NOR
+opt
+hierarchy -auto-top
+opt_clean -purge
+show -format pdf -prefix ./87/6input_87_yosys
+write_edif ./87/6input_87.edif
+write_json ./87/6input_87.json

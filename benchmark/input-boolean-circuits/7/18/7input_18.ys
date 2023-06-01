@@ -1,0 +1,14 @@
+read_verilog 7input_18.v
+flatten
+splitnets -ports
+hierarchy -auto-top
+proc
+techmap
+opt
+abc -g NOR
+opt
+hierarchy -auto-top
+opt_clean -purge
+show -format pdf -prefix ./18/7input_18_yosys
+write_edif ./18/7input_18.edif
+write_json ./18/7input_18.json

@@ -1,0 +1,17 @@
+digraph "x6" {
+label="x6";
+rankdir="LR";
+remincross=true;
+n1 [ shape=octagon, label="a", color="black", fontcolor="black" ];
+n2 [ shape=octagon, label="b", color="black", fontcolor="black" ];
+n3 [ shape=octagon, label="c", color="black", fontcolor="black" ];
+n4 [ shape=octagon, label="d", color="black", fontcolor="black" ];
+n5 [ shape=octagon, label="e", color="black", fontcolor="black" ];
+n6 [ shape=octagon, label="f", color="black", fontcolor="black" ];
+n7 [ shape=octagon, label="g", color="black", fontcolor="black" ];
+n8 [ shape=octagon, label="out", color="black", fontcolor="black" ];
+v0 [ label="1'0" ];
+x1 [shape=box, style=rounded, label="BUF"];
+x1:e:e -> n8:w [color="black", label=""];
+v0:e -> x1:w:w [color="black", label=""];
+}

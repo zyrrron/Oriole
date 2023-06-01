@@ -1,0 +1,105 @@
+{
+  "creator": "Yosys 0.9 (git sha1 UNKNOWN, clang 12.0.0 -fPIC -Os)",
+  "modules": {
+    "x6": {
+      "attributes": {
+        "top": 1,
+        "src": "7input_6.v:1"
+      },
+      "ports": {
+        "out": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "a": {
+          "direction": "input",
+          "bits": [ 2 ]
+        },
+        "b": {
+          "direction": "input",
+          "bits": [ 3 ]
+        },
+        "c": {
+          "direction": "input",
+          "bits": [ 4 ]
+        },
+        "d": {
+          "direction": "input",
+          "bits": [ 5 ]
+        },
+        "e": {
+          "direction": "input",
+          "bits": [ 6 ]
+        },
+        "f": {
+          "direction": "input",
+          "bits": [ 7 ]
+        },
+        "g": {
+          "direction": "input",
+          "bits": [ 8 ]
+        }
+      },
+      "cells": {
+      },
+      "netnames": {
+        "a": {
+          "hide_name": 0,
+          "bits": [ 2 ],
+          "attributes": {
+            "src": "7input_6.v:1"
+          }
+        },
+        "b": {
+          "hide_name": 0,
+          "bits": [ 3 ],
+          "attributes": {
+            "src": "7input_6.v:1"
+          }
+        },
+        "c": {
+          "hide_name": 0,
+          "bits": [ 4 ],
+          "attributes": {
+            "src": "7input_6.v:1"
+          }
+        },
+        "d": {
+          "hide_name": 0,
+          "bits": [ 5 ],
+          "attributes": {
+            "src": "7input_6.v:1"
+          }
+        },
+        "e": {
+          "hide_name": 0,
+          "bits": [ 6 ],
+          "attributes": {
+            "src": "7input_6.v:1"
+          }
+        },
+        "f": {
+          "hide_name": 0,
+          "bits": [ 7 ],
+          "attributes": {
+            "src": "7input_6.v:1"
+          }
+        },
+        "g": {
+          "hide_name": 0,
+          "bits": [ 8 ],
+          "attributes": {
+            "src": "7input_6.v:1"
+          }
+        },
+        "out": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "7input_6.v:1"
+          }
+        }
+      }
+    }
+  }
+}

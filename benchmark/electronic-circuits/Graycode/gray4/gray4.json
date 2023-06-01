@@ -1,0 +1,120 @@
+{
+  "creator": "Yosys 0.9 (git sha1 UNKNOWN, clang 12.0.0 -fPIC -Os)",
+  "modules": {
+    "binary2gray_4": {
+      "attributes": {
+        "top": 1,
+        "src": "./Circuits/Graycode/gray4.v:3"
+      },
+      "ports": {
+        "binary[0]": {
+          "direction": "input",
+          "bits": [ 2 ]
+        },
+        "binary[1]": {
+          "direction": "input",
+          "bits": [ 3 ]
+        },
+        "binary[2]": {
+          "direction": "input",
+          "bits": [ 4 ]
+        },
+        "binary[3]": {
+          "direction": "input",
+          "bits": [ 5 ]
+        },
+        "gray[0]": {
+          "direction": "output",
+          "bits": [ 6 ]
+        },
+        "gray[1]": {
+          "direction": "output",
+          "bits": [ 7 ]
+        },
+        "gray[2]": {
+          "direction": "output",
+          "bits": [ 8 ]
+        },
+        "gray[3]": {
+          "direction": "output",
+          "bits": [ 9 ]
+        }
+      },
+      "cells": {
+        "bin2gray": {
+          "hide_name": 0,
+          "type": "binary2gray",
+          "parameters": {
+            "N": 4
+          },
+          "attributes": {
+            "module_not_derived": 1,
+            "src": "./Circuits/Graycode/gray4.v:5"
+          },
+          "connections": {
+            "binary": [ 2, 3, 4, 5 ],
+            "gray": [ 6, 7, 8, 9 ]
+          }
+        }
+      },
+      "netnames": {
+        "binary[0]": {
+          "hide_name": 0,
+          "bits": [ 2 ],
+          "attributes": {
+            "src": "./Circuits/Graycode/gray4.v:3"
+          }
+        },
+        "binary[1]": {
+          "hide_name": 0,
+          "bits": [ 3 ],
+          "attributes": {
+            "src": "./Circuits/Graycode/gray4.v:3"
+          }
+        },
+        "binary[2]": {
+          "hide_name": 0,
+          "bits": [ 4 ],
+          "attributes": {
+            "src": "./Circuits/Graycode/gray4.v:3"
+          }
+        },
+        "binary[3]": {
+          "hide_name": 0,
+          "bits": [ 5 ],
+          "attributes": {
+            "src": "./Circuits/Graycode/gray4.v:3"
+          }
+        },
+        "gray[0]": {
+          "hide_name": 0,
+          "bits": [ 6 ],
+          "attributes": {
+            "src": "./Circuits/Graycode/gray4.v:4"
+          }
+        },
+        "gray[1]": {
+          "hide_name": 0,
+          "bits": [ 7 ],
+          "attributes": {
+            "src": "./Circuits/Graycode/gray4.v:4"
+          }
+        },
+        "gray[2]": {
+          "hide_name": 0,
+          "bits": [ 8 ],
+          "attributes": {
+            "src": "./Circuits/Graycode/gray4.v:4"
+          }
+        },
+        "gray[3]": {
+          "hide_name": 0,
+          "bits": [ 9 ],
+          "attributes": {
+            "src": "./Circuits/Graycode/gray4.v:4"
+          }
+        }
+      }
+    }
+  }
+}

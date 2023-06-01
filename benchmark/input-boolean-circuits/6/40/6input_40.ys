@@ -1,0 +1,14 @@
+read_verilog 6input_40.v
+flatten
+splitnets -ports
+hierarchy -auto-top
+proc
+techmap
+opt
+abc -g NOR
+opt
+hierarchy -auto-top
+opt_clean -purge
+show -format pdf -prefix ./40/6input_40_yosys
+write_edif ./40/6input_40.edif
+write_json ./40/6input_40.json

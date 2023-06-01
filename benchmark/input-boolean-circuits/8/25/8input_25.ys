@@ -1,0 +1,14 @@
+read_verilog 8input_25.v
+flatten
+splitnets -ports
+hierarchy -auto-top
+proc
+techmap
+opt
+abc -g NOR
+opt
+hierarchy -auto-top
+opt_clean -purge
+show -format pdf -prefix ./25/8input_25_yosys
+write_edif ./25/8input_25.edif
+write_json ./25/8input_25.json

@@ -1,0 +1,26 @@
+digraph "binary2gray_4" {
+label="binary2gray_4";
+rankdir="LR";
+remincross=true;
+n1 [ shape=octagon, label="binary[0]", color="black", fontcolor="black" ];
+n2 [ shape=octagon, label="binary[1]", color="black", fontcolor="black" ];
+n3 [ shape=octagon, label="binary[2]", color="black", fontcolor="black" ];
+n4 [ shape=octagon, label="binary[3]", color="black", fontcolor="black" ];
+n5 [ shape=octagon, label="gray[0]", color="black", fontcolor="black" ];
+n6 [ shape=octagon, label="gray[1]", color="black", fontcolor="black" ];
+n7 [ shape=octagon, label="gray[2]", color="black", fontcolor="black" ];
+n8 [ shape=octagon, label="gray[3]", color="black", fontcolor="black" ];
+c11 [ shape=record, label="{{<p9> binary|<p10> gray}|bin2gray\nbinary2gray|{}}" ];
+x0 [ shape=record, style=rounded, label="<s3> 0:0 - 3:3 |<s2> 0:0 - 2:2 |<s1> 0:0 - 1:1 |<s0> 0:0 - 0:0 " ];
+x0:e -> c11:p9:w [arrowhead=odiamond, arrowtail=odiamond, dir=both, color="black", style="setlinewidth(3)", label=""];
+x1 [ shape=record, style=rounded, label="<s3> 0:0 - 3:3 |<s2> 0:0 - 2:2 |<s1> 0:0 - 1:1 |<s0> 0:0 - 0:0 " ];
+x1:e -> c11:p10:w [arrowhead=odiamond, arrowtail=odiamond, dir=both, color="black", style="setlinewidth(3)", label=""];
+n1:e -> x0:s0:w [color="black", label=""];
+n2:e -> x0:s1:w [color="black", label=""];
+n3:e -> x0:s2:w [color="black", label=""];
+n4:e -> x0:s3:w [color="black", label=""];
+n5:e -> x1:s0:w [color="black", label=""];
+n6:e -> x1:s1:w [color="black", label=""];
+n7:e -> x1:s2:w [color="black", label=""];
+n8:e -> x1:s3:w [color="black", label=""];
+}

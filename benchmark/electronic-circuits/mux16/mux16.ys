@@ -1,0 +1,14 @@
+read_verilog ./Circuits/mux/mux16.v
+flatten
+splitnets -ports
+hierarchy -auto-top
+proc
+techmap
+opt
+abc -g NOR
+opt
+hierarchy -auto-top
+opt_clean -purge
+show -format pdf -prefix ./Circuits/mux/mux16/mux16_yosys
+write_edif ./Circuits/mux/mux16/mux16.edif
+write_json ./Circuits/mux/mux16/mux16.json

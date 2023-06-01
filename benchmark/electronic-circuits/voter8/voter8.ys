@@ -1,0 +1,14 @@
+read_verilog ./Circuits/Voter/voter8.v
+flatten
+splitnets -ports
+hierarchy -auto-top
+proc
+techmap
+opt
+abc -g NOR
+opt
+hierarchy -auto-top
+opt_clean -purge
+show -format pdf -prefix ./Circuits/Voter/voter8/voter8_yosys
+write_edif ./Circuits/Voter/voter8/voter8.edif
+write_json ./Circuits/Voter/voter8/voter8.json

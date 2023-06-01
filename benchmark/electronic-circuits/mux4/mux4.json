@@ -1,0 +1,177 @@
+{
+  "creator": "Yosys 0.9 (git sha1 UNKNOWN, clang 12.0.0 -fPIC -Os)",
+  "modules": {
+    "mux4": {
+      "attributes": {
+        "top": 1,
+        "src": "./Circuits/mux/mux4.v:23"
+      },
+      "ports": {
+        "D0[0]": {
+          "direction": "input",
+          "bits": [ 2 ]
+        },
+        "D0[1]": {
+          "direction": "input",
+          "bits": [ 3 ]
+        },
+        "D0[2]": {
+          "direction": "input",
+          "bits": [ 4 ]
+        },
+        "D0[3]": {
+          "direction": "input",
+          "bits": [ 5 ]
+        },
+        "D1[0]": {
+          "direction": "input",
+          "bits": [ 6 ]
+        },
+        "D1[1]": {
+          "direction": "input",
+          "bits": [ 7 ]
+        },
+        "D1[2]": {
+          "direction": "input",
+          "bits": [ 8 ]
+        },
+        "D1[3]": {
+          "direction": "input",
+          "bits": [ 9 ]
+        },
+        "S": {
+          "direction": "output",
+          "bits": [ 10 ]
+        },
+        "Y[0]": {
+          "direction": "output",
+          "bits": [ 11 ]
+        },
+        "Y[1]": {
+          "direction": "output",
+          "bits": [ 12 ]
+        },
+        "Y[2]": {
+          "direction": "output",
+          "bits": [ 13 ]
+        },
+        "Y[3]": {
+          "direction": "output",
+          "bits": [ 14 ]
+        }
+      },
+      "cells": {
+        "m": {
+          "hide_name": 0,
+          "type": "mux",
+          "parameters": {
+            "WIDTH": 4
+          },
+          "attributes": {
+            "module_not_derived": 1,
+            "src": "./Circuits/mux/mux4.v:30"
+          },
+          "connections": {
+            "D0": [ 2, 3, 4, 5 ],
+            "D1": [ 6, 7, 8, 9 ],
+            "S": [ 10 ],
+            "Y": [ 11, 12, 13, 14 ]
+          }
+        }
+      },
+      "netnames": {
+        "D0[0]": {
+          "hide_name": 0,
+          "bits": [ 2 ],
+          "attributes": {
+            "src": "./Circuits/mux/mux4.v:24"
+          }
+        },
+        "D0[1]": {
+          "hide_name": 0,
+          "bits": [ 3 ],
+          "attributes": {
+            "src": "./Circuits/mux/mux4.v:24"
+          }
+        },
+        "D0[2]": {
+          "hide_name": 0,
+          "bits": [ 4 ],
+          "attributes": {
+            "src": "./Circuits/mux/mux4.v:24"
+          }
+        },
+        "D0[3]": {
+          "hide_name": 0,
+          "bits": [ 5 ],
+          "attributes": {
+            "src": "./Circuits/mux/mux4.v:24"
+          }
+        },
+        "D1[0]": {
+          "hide_name": 0,
+          "bits": [ 6 ],
+          "attributes": {
+            "src": "./Circuits/mux/mux4.v:25"
+          }
+        },
+        "D1[1]": {
+          "hide_name": 0,
+          "bits": [ 7 ],
+          "attributes": {
+            "src": "./Circuits/mux/mux4.v:25"
+          }
+        },
+        "D1[2]": {
+          "hide_name": 0,
+          "bits": [ 8 ],
+          "attributes": {
+            "src": "./Circuits/mux/mux4.v:25"
+          }
+        },
+        "D1[3]": {
+          "hide_name": 0,
+          "bits": [ 9 ],
+          "attributes": {
+            "src": "./Circuits/mux/mux4.v:25"
+          }
+        },
+        "S": {
+          "hide_name": 0,
+          "bits": [ 10 ],
+          "attributes": {
+            "src": "./Circuits/mux/mux4.v:26"
+          }
+        },
+        "Y[0]": {
+          "hide_name": 0,
+          "bits": [ 11 ],
+          "attributes": {
+            "src": "./Circuits/mux/mux4.v:27"
+          }
+        },
+        "Y[1]": {
+          "hide_name": 0,
+          "bits": [ 12 ],
+          "attributes": {
+            "src": "./Circuits/mux/mux4.v:27"
+          }
+        },
+        "Y[2]": {
+          "hide_name": 0,
+          "bits": [ 13 ],
+          "attributes": {
+            "src": "./Circuits/mux/mux4.v:27"
+          }
+        },
+        "Y[3]": {
+          "hide_name": 0,
+          "bits": [ 14 ],
+          "attributes": {
+            "src": "./Circuits/mux/mux4.v:27"
+          }
+        }
+      }
+    }
+  }
+}
