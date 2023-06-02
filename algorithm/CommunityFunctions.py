@@ -306,15 +306,19 @@ def findMergeCommunities(G, result, constraint, bio_flag, initial_flag, SearchSt
 # Change the order of the sorted merge communities list
 def changeOrder(l, step):
     ll = {}
-    N = len(l) // 5
+
+    # N is the number of communities we will try to merge in the first step.
+    N = len(l) // 3
     count = 1
     for ele in l:
+
         # if reward is too small, don't add it.
-        if count == step and l[ele] > 3:
+        if count == step and l[ele] > 0:
             ll[ele] = l[ele]
             count = 1
         else:
             count += 1
+
     # If the total number of ll is smaller than N, add element with positive reward to achieve N.
     if len(ll) < N:
         i = len(ll)
