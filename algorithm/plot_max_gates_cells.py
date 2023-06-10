@@ -38,20 +38,23 @@ with open('../results/bionetwork/chris_group/chris_new_requirement/plot_data2.cs
 transposed_y = list(map(list, zip(*y)))
 transposed_x = list(map(list, zip(*x)))
 plt.figure(1)
-plt.figure(figsize=(20,10))
+plt.figure(figsize=(10,10))
+plt.rc('xtick', labelsize=20)
+plt.rc('ytick', labelsize=20)
 # Plotting the graph: color means gate number, x means max cell-cell edge
 n = len(transposed_y)
-colors = plt.cm.Set3(np.linspace(0, 1, n))
+colors = plt.cm.Set1(np.linspace(0, 1, n))
 for i in range(len(transposed_y)):
 
-    plt.plot(range(1,132), transposed_y[i], color=colors[i], label=f'Max intercellular edges per cell: {i+1}')
+    plt.plot(range(1,132), transposed_y[i], color=colors[i], label=f'{column_headers[i]} channels')
 
 # Adding labels to the graph
-plt.xlabel('Max gates per cell')
-plt.ylabel('cells')
-plt.title('Max gate <-> cells')
+plt.rc('legend', fontsize=20)
+plt.xlabel('Max # of gates', fontsize=40)
+plt.ylabel('# of cells', fontsize=40)
+plt.title('Max gate <-> cells', fontsize=40)
 
 # Adding a legend
-plt.legend(bbox_to_anchor=(0.9, 1.0), loc='upper left')
-plt.savefig('../results/bionetwork/chris_group/chris_new_requirement/Max gates per cell.png')
+plt.legend(loc='upper right')
+plt.savefig('../results/bionetwork/chris_group/chris_new_requirement/gates-cell.png')
 plt.show()
