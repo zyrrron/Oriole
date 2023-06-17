@@ -1,0 +1,48 @@
+name: build-openlane-sky130
+on: [push]
+
+jobs:
+  build-sha256:
+    runs-on: ubuntu-latest
+    env:
+      REPO : sha256
+      VLNV : secworks:crypto:sha256
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          path: sha256
+      - run: echo "EDALIZE_LAUNCHER=el_docker" >> $GITHUB_ENV
+      - run: pip3 install fusesoc
+      - run: fusesoc library add $REPO $GITHUB_WORKSPACE/$REPO
+      - run: fusesoc run --target=sky130 $VLNV
+
+  sim-icarus:
+    runs-on: ubuntu-latest
+    env:
+      REPO : sha256
+      VLNV : secworks:crypto:sha256
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          path: sha256
+      - run: sudo apt install iverilog
+      - run: pip3 install fusesoc
+      - run: fusesoc library add $REPO $GITHUB_WORKSPACE/$REPO
+      - run: fusesoc run --target=tb_sha256 $VLNV
+
+  lint-verilator:
+    runs-on: ubuntu-latest
+    env:
+      REPO : sha256
+      VLNV : secworks:crypto:sha256
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          path: sha256
+      - run: sudo apt install verilator
+      - run: pip3 install fusesoc
+      - run: fusesoc library add $REPO $GITHUB_WORKSPACE/$REPO
+      - run: fusesoc run --target=lint $VLNV
