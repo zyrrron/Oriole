@@ -1,0 +1,161 @@
+{
+  "creator": "Yosys 0.9 (git sha1 UNKNOWN, clang 12.0.0 -fPIC -Os)",
+  "modules": {
+    "parity": {
+      "attributes": {
+        "dynports": 1,
+        "top": 1,
+        "src": "./Circuits/Parity/parity.v:3"
+      },
+      "ports": {
+        "a[0]": {
+          "direction": "input",
+          "bits": [ 2 ]
+        },
+        "a[1]": {
+          "direction": "input",
+          "bits": [ 3 ]
+        },
+        "out": {
+          "direction": "output",
+          "bits": [ 4 ]
+        }
+      },
+      "cells": {
+        "$abc$48$auto$blifparse.cc:371:parse_blif$49": {
+          "hide_name": 1,
+          "type": "$_NOT_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 2 ],
+            "Y": [ 5 ]
+          }
+        },
+        "$abc$48$auto$blifparse.cc:371:parse_blif$50": {
+          "hide_name": 1,
+          "type": "$_NOT_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 3 ],
+            "Y": [ 6 ]
+          }
+        },
+        "$abc$48$auto$blifparse.cc:371:parse_blif$51": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 2 ],
+            "B": [ 3 ],
+            "Y": [ 7 ]
+          }
+        },
+        "$abc$48$auto$blifparse.cc:371:parse_blif$52": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 5 ],
+            "B": [ 6 ],
+            "Y": [ 8 ]
+          }
+        },
+        "$abc$48$auto$blifparse.cc:371:parse_blif$53": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 7 ],
+            "B": [ 8 ],
+            "Y": [ 4 ]
+          }
+        }
+      },
+      "netnames": {
+        "$abc$48$new_n4_": {
+          "hide_name": 1,
+          "bits": [ 5 ],
+          "attributes": {
+          }
+        },
+        "$abc$48$new_n5_": {
+          "hide_name": 1,
+          "bits": [ 6 ],
+          "attributes": {
+          }
+        },
+        "$abc$48$new_n6_": {
+          "hide_name": 1,
+          "bits": [ 7 ],
+          "attributes": {
+          }
+        },
+        "$abc$48$new_n7_": {
+          "hide_name": 1,
+          "bits": [ 8 ],
+          "attributes": {
+          }
+        },
+        "a[0]": {
+          "hide_name": 0,
+          "bits": [ 2 ],
+          "attributes": {
+            "src": "./Circuits/Parity/parity.v:5"
+          }
+        },
+        "a[1]": {
+          "hide_name": 0,
+          "bits": [ 3 ],
+          "attributes": {
+            "src": "./Circuits/Parity/parity.v:5"
+          }
+        },
+        "out": {
+          "hide_name": 0,
+          "bits": [ 4 ],
+          "attributes": {
+            "src": "./Circuits/Parity/parity.v:6"
+          }
+        }
+      }
+    }
+  }
+}

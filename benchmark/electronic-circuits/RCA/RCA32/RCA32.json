@@ -1,0 +1,1611 @@
+{
+  "creator": "Yosys 0.9 (git sha1 UNKNOWN, clang 12.0.0 -fPIC -Os)",
+  "modules": {
+    "RCA32": {
+      "attributes": {
+        "top": 1,
+        "src": "./Circuits/RCA/RCA32.v:64"
+      },
+      "ports": {
+        "A[0]": {
+          "direction": "input",
+          "bits": [ 2 ]
+        },
+        "A[1]": {
+          "direction": "input",
+          "bits": [ 3 ]
+        },
+        "A[2]": {
+          "direction": "input",
+          "bits": [ 4 ]
+        },
+        "A[3]": {
+          "direction": "input",
+          "bits": [ 5 ]
+        },
+        "A[4]": {
+          "direction": "input",
+          "bits": [ 6 ]
+        },
+        "A[5]": {
+          "direction": "input",
+          "bits": [ 7 ]
+        },
+        "A[6]": {
+          "direction": "input",
+          "bits": [ 8 ]
+        },
+        "A[7]": {
+          "direction": "input",
+          "bits": [ 9 ]
+        },
+        "A[8]": {
+          "direction": "input",
+          "bits": [ 10 ]
+        },
+        "A[9]": {
+          "direction": "input",
+          "bits": [ 11 ]
+        },
+        "A[10]": {
+          "direction": "input",
+          "bits": [ 12 ]
+        },
+        "A[11]": {
+          "direction": "input",
+          "bits": [ 13 ]
+        },
+        "A[12]": {
+          "direction": "input",
+          "bits": [ 14 ]
+        },
+        "A[13]": {
+          "direction": "input",
+          "bits": [ 15 ]
+        },
+        "A[14]": {
+          "direction": "input",
+          "bits": [ 16 ]
+        },
+        "A[15]": {
+          "direction": "input",
+          "bits": [ 17 ]
+        },
+        "A[16]": {
+          "direction": "input",
+          "bits": [ 18 ]
+        },
+        "A[17]": {
+          "direction": "input",
+          "bits": [ 19 ]
+        },
+        "A[18]": {
+          "direction": "input",
+          "bits": [ 20 ]
+        },
+        "A[19]": {
+          "direction": "input",
+          "bits": [ 21 ]
+        },
+        "A[20]": {
+          "direction": "input",
+          "bits": [ 22 ]
+        },
+        "A[21]": {
+          "direction": "input",
+          "bits": [ 23 ]
+        },
+        "A[22]": {
+          "direction": "input",
+          "bits": [ 24 ]
+        },
+        "A[23]": {
+          "direction": "input",
+          "bits": [ 25 ]
+        },
+        "A[24]": {
+          "direction": "input",
+          "bits": [ 26 ]
+        },
+        "A[25]": {
+          "direction": "input",
+          "bits": [ 27 ]
+        },
+        "A[26]": {
+          "direction": "input",
+          "bits": [ 28 ]
+        },
+        "A[27]": {
+          "direction": "input",
+          "bits": [ 29 ]
+        },
+        "A[28]": {
+          "direction": "input",
+          "bits": [ 30 ]
+        },
+        "A[29]": {
+          "direction": "input",
+          "bits": [ 31 ]
+        },
+        "A[30]": {
+          "direction": "input",
+          "bits": [ 32 ]
+        },
+        "A[31]": {
+          "direction": "input",
+          "bits": [ 33 ]
+        },
+        "B[0]": {
+          "direction": "input",
+          "bits": [ 34 ]
+        },
+        "B[1]": {
+          "direction": "input",
+          "bits": [ 35 ]
+        },
+        "B[2]": {
+          "direction": "input",
+          "bits": [ 36 ]
+        },
+        "B[3]": {
+          "direction": "input",
+          "bits": [ 37 ]
+        },
+        "B[4]": {
+          "direction": "input",
+          "bits": [ 38 ]
+        },
+        "B[5]": {
+          "direction": "input",
+          "bits": [ 39 ]
+        },
+        "B[6]": {
+          "direction": "input",
+          "bits": [ 40 ]
+        },
+        "B[7]": {
+          "direction": "input",
+          "bits": [ 41 ]
+        },
+        "B[8]": {
+          "direction": "input",
+          "bits": [ 42 ]
+        },
+        "B[9]": {
+          "direction": "input",
+          "bits": [ 43 ]
+        },
+        "B[10]": {
+          "direction": "input",
+          "bits": [ 44 ]
+        },
+        "B[11]": {
+          "direction": "input",
+          "bits": [ 45 ]
+        },
+        "B[12]": {
+          "direction": "input",
+          "bits": [ 46 ]
+        },
+        "B[13]": {
+          "direction": "input",
+          "bits": [ 47 ]
+        },
+        "B[14]": {
+          "direction": "input",
+          "bits": [ 48 ]
+        },
+        "B[15]": {
+          "direction": "input",
+          "bits": [ 49 ]
+        },
+        "B[16]": {
+          "direction": "input",
+          "bits": [ 50 ]
+        },
+        "B[17]": {
+          "direction": "input",
+          "bits": [ 51 ]
+        },
+        "B[18]": {
+          "direction": "input",
+          "bits": [ 52 ]
+        },
+        "B[19]": {
+          "direction": "input",
+          "bits": [ 53 ]
+        },
+        "B[20]": {
+          "direction": "input",
+          "bits": [ 54 ]
+        },
+        "B[21]": {
+          "direction": "input",
+          "bits": [ 55 ]
+        },
+        "B[22]": {
+          "direction": "input",
+          "bits": [ 56 ]
+        },
+        "B[23]": {
+          "direction": "input",
+          "bits": [ 57 ]
+        },
+        "B[24]": {
+          "direction": "input",
+          "bits": [ 58 ]
+        },
+        "B[25]": {
+          "direction": "input",
+          "bits": [ 59 ]
+        },
+        "B[26]": {
+          "direction": "input",
+          "bits": [ 60 ]
+        },
+        "B[27]": {
+          "direction": "input",
+          "bits": [ 61 ]
+        },
+        "B[28]": {
+          "direction": "input",
+          "bits": [ 62 ]
+        },
+        "B[29]": {
+          "direction": "input",
+          "bits": [ 63 ]
+        },
+        "B[30]": {
+          "direction": "input",
+          "bits": [ 64 ]
+        },
+        "B[31]": {
+          "direction": "input",
+          "bits": [ 65 ]
+        },
+        "Cin": {
+          "direction": "input",
+          "bits": [ 66 ]
+        },
+        "S[0]": {
+          "direction": "output",
+          "bits": [ 67 ]
+        },
+        "S[1]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[2]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[3]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[4]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[5]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[6]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[7]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[8]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[9]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[10]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[11]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[12]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[13]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[14]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[15]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[16]": {
+          "direction": "output",
+          "bits": [ 68 ]
+        },
+        "S[17]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[18]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[19]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[20]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[21]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[22]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[23]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[24]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[25]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[26]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[27]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[28]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[29]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[30]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[31]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "Cout": {
+          "direction": "output",
+          "bits": [ 69 ]
+        }
+      },
+      "cells": {
+        "$abc$97$auto$blifparse.cc:371:parse_blif$100": {
+          "hide_name": 1,
+          "type": "$_NOT_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 34 ],
+            "Y": [ 70 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$101": {
+          "hide_name": 1,
+          "type": "$_NOT_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 18 ],
+            "Y": [ 71 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$102": {
+          "hide_name": 1,
+          "type": "$_NOT_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 50 ],
+            "Y": [ 72 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$103": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 73 ],
+            "B": [ 70 ],
+            "Y": [ 74 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$104": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 2 ],
+            "B": [ 34 ],
+            "Y": [ 75 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$105": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 74 ],
+            "B": [ 75 ],
+            "Y": [ 76 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$106": {
+          "hide_name": 1,
+          "type": "$_NOT_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 76 ],
+            "Y": [ 77 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$107": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 78 ],
+            "B": [ 77 ],
+            "Y": [ 79 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$108": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 66 ],
+            "B": [ 76 ],
+            "Y": [ 80 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$109": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 79 ],
+            "B": [ 80 ],
+            "Y": [ 67 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$110": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 74 ],
+            "B": [ 79 ],
+            "Y": [ 81 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$111": {
+          "hide_name": 1,
+          "type": "$_NOT_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 81 ],
+            "Y": [ 82 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$112": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 71 ],
+            "B": [ 72 ],
+            "Y": [ 83 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$113": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 18 ],
+            "B": [ 50 ],
+            "Y": [ 84 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$114": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 83 ],
+            "B": [ 84 ],
+            "Y": [ 85 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$115": {
+          "hide_name": 1,
+          "type": "$_NOT_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 85 ],
+            "Y": [ 86 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$116": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 81 ],
+            "B": [ 86 ],
+            "Y": [ 87 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$117": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 82 ],
+            "B": [ 85 ],
+            "Y": [ 88 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$118": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 87 ],
+            "B": [ 88 ],
+            "Y": [ 68 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$119": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 83 ],
+            "B": [ 87 ],
+            "Y": [ 89 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$120": {
+          "hide_name": 1,
+          "type": "$_NOT_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 89 ],
+            "Y": [ 69 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$98": {
+          "hide_name": 1,
+          "type": "$_NOT_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 66 ],
+            "Y": [ 78 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$99": {
+          "hide_name": 1,
+          "type": "$_NOT_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 2 ],
+            "Y": [ 73 ]
+          }
+        }
+      },
+      "netnames": {
+        "$abc$97$new_n10_": {
+          "hide_name": 1,
+          "bits": [ 73 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n11_": {
+          "hide_name": 1,
+          "bits": [ 70 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n12_": {
+          "hide_name": 1,
+          "bits": [ 71 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n13_": {
+          "hide_name": 1,
+          "bits": [ 72 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n14_": {
+          "hide_name": 1,
+          "bits": [ 74 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n15_": {
+          "hide_name": 1,
+          "bits": [ 75 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n16_": {
+          "hide_name": 1,
+          "bits": [ 76 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n17_": {
+          "hide_name": 1,
+          "bits": [ 77 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n18_": {
+          "hide_name": 1,
+          "bits": [ 79 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n19_": {
+          "hide_name": 1,
+          "bits": [ 80 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n21_": {
+          "hide_name": 1,
+          "bits": [ 81 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n22_": {
+          "hide_name": 1,
+          "bits": [ 82 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n23_": {
+          "hide_name": 1,
+          "bits": [ 83 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n24_": {
+          "hide_name": 1,
+          "bits": [ 84 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n25_": {
+          "hide_name": 1,
+          "bits": [ 85 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n26_": {
+          "hide_name": 1,
+          "bits": [ 86 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n27_": {
+          "hide_name": 1,
+          "bits": [ 87 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n28_": {
+          "hide_name": 1,
+          "bits": [ 88 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n30_": {
+          "hide_name": 1,
+          "bits": [ 89 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n9_": {
+          "hide_name": 1,
+          "bits": [ 78 ],
+          "attributes": {
+          }
+        },
+        "A[0]": {
+          "hide_name": 0,
+          "bits": [ 2 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "A[10]": {
+          "hide_name": 0,
+          "bits": [ 12 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "A[11]": {
+          "hide_name": 0,
+          "bits": [ 13 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "A[12]": {
+          "hide_name": 0,
+          "bits": [ 14 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "A[13]": {
+          "hide_name": 0,
+          "bits": [ 15 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "A[14]": {
+          "hide_name": 0,
+          "bits": [ 16 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "A[15]": {
+          "hide_name": 0,
+          "bits": [ 17 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "A[16]": {
+          "hide_name": 0,
+          "bits": [ 18 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "A[17]": {
+          "hide_name": 0,
+          "bits": [ 19 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "A[18]": {
+          "hide_name": 0,
+          "bits": [ 20 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "A[19]": {
+          "hide_name": 0,
+          "bits": [ 21 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "A[1]": {
+          "hide_name": 0,
+          "bits": [ 3 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "A[20]": {
+          "hide_name": 0,
+          "bits": [ 22 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "A[21]": {
+          "hide_name": 0,
+          "bits": [ 23 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "A[22]": {
+          "hide_name": 0,
+          "bits": [ 24 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "A[23]": {
+          "hide_name": 0,
+          "bits": [ 25 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "A[24]": {
+          "hide_name": 0,
+          "bits": [ 26 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "A[25]": {
+          "hide_name": 0,
+          "bits": [ 27 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "A[26]": {
+          "hide_name": 0,
+          "bits": [ 28 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "A[27]": {
+          "hide_name": 0,
+          "bits": [ 29 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "A[28]": {
+          "hide_name": 0,
+          "bits": [ 30 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "A[29]": {
+          "hide_name": 0,
+          "bits": [ 31 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "A[2]": {
+          "hide_name": 0,
+          "bits": [ 4 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "A[30]": {
+          "hide_name": 0,
+          "bits": [ 32 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "A[31]": {
+          "hide_name": 0,
+          "bits": [ 33 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "A[3]": {
+          "hide_name": 0,
+          "bits": [ 5 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "A[4]": {
+          "hide_name": 0,
+          "bits": [ 6 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "A[5]": {
+          "hide_name": 0,
+          "bits": [ 7 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "A[6]": {
+          "hide_name": 0,
+          "bits": [ 8 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "A[7]": {
+          "hide_name": 0,
+          "bits": [ 9 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "A[8]": {
+          "hide_name": 0,
+          "bits": [ 10 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "A[9]": {
+          "hide_name": 0,
+          "bits": [ 11 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[0]": {
+          "hide_name": 0,
+          "bits": [ 34 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[10]": {
+          "hide_name": 0,
+          "bits": [ 44 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[11]": {
+          "hide_name": 0,
+          "bits": [ 45 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[12]": {
+          "hide_name": 0,
+          "bits": [ 46 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[13]": {
+          "hide_name": 0,
+          "bits": [ 47 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[14]": {
+          "hide_name": 0,
+          "bits": [ 48 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[15]": {
+          "hide_name": 0,
+          "bits": [ 49 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[16]": {
+          "hide_name": 0,
+          "bits": [ 50 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[17]": {
+          "hide_name": 0,
+          "bits": [ 51 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[18]": {
+          "hide_name": 0,
+          "bits": [ 52 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[19]": {
+          "hide_name": 0,
+          "bits": [ 53 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[1]": {
+          "hide_name": 0,
+          "bits": [ 35 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[20]": {
+          "hide_name": 0,
+          "bits": [ 54 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[21]": {
+          "hide_name": 0,
+          "bits": [ 55 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[22]": {
+          "hide_name": 0,
+          "bits": [ 56 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[23]": {
+          "hide_name": 0,
+          "bits": [ 57 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[24]": {
+          "hide_name": 0,
+          "bits": [ 58 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[25]": {
+          "hide_name": 0,
+          "bits": [ 59 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[26]": {
+          "hide_name": 0,
+          "bits": [ 60 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[27]": {
+          "hide_name": 0,
+          "bits": [ 61 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[28]": {
+          "hide_name": 0,
+          "bits": [ 62 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[29]": {
+          "hide_name": 0,
+          "bits": [ 63 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[2]": {
+          "hide_name": 0,
+          "bits": [ 36 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[30]": {
+          "hide_name": 0,
+          "bits": [ 64 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[31]": {
+          "hide_name": 0,
+          "bits": [ 65 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[3]": {
+          "hide_name": 0,
+          "bits": [ 37 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[4]": {
+          "hide_name": 0,
+          "bits": [ 38 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[5]": {
+          "hide_name": 0,
+          "bits": [ 39 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[6]": {
+          "hide_name": 0,
+          "bits": [ 40 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[7]": {
+          "hide_name": 0,
+          "bits": [ 41 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[8]": {
+          "hide_name": 0,
+          "bits": [ 42 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "B[9]": {
+          "hide_name": 0,
+          "bits": [ 43 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:65"
+          }
+        },
+        "Cin": {
+          "hide_name": 0,
+          "bits": [ 66 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:66"
+          }
+        },
+        "Cout": {
+          "hide_name": 0,
+          "bits": [ 69 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:68"
+          }
+        },
+        "S[0]": {
+          "hide_name": 0,
+          "bits": [ 67 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        },
+        "S[10]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        },
+        "S[11]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        },
+        "S[12]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        },
+        "S[13]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        },
+        "S[14]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        },
+        "S[15]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        },
+        "S[16]": {
+          "hide_name": 0,
+          "bits": [ 68 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        },
+        "S[17]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        },
+        "S[18]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        },
+        "S[19]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        },
+        "S[1]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        },
+        "S[20]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        },
+        "S[21]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        },
+        "S[22]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        },
+        "S[23]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        },
+        "S[24]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        },
+        "S[25]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        },
+        "S[26]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        },
+        "S[27]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        },
+        "S[28]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        },
+        "S[29]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        },
+        "S[2]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        },
+        "S[30]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        },
+        "S[31]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        },
+        "S[3]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        },
+        "S[4]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        },
+        "S[5]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        },
+        "S[6]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        },
+        "S[7]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        },
+        "S[8]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        },
+        "S[9]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA32.v:67"
+          }
+        }
+      }
+    }
+  }
+}

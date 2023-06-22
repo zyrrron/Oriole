@@ -1,0 +1,14 @@
+read_verilog ./Circuits/mux/mux64.v
+flatten
+splitnets -ports
+hierarchy -auto-top
+proc
+techmap
+opt
+abc -g NOR
+opt
+hierarchy -auto-top
+opt_clean -purge
+show -format pdf -prefix ./Circuits/mux/mux64/mux64_yosys
+write_edif ./Circuits/mux/mux64/mux64.edif
+write_json ./Circuits/mux/mux64/mux64.json

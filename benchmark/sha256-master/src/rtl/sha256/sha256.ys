@@ -1,0 +1,14 @@
+read_verilog ../sha256.v
+flatten
+splitnets -ports
+hierarchy -auto-top
+proc
+techmap
+opt
+abc -g NOR,AND,NAND,OR
+opt
+hierarchy -auto-top
+opt_clean -purge
+show -format pdf -prefix ../sha256/sha256_yosys
+write_edif ../sha256/sha256.edif
+write_json ../sha256/sha256.json

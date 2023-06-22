@@ -1,0 +1,819 @@
+{
+  "creator": "Yosys 0.9 (git sha1 UNKNOWN, clang 12.0.0 -fPIC -Os)",
+  "modules": {
+    "RCA8": {
+      "attributes": {
+        "top": 1,
+        "src": "./Circuits/RCA/RCA8.v:49"
+      },
+      "ports": {
+        "A[0]": {
+          "direction": "input",
+          "bits": [ 2 ]
+        },
+        "A[1]": {
+          "direction": "input",
+          "bits": [ 3 ]
+        },
+        "A[2]": {
+          "direction": "input",
+          "bits": [ 4 ]
+        },
+        "A[3]": {
+          "direction": "input",
+          "bits": [ 5 ]
+        },
+        "A[4]": {
+          "direction": "input",
+          "bits": [ 6 ]
+        },
+        "A[5]": {
+          "direction": "input",
+          "bits": [ 7 ]
+        },
+        "A[6]": {
+          "direction": "input",
+          "bits": [ 8 ]
+        },
+        "A[7]": {
+          "direction": "input",
+          "bits": [ 9 ]
+        },
+        "B[0]": {
+          "direction": "input",
+          "bits": [ 10 ]
+        },
+        "B[1]": {
+          "direction": "input",
+          "bits": [ 11 ]
+        },
+        "B[2]": {
+          "direction": "input",
+          "bits": [ 12 ]
+        },
+        "B[3]": {
+          "direction": "input",
+          "bits": [ 13 ]
+        },
+        "B[4]": {
+          "direction": "input",
+          "bits": [ 14 ]
+        },
+        "B[5]": {
+          "direction": "input",
+          "bits": [ 15 ]
+        },
+        "B[6]": {
+          "direction": "input",
+          "bits": [ 16 ]
+        },
+        "B[7]": {
+          "direction": "input",
+          "bits": [ 17 ]
+        },
+        "Cin": {
+          "direction": "input",
+          "bits": [ 18 ]
+        },
+        "S[0]": {
+          "direction": "output",
+          "bits": [ 19 ]
+        },
+        "S[1]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[2]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[3]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[4]": {
+          "direction": "output",
+          "bits": [ 20 ]
+        },
+        "S[5]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[6]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "S[7]": {
+          "direction": "output",
+          "bits": [ "0" ]
+        },
+        "Cout": {
+          "direction": "output",
+          "bits": [ 21 ]
+        }
+      },
+      "cells": {
+        "$abc$97$auto$blifparse.cc:371:parse_blif$100": {
+          "hide_name": 1,
+          "type": "$_NOT_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 10 ],
+            "Y": [ 22 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$101": {
+          "hide_name": 1,
+          "type": "$_NOT_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 6 ],
+            "Y": [ 23 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$102": {
+          "hide_name": 1,
+          "type": "$_NOT_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 14 ],
+            "Y": [ 24 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$103": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 25 ],
+            "B": [ 22 ],
+            "Y": [ 26 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$104": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 2 ],
+            "B": [ 10 ],
+            "Y": [ 27 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$105": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 26 ],
+            "B": [ 27 ],
+            "Y": [ 28 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$106": {
+          "hide_name": 1,
+          "type": "$_NOT_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 28 ],
+            "Y": [ 29 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$107": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 30 ],
+            "B": [ 29 ],
+            "Y": [ 31 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$108": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 18 ],
+            "B": [ 28 ],
+            "Y": [ 32 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$109": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 31 ],
+            "B": [ 32 ],
+            "Y": [ 19 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$110": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 26 ],
+            "B": [ 31 ],
+            "Y": [ 33 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$111": {
+          "hide_name": 1,
+          "type": "$_NOT_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 33 ],
+            "Y": [ 34 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$112": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 23 ],
+            "B": [ 24 ],
+            "Y": [ 35 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$113": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 6 ],
+            "B": [ 14 ],
+            "Y": [ 36 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$114": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 35 ],
+            "B": [ 36 ],
+            "Y": [ 37 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$115": {
+          "hide_name": 1,
+          "type": "$_NOT_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 37 ],
+            "Y": [ 38 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$116": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 33 ],
+            "B": [ 38 ],
+            "Y": [ 39 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$117": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 34 ],
+            "B": [ 37 ],
+            "Y": [ 40 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$118": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 39 ],
+            "B": [ 40 ],
+            "Y": [ 20 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$119": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 35 ],
+            "B": [ 39 ],
+            "Y": [ 41 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$120": {
+          "hide_name": 1,
+          "type": "$_NOT_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 41 ],
+            "Y": [ 21 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$98": {
+          "hide_name": 1,
+          "type": "$_NOT_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 18 ],
+            "Y": [ 30 ]
+          }
+        },
+        "$abc$97$auto$blifparse.cc:371:parse_blif$99": {
+          "hide_name": 1,
+          "type": "$_NOT_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 2 ],
+            "Y": [ 25 ]
+          }
+        }
+      },
+      "netnames": {
+        "$abc$97$new_n10_": {
+          "hide_name": 1,
+          "bits": [ 25 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n11_": {
+          "hide_name": 1,
+          "bits": [ 22 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n12_": {
+          "hide_name": 1,
+          "bits": [ 23 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n13_": {
+          "hide_name": 1,
+          "bits": [ 24 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n14_": {
+          "hide_name": 1,
+          "bits": [ 26 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n15_": {
+          "hide_name": 1,
+          "bits": [ 27 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n16_": {
+          "hide_name": 1,
+          "bits": [ 28 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n17_": {
+          "hide_name": 1,
+          "bits": [ 29 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n18_": {
+          "hide_name": 1,
+          "bits": [ 31 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n19_": {
+          "hide_name": 1,
+          "bits": [ 32 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n21_": {
+          "hide_name": 1,
+          "bits": [ 33 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n22_": {
+          "hide_name": 1,
+          "bits": [ 34 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n23_": {
+          "hide_name": 1,
+          "bits": [ 35 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n24_": {
+          "hide_name": 1,
+          "bits": [ 36 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n25_": {
+          "hide_name": 1,
+          "bits": [ 37 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n26_": {
+          "hide_name": 1,
+          "bits": [ 38 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n27_": {
+          "hide_name": 1,
+          "bits": [ 39 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n28_": {
+          "hide_name": 1,
+          "bits": [ 40 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n30_": {
+          "hide_name": 1,
+          "bits": [ 41 ],
+          "attributes": {
+          }
+        },
+        "$abc$97$new_n9_": {
+          "hide_name": 1,
+          "bits": [ 30 ],
+          "attributes": {
+          }
+        },
+        "A[0]": {
+          "hide_name": 0,
+          "bits": [ 2 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA8.v:50"
+          }
+        },
+        "A[1]": {
+          "hide_name": 0,
+          "bits": [ 3 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA8.v:50"
+          }
+        },
+        "A[2]": {
+          "hide_name": 0,
+          "bits": [ 4 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA8.v:50"
+          }
+        },
+        "A[3]": {
+          "hide_name": 0,
+          "bits": [ 5 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA8.v:50"
+          }
+        },
+        "A[4]": {
+          "hide_name": 0,
+          "bits": [ 6 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA8.v:50"
+          }
+        },
+        "A[5]": {
+          "hide_name": 0,
+          "bits": [ 7 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA8.v:50"
+          }
+        },
+        "A[6]": {
+          "hide_name": 0,
+          "bits": [ 8 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA8.v:50"
+          }
+        },
+        "A[7]": {
+          "hide_name": 0,
+          "bits": [ 9 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA8.v:50"
+          }
+        },
+        "B[0]": {
+          "hide_name": 0,
+          "bits": [ 10 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA8.v:50"
+          }
+        },
+        "B[1]": {
+          "hide_name": 0,
+          "bits": [ 11 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA8.v:50"
+          }
+        },
+        "B[2]": {
+          "hide_name": 0,
+          "bits": [ 12 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA8.v:50"
+          }
+        },
+        "B[3]": {
+          "hide_name": 0,
+          "bits": [ 13 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA8.v:50"
+          }
+        },
+        "B[4]": {
+          "hide_name": 0,
+          "bits": [ 14 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA8.v:50"
+          }
+        },
+        "B[5]": {
+          "hide_name": 0,
+          "bits": [ 15 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA8.v:50"
+          }
+        },
+        "B[6]": {
+          "hide_name": 0,
+          "bits": [ 16 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA8.v:50"
+          }
+        },
+        "B[7]": {
+          "hide_name": 0,
+          "bits": [ 17 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA8.v:50"
+          }
+        },
+        "Cin": {
+          "hide_name": 0,
+          "bits": [ 18 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA8.v:51"
+          }
+        },
+        "Cout": {
+          "hide_name": 0,
+          "bits": [ 21 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA8.v:53"
+          }
+        },
+        "S[0]": {
+          "hide_name": 0,
+          "bits": [ 19 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA8.v:52"
+          }
+        },
+        "S[1]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA8.v:52"
+          }
+        },
+        "S[2]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA8.v:52"
+          }
+        },
+        "S[3]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA8.v:52"
+          }
+        },
+        "S[4]": {
+          "hide_name": 0,
+          "bits": [ 20 ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA8.v:52"
+          }
+        },
+        "S[5]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA8.v:52"
+          }
+        },
+        "S[6]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA8.v:52"
+          }
+        },
+        "S[7]": {
+          "hide_name": 0,
+          "bits": [ "0" ],
+          "attributes": {
+            "src": "./Circuits/RCA/RCA8.v:52"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,195 @@
+{
+  "creator": "Yosys 0.25+94 (git sha1 0f2cb80a2, clang 10.0.0-4ubuntu1 -fPIC -Os)",
+  "modules": {
+    "mux4": {
+      "attributes": {
+        "top": "00000000000000000000000000000001",
+        "src": "../mux4.v:23.1-35.10"
+      },
+      "ports": {
+        "D0[0]": {
+          "direction": "input",
+          "bits": [ 2 ]
+        },
+        "D0[1]": {
+          "direction": "input",
+          "offset": 1,
+          "bits": [ 3 ]
+        },
+        "D0[2]": {
+          "direction": "input",
+          "offset": 2,
+          "bits": [ 4 ]
+        },
+        "D0[3]": {
+          "direction": "input",
+          "offset": 3,
+          "bits": [ 5 ]
+        },
+        "D1[0]": {
+          "direction": "input",
+          "bits": [ 6 ]
+        },
+        "D1[1]": {
+          "direction": "input",
+          "offset": 1,
+          "bits": [ 7 ]
+        },
+        "D1[2]": {
+          "direction": "input",
+          "offset": 2,
+          "bits": [ 8 ]
+        },
+        "D1[3]": {
+          "direction": "input",
+          "offset": 3,
+          "bits": [ 9 ]
+        },
+        "S": {
+          "direction": "output",
+          "bits": [ 10 ]
+        },
+        "Y[0]": {
+          "direction": "output",
+          "bits": [ 11 ]
+        },
+        "Y[1]": {
+          "direction": "output",
+          "offset": 1,
+          "bits": [ 12 ]
+        },
+        "Y[2]": {
+          "direction": "output",
+          "offset": 2,
+          "bits": [ 13 ]
+        },
+        "Y[3]": {
+          "direction": "output",
+          "offset": 3,
+          "bits": [ 14 ]
+        }
+      },
+      "cells": {
+        "m": {
+          "hide_name": 0,
+          "type": "mux",
+          "parameters": {
+            "WIDTH": "00000000000000000000000000000100"
+          },
+          "attributes": {
+            "module_not_derived": "00000000000000000000000000000001",
+            "src": "../mux4.v:30.22-33.16"
+          },
+          "connections": {
+            "D0": [ 2, 3, 4, 5 ],
+            "D1": [ 6, 7, 8, 9 ],
+            "S": [ 10 ],
+            "Y": [ 11, 12, 13, 14 ]
+          }
+        }
+      },
+      "netnames": {
+        "D0[0]": {
+          "hide_name": 0,
+          "bits": [ 2 ],
+          "attributes": {
+            "src": "../mux4.v:24.17-24.19"
+          }
+        },
+        "D0[1]": {
+          "hide_name": 0,
+          "bits": [ 3 ],
+          "offset": 1,
+          "attributes": {
+            "src": "../mux4.v:24.17-24.19"
+          }
+        },
+        "D0[2]": {
+          "hide_name": 0,
+          "bits": [ 4 ],
+          "offset": 2,
+          "attributes": {
+            "src": "../mux4.v:24.17-24.19"
+          }
+        },
+        "D0[3]": {
+          "hide_name": 0,
+          "bits": [ 5 ],
+          "offset": 3,
+          "attributes": {
+            "src": "../mux4.v:24.17-24.19"
+          }
+        },
+        "D1[0]": {
+          "hide_name": 0,
+          "bits": [ 6 ],
+          "attributes": {
+            "src": "../mux4.v:25.17-25.19"
+          }
+        },
+        "D1[1]": {
+          "hide_name": 0,
+          "bits": [ 7 ],
+          "offset": 1,
+          "attributes": {
+            "src": "../mux4.v:25.17-25.19"
+          }
+        },
+        "D1[2]": {
+          "hide_name": 0,
+          "bits": [ 8 ],
+          "offset": 2,
+          "attributes": {
+            "src": "../mux4.v:25.17-25.19"
+          }
+        },
+        "D1[3]": {
+          "hide_name": 0,
+          "bits": [ 9 ],
+          "offset": 3,
+          "attributes": {
+            "src": "../mux4.v:25.17-25.19"
+          }
+        },
+        "S": {
+          "hide_name": 0,
+          "bits": [ 10 ],
+          "attributes": {
+            "src": "../mux4.v:26.12-26.13"
+          }
+        },
+        "Y[0]": {
+          "hide_name": 0,
+          "bits": [ 11 ],
+          "attributes": {
+            "src": "../mux4.v:27.17-27.18"
+          }
+        },
+        "Y[1]": {
+          "hide_name": 0,
+          "bits": [ 12 ],
+          "offset": 1,
+          "attributes": {
+            "src": "../mux4.v:27.17-27.18"
+          }
+        },
+        "Y[2]": {
+          "hide_name": 0,
+          "bits": [ 13 ],
+          "offset": 2,
+          "attributes": {
+            "src": "../mux4.v:27.17-27.18"
+          }
+        },
+        "Y[3]": {
+          "hide_name": 0,
+          "bits": [ 14 ],
+          "offset": 3,
+          "attributes": {
+            "src": "../mux4.v:27.17-27.18"
+          }
+        }
+      }
+    }
+  }
+}
