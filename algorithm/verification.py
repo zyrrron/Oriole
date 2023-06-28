@@ -26,7 +26,8 @@ def Verification():
     for s in samples:
 
         # Load data and check if we can directly put all the nodes in one community
-        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, timestep, _, _, bio_flag, height,_ = utils.loadData(s, settings)
+        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, _, timestep2, \
+            bio_flag, height, DAG, height2, attempts, ub = utils.loadData(s, settings)
 
         # If the max size for one community is bigger than the current total number of the nodes, output it and continue the next sample
         if len(G_primitive.nodes) < S_bounds[1]:
@@ -50,8 +51,8 @@ def Verification():
         print("PendingCommunity: ", PendingCommunity)
 
         # Start to solve the worst case by enlarging its size
-        VerifyResult, VerifyFlag, ErrorLog, timestep = ec.enlargeCommunity(G_primitive, PendingCommunity, S_bounds, ConstraintType,
-                                                       constraint, loop_free, priority, timestep, CurrentVerifyResult, bio_flag, height)
+        VerifyResult, VerifyFlag, ErrorLog = ec.enlargeCommunity(G_primitive, PendingCommunity, S_bounds, ConstraintType,
+                                                       constraint, loop_free, priority, CurrentVerifyResult, bio_flag, ub, height)
 
         # If VerifyFlag is false, that means the graph and constraints don't pass the verification, user should change
         # it later. If it is ture, save the result. Then we go to the merging stage.

@@ -15,7 +15,7 @@ def Merge():
     for s in samples:
 
         # Load verification result
-        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, _, timestep, bio_flag, height, DAG = utils.loadData(s, settings)
+        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, _, timestep, bio_flag, height, DAG, height2, attempts, ub = utils.loadData(s, settings)
         target_n = math.ceil(len(G_primitive.nodes) / S_bounds[1])
         VerifyResult = iof.loadSolution(f"{out_path}/sol_after_verify.txt", s)
         CommunityNumToNodes = uf.mapCommunityToNodes(VerifyResult)
@@ -38,12 +38,9 @@ def Merge():
 
         # Start merging from the community with the least incoming or outgoing edges.
         print("Now try merging the communities!")
-        # "attempts" means the number of possible merging paths we will collect, note that each path includes multiple partition results
-        # "height2": the depth of searching possible merging solution for un-neighbor communities in every propaganda checking
-        attempts = 5
-        height2 = 2
+
         MergeResult, MergeFlag, MergeErrorLog = ec.enlargeCommunityMerge(G_primitive, S_bounds,
-                            constraint, loop_free, priority, timestep, VerifyResult, target_n, bio_flag, height, height2, attempts)
+                            constraint, loop_free, priority, timestep, VerifyResult, target_n, bio_flag, height, height2, attempts, ub)
 
         if MergeFlag:
             print(f"Merge passed according to the target N: {target_n}!")

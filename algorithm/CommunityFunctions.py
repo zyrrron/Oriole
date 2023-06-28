@@ -72,8 +72,8 @@ def findPropagandizedNeighborComm(G, c, CurrentResult, height, res, path, S_boun
     MergeCommList = []
     reward_Neighbors = {}
 
-    # calculate the rewards for neighbor communities for current Community c.
-    # If it keeps negative for more than 5 times continuously, stop this path.
+    # calculate the rewards for all the neighbor communities of current Community c (maybe updated in the last level).
+    # If it keeps negative for more than ub times continuously, stop this path.
     for com in Neighbors:
         if com not in path:
             save_reward = True
@@ -138,10 +138,16 @@ def findPropagandizedNeighborComm(G, c, CurrentResult, height, res, path, S_boun
         res[height] = MergeCommListStr
 
     # Search for the next level neighbors from this level neighbors one by one
+    # Combine com and c, because we want to collect the rewards of all the neighbors after updating the partition result
+    # After checking the all rewards of possible sub-group results,
     for com in MergeCommList:
         path.append(com)
-        res, rewards, path_set = findPropagandizedNeighborComm(G, com, CurrentResult, height-1, res, path, S_bound, size + len(CommunityNumToNodes[com]),
+        tempvalue = CurrentResult[com]
+        size_new = size + len(CommunityNumToNodes[com])
+        CurrentResult[com] = CurrentResult[c]
+        res, rewards, path_set = findPropagandizedNeighborComm(G, c, CurrentResult, height-1, res, path, S_bound, size_new,
                                             reward_Neighbors[com], rewards, constraint, bio_flag, path_set, ub)
+        CurrentResult[com] = tempvalue
         path.pop()
 
     return res, rewards, path_set
