@@ -62,7 +62,7 @@ def findPropagandizedNeighborComm(G, c, CurrentResult, height, res, path, S_boun
         return res, rewards, path_set
 
     CommunityNumToNodes = uf.mapCommunityToNodes(CurrentResult)
-    if size + len(CommunityNumToNodes[c]) > S_bound[1]:
+    if size >= S_bound[1]:
         return res, rewards, path_set
 
     # save the neighbor communities in this height, format is "path,current comm"
@@ -88,27 +88,12 @@ def findPropagandizedNeighborComm(G, c, CurrentResult, height, res, path, S_boun
             if tmp not in path_set:
                 path_set.add(tmp)
             else: continue
-
             reward_path_current = copy.deepcopy(reward_path)
 
-            # Get all the communities and nodes in this path.
-            CommsToBeMerged = path[1:] + [com]
-            NeighborComm = CommsToBeMerged[0]
-
-            # merge the nodes from NodesToBeMerged into the first neighbor Community, and use it in the same way as the normal neighbors
-            for cc in CommsToBeMerged:
-                for node in CommunityNumToNodes[cc]:
-                    CurrentResult[node] = NeighborComm
-
             # calculate reward for current searching path and add it into the reward_path
-            reward_current = calf.calculateRewardComm(G, NeighborComm, path[0], CurrentResult, constraint, bio_flag)
+            reward_current = calf.calculateRewardComm(G, com, path[0], CurrentResult, constraint, bio_flag) + reward_path[-1]
             reward_path_current.append(reward_current)
             reward_Neighbors[com] = reward_path_current
-
-            # backtracking
-            for p in CommsToBeMerged:
-                for node in CommunityNumToNodes[p]:
-                    CurrentResult[node] = p
 
             # If there are more than NegativeUpperBound times negative rewards continuously, stop searching in this path.
             if reward_current < -1:
@@ -125,7 +110,7 @@ def findPropagandizedNeighborComm(G, c, CurrentResult, height, res, path, S_boun
             if save_reward:
                 rewards[tmp] = reward_current
 
-                # If the reward is negative, we don't save it into rewards
+                # If the reward is less than -1, we don't save it into rewards
                 MergeCommListStr.append(tmp)
 
             # But we will save all the path has less than NegativeUpperBound continuous negative rewards
@@ -138,16 +123,19 @@ def findPropagandizedNeighborComm(G, c, CurrentResult, height, res, path, S_boun
         res[height] = MergeCommListStr
 
     # Search for the next level neighbors from this level neighbors one by one
+    # com is the community number of
     # Combine com and c, because we want to collect the rewards of all the neighbors after updating the partition result
     # After checking the all rewards of possible sub-group results,
     for com in MergeCommList:
         path.append(com)
-        tempvalue = CurrentResult[com]
         size_new = size + len(CommunityNumToNodes[com])
-        CurrentResult[com] = CurrentResult[c]
+        tempvalue = CommunityNumToNodes[com]
+        for node in CommunityNumToNodes[com]:
+            CurrentResult[node] = c
         res, rewards, path_set = findPropagandizedNeighborComm(G, c, CurrentResult, height-1, res, path, S_bound, size_new,
                                             reward_Neighbors[com], rewards, constraint, bio_flag, path_set, ub)
-        CurrentResult[com] = tempvalue
+        for node in tempvalue:
+            CurrentResult[node] = com
         path.pop()
 
     return res, rewards, path_set

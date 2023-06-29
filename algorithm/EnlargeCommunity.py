@@ -124,12 +124,17 @@ def prepareMerge(totalNum, count, SearchStep, MergeResult, attempts, Result, con
     CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
     ll = len(CommunityNumToNodes)
     MergeCommunities = {}
+
+    # assign rewards for each community before any operation, use these rewards to set the order of merging center for un-neighbor merging.
     if totalNum == ll:
         count += 1
         for c in CommunityNumToNodes:
             if len(CommunityNumToNodes[c]) < S_bounds[1]:
                 MergeCommunities[c] = len(CommunityNumToNodes[c]) + sum(constraint) - len(ccf.findIncomingEdgesComm(G, c, MergeResult, bio_flag)) -\
                                       len(ccf.findOutgoingEdgesComm(G, c, MergeResult, bio_flag))
+        # Sort
+        tmp = sorted(MergeCommunities.items(), key=lambda x: (x[1], x[0]), reverse=True)
+        MergeCommunities = dict(tmp)
     else:
         count = 1
         totalNum = ll
@@ -229,12 +234,12 @@ def enlargeCommunityMerge(G, S_bounds, constraint, loop_free, priority, timestep
 
 
 # Merging for Chris group: Every time when we decide to merge, do edge-coloring assignment first. If it fails, drop it and try next one.
-def enlargeCommunityMerge_chris(G, S_bounds, constraint, loop_free, timestep, Result, target_n, bio_flag, height, height2, DAG_original, ColorOptions, attempts):
+def enlargeCommunityMerge_chris(G, S_bounds, constraint, loop_free, timestep, Result, target_n, bio_flag, height, height2, DAG_original, ColorOptions, attempts, ub):
     DAG = copy.deepcopy(DAG_original)
     MergeResult = copy.deepcopy(Result)
     CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
     MergeResultList, MergeResult, ll = tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, timestep, loop_free, target_n, Result,
-                                                attempts)
+                                                attempts, ub)
 
     # reduce duplication in the list
     if len(MergeResult) != len(Result) or S_bounds[1] == 1:

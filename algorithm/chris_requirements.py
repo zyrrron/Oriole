@@ -27,7 +27,7 @@ def VerifyAndMerge():
         res = []
 
         # Run and load verification result
-        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, timestep1, timestep2, bio_flag, height, DAG = utils.loadData(
+        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, timestep1, timestep2, bio_flag, height, DAG, height2, attempts, ub = utils.loadData(
             s, settings)
         target_n = math.ceil(len(G_primitive.nodes) / S_bounds[1])
         print(f"Current max gate per cell is {S_bounds[1]}")
@@ -71,7 +71,7 @@ def VerifyAndMerge():
                 attempts = 500
                 height2 = 5
                 MergeResult, MergeFlag, MergeErrorLog, ColorFlag, DAG_new = ec.enlargeCommunityMerge_chris(G_primitive, S_bounds,
-                                    constraint, loop_free, timestep2, VerifyResult, target_n, bio_flag, height, height2, DAG, ColorOptions, attempts)
+                                    constraint, loop_free, timestep2, VerifyResult, target_n, bio_flag, height, height2, DAG, ColorOptions, attempts, ub)
 
                 # Check if the new result is better than the previous one, if not, don't save it and go to the next one
                 if len(res) > 0 and res[-1] != 'inf' and len(collections.Counter(list(MergeResult.values()))) >= res[-1]:

@@ -69,4 +69,4 @@ def merge_final_check(G, S_bounds, MergeResult):
     return MergeResult, flag
 
 
-# Merge()
+Merge()
