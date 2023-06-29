@@ -67,6 +67,10 @@ def findPropagandizedNeighborComm(G, c, CurrentResult, height, res, path, S_boun
 
     # save the neighbor communities in this height, format is "path,current comm"
     Neighbors = findAllNeighborsComm(G, c, CurrentResult)
+
+    # If no more neighbors for current center, return
+    if len(Neighbors) == 0:
+        return res, rewards, path_set
     Neighbors.sort()
     MergeCommListStr = []
     MergeCommList = []
