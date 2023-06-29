@@ -96,7 +96,7 @@ def enlargeCommunity(G, Community, S_bounds, ConstraintType, constraint, loop_fr
 
         # Return to the last level if it arrives to the size constraints, time constraint or current community meets all constraints
         if ccf.checkSize(CurrentResult_updated, Community) > S_bounds[1]:
-            return CurrentResult, False, {Community}
+            continue
 
         # If the current pending community is solved, then we choose the next one to deal with
         # If not, we backtrack to the scenario before adding the current neighbor node
@@ -112,10 +112,12 @@ def enlargeCommunity(G, Community, S_bounds, ConstraintType, constraint, loop_fr
 
                 # else, check the next one
                 Community = ccf.findWorstCommunity(G, PendingCommunities, CurrentResult_updated, bio_flag)
+                print("Start new pending community: ", Community)
                 CurrentResult_updated, VerifyFlag, ErrorLog = enlargeCommunity(G, Community, S_bounds, ConstraintType,
                                                                              constraint, loop_free, priority,  CurrentResult_updated, bio_flag, ub, height)
-
-    return CurrentResult_new, VerifyFlag, {"Impossible Target N"}
+        if VerifyFlag:
+            return CurrentResult_updated, VerifyFlag, ErrorLog
+    return CurrentResult_new, VerifyFlag, {f"Community {Community} cannot be solved!"}
 
 
 def prepareMerge(totalNum, count, SearchStep, MergeResult, attempts, Result, constraint, bio_flag, G, S_bounds, ub):

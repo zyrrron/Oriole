@@ -1,2 +1,1 @@
-Target N is: 3.0. Error caused by: {'Time runs out'}. 
-After 100000 steps merge attempts, we decrease the number of communities from 10 to 6
+Error caused by: {'5'}. Please check constraints and the edges connected to this node.
