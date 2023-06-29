@@ -257,6 +257,7 @@ def findWorstCommunity(G, PendingCommunities, CurrentResult, bio_flag):
         # update the worst case when a community has bigger value
         if PendingCommunities[key] > maxVal:
             maxKey = key
+            maxVal = PendingCommunities[key]
             maxEdges = len(findIncomingEdgesComm(G, key, CurrentResult, bio_flag)) + len(findOutgoingEdgesComm(G, key, CurrentResult, bio_flag))
 
         # If the number of unmet constraints is equal, choose the one has more edges connected
