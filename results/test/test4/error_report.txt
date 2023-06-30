@@ -1,1 +1,2 @@
-Error caused by: {'5'}. Please check constraints and the edges connected to this node.
+Target N is: 3. Stop caused by: {'Time runs out'}. 
+After 10000 steps merge attempts, we decrease the number of communities from 7 to 6

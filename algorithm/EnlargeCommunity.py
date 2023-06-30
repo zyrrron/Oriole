@@ -120,7 +120,8 @@ def enlargeCommunity(G, Community, S_bounds, ConstraintType, constraint, loop_fr
     return CurrentResult_new, VerifyFlag, {f"Community {Community} cannot be solved!"}
 
 
-def prepareMerge(totalNum, count, SearchStep, MergeResult, attempts, Result, constraint, bio_flag, G, S_bounds, ub):
+# In this function, we only provide the list of as-center-to-be-merged communities, in order of calculated center-merging rewards.
+def prepareMerge(totalNum, count, SearchStep, MergeResult, attempts, Result, constraint, bio_flag, G, S_bounds):
 
     CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
     ll = len(CommunityNumToNodes)
@@ -157,17 +158,17 @@ def prepareMerge(totalNum, count, SearchStep, MergeResult, attempts, Result, con
                 count = 1
                 SearchStep += 1
 
+    # Find all possible to-be-merged communities and sort them with rewards. Scan them in this order.
+    # In the initial step, searchstep will determine the communities to be merged in this step.
+    # if SearchStep == 1, all communities will be in the to-be-merged list, if it is 5, findMergeCommunities() will only return 5th, 10th, 15th,...
+    # (products of 5) elements in the original dictionary.
     if count == 1:
-        # Find all possible to-be-merged communities and sort them with rewards. Scan them in this order.
-        # In the initial step, searchstep will determine the communities to be merged in this step.
-        # if SearchStep == 1, all communities will be in the to-be-merged list, if it is 5, findMergeCommunities() will only return 5th, 10th, 15th,...
-        # (products of 5) elements in the original dictionary.
         MergeCommunities = ccf.findMergeCommunities(G, MergeResult, constraint, bio_flag, SearchStep)
 
-    return MergeCommunities, ub, totalNum, count, SearchStep, attempts, MergeResult
+    return MergeCommunities, totalNum, count, SearchStep, attempts, MergeResult
 
 
-def tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, timestep, loop_free,target_n, Result, attempts, ub):
+def tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, timestep, loop_free, Result, attempts, ub):
     totalNum = 0
     count = 1
     MergeResultList = []
@@ -179,7 +180,7 @@ def tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, ti
     # 2. meet time constraint
     while timestep >= 0 and attempts > 0:
         path_set = set()
-        MergeCommunities, ub, totalNum, count, SearchStep, attempts, MergeResult = prepareMerge(totalNum, count, SearchStep, MergeResult, attempts, Result, constraint, bio_flag, G, S_bounds, ub)
+        MergeCommunities, totalNum, count, SearchStep, attempts, MergeResult = prepareMerge(totalNum, count, SearchStep, MergeResult, attempts, Result, constraint, bio_flag, G, S_bounds)
 
         # Try to merge the communities in the order of MergeCommunities
         for Community in MergeCommunities:
@@ -214,9 +215,9 @@ def tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, ti
 
 
 # Merging Method 1: Enlarge Communities in the Merge stage using height level neighbor propaganda checking. (every time try to merge multiple communities)
-def enlargeCommunityMerge(G, S_bounds, constraint, loop_free, priority, timestep, Result, target_n, bio_flag, height, height2, attempts, ub):
+def enlargeCommunityMerge(G, S_bounds, constraint, loop_free, timestep, Result, target_n, bio_flag, height, height2, attempts, ub):
     MergeResult = copy.deepcopy(Result)
-    MergeResultList, MergeResult, ll = tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, timestep, loop_free,target_n, Result, attempts, ub)
+    MergeResultList, MergeResult, ll = tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, timestep, loop_free, Result, attempts, ub)
 
     # reduce duplication in the list
     MergeResultList = [dict(t) for t in set([tuple(d.items()) for d in MergeResultList])]
@@ -227,10 +228,11 @@ def enlargeCommunityMerge(G, S_bounds, constraint, loop_free, priority, timestep
             minval = len(tmp)
             MergeResult = res
 
+    # If the current number of communities is bigger than what we expected (target_n), return False
     if len(uf.mapCommunityToNodes(MergeResult)) <= target_n:
         return MergeResult, True, {}
     else:
-        return MergeResult, False, {"Time runs out"}
+        return MergeResult, False, {"No more attempts"}
 
 
 # Merging for Chris group: Every time when we decide to merge, do edge-coloring assignment first. If it fails, drop it and try next one.
@@ -238,7 +240,7 @@ def enlargeCommunityMerge_chris(G, S_bounds, constraint, loop_free, timestep, Re
     DAG = copy.deepcopy(DAG_original)
     MergeResult = copy.deepcopy(Result)
     CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
-    MergeResultList, MergeResult, ll = tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, timestep, loop_free, target_n, Result,
+    MergeResultList, MergeResult, ll = tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, timestep, loop_free, Result,
                                                 attempts, ub)
 
     # reduce duplication in the list
