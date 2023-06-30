@@ -156,7 +156,6 @@ def prepareMerge(totalNum, count, SearchStep, MergeResult, attempts, Result, con
                 MergeResult = copy.deepcopy(Result)
                 count = 1
                 SearchStep += 1
-                initial_flag = True
 
     if count == 1:
         # Find all possible to-be-merged communities and sort them with rewards. Scan them in this order.
