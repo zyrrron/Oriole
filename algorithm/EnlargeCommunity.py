@@ -215,7 +215,7 @@ def tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, ti
     return MergeResultList, MergeResult, ll
 
 
-# Merging Method 1: Enlarge Communities in the Merge stage using two level neighbor propaganda checking. (every time merge one or two communities)
+# Merging Method 1: Enlarge Communities in the Merge stage using height level neighbor propaganda checking. (every time try to merge multiple communities)
 def enlargeCommunityMerge(G, S_bounds, constraint, loop_free, priority, timestep, Result, target_n, bio_flag, height, height2, attempts, ub):
     MergeResult = copy.deepcopy(Result)
     MergeResultList, MergeResult, ll = tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, timestep, loop_free,target_n, Result, attempts, ub)
