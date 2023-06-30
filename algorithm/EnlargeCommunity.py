@@ -122,7 +122,6 @@ def enlargeCommunity(G, Community, S_bounds, ConstraintType, constraint, loop_fr
 
 def prepareMerge(totalNum, count, SearchStep, MergeResult, attempts, Result, constraint, bio_flag, G, S_bounds, ub):
 
-    initial_flag = False
     CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
     ll = len(CommunityNumToNodes)
     MergeCommunities = {}
@@ -164,7 +163,7 @@ def prepareMerge(totalNum, count, SearchStep, MergeResult, attempts, Result, con
         # In the initial step, searchstep will determine the communities to be merged in this step.
         # if SearchStep == 1, all communities will be in the to-be-merged list, if it is 5, findMergeCommunities() will only return 5th, 10th, 15th,...
         # (products of 5) elements in the original dictionary.
-        MergeCommunities = ccf.findMergeCommunities(G, MergeResult, constraint, bio_flag, initial_flag, SearchStep)
+        MergeCommunities = ccf.findMergeCommunities(G, MergeResult, constraint, bio_flag, SearchStep)
 
     return MergeCommunities, ub, totalNum, count, SearchStep, attempts, MergeResult
 
