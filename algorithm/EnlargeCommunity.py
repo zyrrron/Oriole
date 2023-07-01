@@ -9,15 +9,15 @@ import copy
 import UpdateFunctions as uf
 
 
-def getUnNeighborRewards(residualComm, CommunityNumToNodes, GateNum, S_bound, rewards, CommPath, Result, CenterCommunity, constraint, bio_flag, G, height):
+def getUnNeighborRewards(residualComm, CommunityNumToNodes, NodeNum, S_bound, rewards, CommPath, Result, CenterCommunity, constraint, bio_flag, G, height):
 
     # force to escape from the current recursion if we meet the max height to search
-    if height <= 0 or GateNum >= S_bound[1]:
+    if height <= 0 or NodeNum >= S_bound[1]:
         return rewards
 
     # Search for the next level
     for c in residualComm:
-        if c not in CommPath and GateNum + len(CommunityNumToNodes[c]) <= S_bound[1]:
+        if c not in CommPath and NodeNum + len(CommunityNumToNodes[c]) <= S_bound[1]:
 
             # create the comm group as the key if we find more than 1 comm can be merged
             path_sorted = sorted(CommPath + [c])
@@ -29,7 +29,7 @@ def getUnNeighborRewards(residualComm, CommunityNumToNodes, GateNum, S_bound, re
             r = calf.calculateRewardComm(G, c, CenterCommunity, Result, constraint, bio_flag)
             if r >= -1:
                 rewards[tmp] = r
-                getUnNeighborRewards(residualComm, CommunityNumToNodes, GateNum + len(CommunityNumToNodes[c]), S_bound, rewards, path_sorted, Result,
+                getUnNeighborRewards(residualComm, CommunityNumToNodes, NodeNum + len(CommunityNumToNodes[c]), S_bound, rewards, path_sorted, Result,
                                  CenterCommunity, constraint, bio_flag, G, height-1)
     return rewards
 
@@ -47,16 +47,16 @@ def prepareNeighborOrder(G, CenterCommunity, CurrentResult, constraint, bio_flag
         CommunityNumToNodes = uf.mapCommunityToNodes(CurrentResult)
         if CenterCommunity in CommunityNumToNodes and len(CommunityNumToNodes[CenterCommunity]) < S_bound[1]:
 
-            # Get all the left communities with less gates inside than upperbound. That means they still have space to merge.
+            # Get all the left communities with fewer inside nodes than upperbound. That means they still have space to merge.
             residualComm = []
             for c in CommunityNumToNodes:
                 if c != CenterCommunity and len(CommunityNumToNodes[c]) + len(CommunityNumToNodes[CenterCommunity]) <= S_bound[1]:
                     residualComm.append(c)
-            GateNum = len(CommunityNumToNodes[CenterCommunity])
+            NodeNum = len(CommunityNumToNodes[CenterCommunity])
 
             # merge communities as big as possible every time
             CommPath = [CenterCommunity]
-            rewards = getUnNeighborRewards(residualComm, CommunityNumToNodes, GateNum, S_bound, rewards, CommPath, CurrentResult_new, CenterCommunity,
+            rewards = getUnNeighborRewards(residualComm, CommunityNumToNodes, NodeNum, S_bound, rewards, CommPath, CurrentResult_new, CenterCommunity,
                                            constraint, bio_flag, G, height2)
     else:
 
@@ -161,7 +161,7 @@ def prepareMerge(totalNum, count, SearchStep, MergeResult, attempts, Result, con
     # Find all possible to-be-merged communities and sort them with rewards. Scan them in this order.
     # In the initial step, searchstep will determine the communities to be merged in this step.
     # if SearchStep == 1, all communities will be in the to-be-merged list, if it is 5, findMergeCommunities() will only return 5th, 10th, 15th,...
-    # (products of 5) elements in the original dictionary.
+    # (products of 5) elements in the original dictionary and other communities are selected in random to achieve the expected length of the list.
     if count == 1:
         MergeCommunities = ccf.findMergeCommunities(G, MergeResult, constraint, bio_flag, SearchStep)
 
@@ -185,7 +185,7 @@ def tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, ti
         # Try to merge the communities in the order of MergeCommunities
         for Community in MergeCommunities:
             # Find all neighbor communities around the chosen community.
-            # And get the sorted rewards dictionary for all the neighbor communities
+            # And get the sorted rewards dictionary for all the propagandized neighbor communities
             rewards_sorted, _, path_set = prepareNeighborOrder(G, Community, MergeResult, constraint, bio_flag, height, height2, S_bounds, ub, path_set, count)
 
             for key in rewards_sorted:

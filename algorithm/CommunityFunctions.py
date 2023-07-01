@@ -193,7 +193,7 @@ def findOutgoingEdgesComm(G, c, CurrentResult, bio_flag):
     InNodes = set()
     for ele in list(OutEdges):
 
-        # ele[1] must be in c, because it is an incoming edge, end node must in c.
+        # ele[0] must be in c, because it is an outgoing edge, end node must in c.
         if ele[1] not in CommunityNumToNodes[c]:
 
             # Only add one outgoing edge for one inside node
