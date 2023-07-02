@@ -1,2 +1,2 @@
-Target N is: 3. Stop caused by: {'Time runs out'}. 
-After 10000 steps merge attempts, we decrease the number of communities from 6 to 5
+Target N is: 2. Stop caused by: {'No more attempts'}. 
+After 10000 steps merge attempts, we decrease the number of communities from 4 to 3

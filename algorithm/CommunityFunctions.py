@@ -296,7 +296,8 @@ def findMergeCommunities(G, result, constraint, bio_flag, SearchStep = 1):
     MergeCommunities = dict(tmp)
 
     # Make some changes on the sorted MergeCommunities according to SearchStep
-    return changeOrder(MergeCommunities, SearchStep)
+    MergeCommunities = changeOrder(MergeCommunities, SearchStep)
+    return MergeCommunities
 
 
 
@@ -320,7 +321,7 @@ def changeOrder(l, step):
     if len(ll) < N:
         i = len(ll)
         while i < N:
-            rv = str(random.randint(1, len(l)))
+            rv = random.choice(list(l.keys()))
             if rv not in ll.keys():
                 ll[rv] = l[rv]
                 i += 1

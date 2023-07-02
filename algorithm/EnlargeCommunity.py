@@ -137,6 +137,7 @@ def prepareMerge(totalNum, count, SearchStep, MergeResult, attempts, Result, con
         # Sort
         tmp = sorted(MergeCommunities.items(), key=lambda x: (x[1], x[0]), reverse=True)
         MergeCommunities = dict(tmp)
+        MergeCommunities = ccf.changeOrder(MergeCommunities, SearchStep)
     else:
         count = 1
         totalNum = ll
@@ -206,11 +207,11 @@ def tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, ti
                     MergeResult = MergeResult_updated
                     break
 
-        timestep -= 1
         # After leaving from the for loop, we may have a successful merge or not.
         # Keep checking until all communities are checked.
+        timestep -= 1
 
-        ll = len(uf.mapCommunityToNodes(MergeResult))
+    ll = len(uf.mapCommunityToNodes(MergeResult))
     return MergeResultList, MergeResult, ll
 
 

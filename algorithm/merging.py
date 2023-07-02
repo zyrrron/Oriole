@@ -4,6 +4,7 @@ import UpdateFunctions as uf
 import utils
 import EnlargeCommunity as ec
 import math
+import copy
 import CommunityFunctions as ccf
 
 
@@ -15,7 +16,8 @@ def Merge():
     for s in samples:
 
         # Load verification result
-        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, out_path, _, timestep, bio_flag, height, DAG, height2, attempts, ub = utils.loadData(s, settings)
+        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, _, out_path, _, timestep, \
+            bio_flag, height, DAG, height2, attempts, ub = utils.loadData(s, settings)
         target_n = math.ceil(len(G_primitive.nodes) / S_bounds[1])
         VerifyResult = iof.loadSolution(f"{out_path}/sol_after_verify.txt", s)
         CommunityNumToNodes = uf.mapCommunityToNodes(VerifyResult)
@@ -44,15 +46,20 @@ def Merge():
 
         if MergeFlag:
             print(f"Merge passed according to the target N: {target_n}!")
-
             # Write current merge solution into an output file
             iof.writeSolution(out_path, '/sol_after_merge.txt', G_primitive, MergeResult)
         else:
-            MergeResult, flag = merge_final_check(G_primitive, S_bounds, MergeResult)
-            iof.reportMergeIssue(G_primitive, out_path, '/sol_after_merge.txt', MergeResult, MergeErrorLog, timestep, VerifyResult, target_n)
+            MergeResult_new, flag = merge_final_check(G_primitive, S_bounds, MergeResult, loop_free, constraint, bio_flag)
+            if flag:
+                print("New merge result after final check!")
+                iof.reportMergeIssue(G_primitive, out_path, '/sol_after_merge.txt', MergeResult_new, MergeErrorLog, timestep, VerifyResult, target_n)
+            else:
+                print("No changes on the merge result after final check!")
+                iof.reportMergeIssue(G_primitive, out_path, '/sol_after_merge.txt', MergeResult, MergeErrorLog, timestep, VerifyResult, target_n)
 
 
-def merge_final_check(G, S_bounds, MergeResult):
+def merge_final_check(G, S_bounds, r, loop_free, constraint, bio_flag):
+    MergeResult = copy.deepcopy(r)
     CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
     maxCommLen, maxComm = 0, ''
     flag = False
@@ -61,11 +68,18 @@ def merge_final_check(G, S_bounds, MergeResult):
             maxCommLen = len(CommunityNumToNodes[tmp])
             maxComm = tmp
 
+    newComm = "0"
     if len(G.nodes) - S_bounds[1] <= maxCommLen:
         for node in MergeResult:
             if MergeResult[node] != maxComm:
-                MergeResult[node] = maxComm + "1"
-        flag = True
+                MergeResult[node] = newComm
+
+        # If current merge operation (added one neighbor community to current one in the last level) can be accepted,
+        # update the current merge result to MergeResult and break the loop, go to the next merge community.
+        # checkloop = 0 and checkInOutComm = 0 means the current community meets all the constraints
+        if ((loop_free and ccf.checkLoopComm(G, newComm, MergeResult, bio_flag) == 0) or not loop_free) and \
+                ccf.checkInOutComm(G, newComm, constraint, MergeResult, bio_flag) == 0:
+            flag = True
     return MergeResult, flag
 
 
