@@ -223,6 +223,8 @@ def enlargeCommunityMerge(G, S_bounds, constraint, loop_free, timestep, Result, 
     # reduce duplication in the list
     MergeResultList = [dict(t) for t in set([tuple(d.items()) for d in MergeResultList])]
     minval = ll
+
+    # Find the merge result consists of the smallest number of sub-groups
     for res in MergeResultList:
         tmp = uf.mapCommunityToNodes(res)
         if len(tmp) < minval:
