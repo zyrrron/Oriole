@@ -1,4 +1,7 @@
 sample	graph_path	lib_path	primitive_only	S_bounds	target_n	high_low_flag	high_constraint	low_constraint	loop_free	priority	BioFlag	output_path
+agc	../benchmark/agc-Digital-Automatic-Gain-Control/src/agc	./lib	TRUE	"1,5"		4	"2,2"	4	TRUE	C	1	../results/AutoGainC
+apollo	../benchmark/agc-guidance	./lib	TRUE	"1,5"		4	"2,2"	4	TRUE	C	1	../results/apollo
+sha256	../benchmark/sha256-master/src/rtl/sha256	./lib	TRUE	"1,5"		4	"2,2"	4	TRUE	C	1	../results/sha256
 test0	../benchmark/test/test0	./lib	TRUE	1,3	5	high	2,2	4	TRUE	C	0	../results/test/test0
 test0_bio	../benchmark/test/test0	./lib	TRUE	1,3	5	high	2,2	4	TRUE	C	1	../results/test/test0_bio
 test1	../benchmark/test/test1	./lib	TRUE	1,6	2	high	2,2	4	TRUE	C	0	../results/test/test1
