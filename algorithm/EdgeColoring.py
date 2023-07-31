@@ -92,7 +92,7 @@ def findColor(MergeResult, CommunityNumToNodes, DAG, ColorOptions, CommEdgeColor
         CommEdgeColorInfo = assignColorForEdge(u, v, CommEdgeColorInfo, ComU, ComV, Color)
 
         # Check if the current color works for the chosen edge (u, v), the depth of recursion in propaganda checking is set to 20
-        depth = 20
+        depth = 5
         NewColorInfo = copy.deepcopy(CommEdgeColorInfo)
 
         if PropagandaChecking(u, v, MergeResult, CommunityNumToNodes, NewColorInfo, ColorOptions, bio_flag, depth):
@@ -150,6 +150,7 @@ def createColorInfo(MergeResult, CommunityNumToNodes, G):
 
 
 def ColorAssignment(MergeResult, CommunityNumToNodes, G_primitive, DAG, bio_flag, ColorOptions):
+
     # Create a dictionary, key is the community number, value is a dictionary.
     # The inner dictionary, key is an edge connecting to the community in the last level, value is its color
     CommEdgeColorInfo, CellToCellEdges = createColorInfo(MergeResult, CommunityNumToNodes, G_primitive)

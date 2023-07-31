@@ -150,7 +150,11 @@ def prepareMerge(totalNum, count, SearchStep, MergeResult, attempts, Result, con
         if attempts > 0:
             totalNum = len(uf.mapCommunityToNodes(MergeResult))
             attempts -= 1
-            if (attempts+1) % 100 == 0:
+            if attempts > 50 and (attempts+1) % 50 == 0:
+                print(f"There are {attempts} attempts left. ", f"{totalNum} cells in total. ", "Try another way to merge!")
+            if 10 < attempts <= 50 and (attempts+1) % 5 == 0:
+                print(f"There are {attempts} attempts left. ", f"{totalNum} cells in total. ", "Try another way to merge!")
+            if attempts <= 10:
                 print(f"There are {attempts} attempts left. ", f"{totalNum} cells in total. ", "Try another way to merge!")
             if attempts <= 0:
                 print("No more attempts left!")
@@ -251,14 +255,13 @@ def enlargeCommunityMerge_chris(G, S_bounds, constraint, loop_free, timestep, Re
         MergeResultList.append(MergeResult)
     MergeResultList = [dict(t) for t in set([tuple(d.items()) for d in MergeResultList])]
 
-    # If edge coloring assignment failed, change to another community
+    # collect length of merge result list.
     d = {}
     for i in range(len(MergeResultList)):
 
         # calculate the number of cells now
         ll = len(collections.Counter(list(MergeResultList[i].values())))
-        if 60 < ll < 64:
-            d[i] = ll
+        d[i] = ll
 
 
     # Sort the given dictionary

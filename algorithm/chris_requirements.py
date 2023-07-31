@@ -41,13 +41,13 @@ def VerifyAndMerge():
         VerifyResult = inf.createInitialCommunities(G_primitive)
 
         # Start to merge in different max channels for cell-cell communication
-        urange = range(4, 5)
-        if S_bounds[1] == 4:
-            urange = range(4, 11)
-        if S_bounds[1] == 3:
-            urange = [4, 6, 7, 8]
-        if S_bounds[1] > 10:
-            urange = [4, 5, 6, 7, 8]
+        urange = [100, 30, 10]
+        # if S_bounds[1] == 4:
+        #     urange = range(4, 11)
+        # if S_bounds[1] == 3:
+        #     urange = [4, 6, 7, 8]
+        # if S_bounds[1] > 10:
+        #     urange = [4, 5, 6, 7, 8]
         for upperbound in urange:
             constraint[0] = upperbound
             ColorOptions = ["black", "gray"]
@@ -67,8 +67,8 @@ def VerifyAndMerge():
 
                 # Start merging from the community with the least incoming or outgoing edges.
                 # Try different searching order may find more optimal solution and get rid of the local optimal
-                # height2 is used for combining the unconnected cells, stop in a limited searching height.
-                attempts = 500
+                # height2 is used for combining the un-neighbored gates, stop in a limited searching height.
+                attempts = 2
                 height2 = 5
                 MergeResult, MergeFlag, MergeErrorLog, ColorFlag, DAG_new = ec.enlargeCommunityMerge_chris(G_primitive, S_bounds,
                                     constraint, loop_free, timestep2, VerifyResult, target_n, bio_flag, height, height2, DAG, ColorOptions, attempts, ub)
@@ -82,7 +82,7 @@ def VerifyAndMerge():
                     iof.writeSolution(out_path, f'/sol_after_merge_{S_bounds[1]}_{upperbound}.txt', G_primitive, MergeResult)
                     iof.writeColoredEdgeList(out_path, f'/sol_after_merge_{S_bounds[1]}_{upperbound}_colored.txt', DAG_new)
                 else:
-                    MergeResult, flag = MG.merge_final_check(G_primitive, S_bounds, MergeResult)
+                    MergeResult, flag = MG.merge_final_check(G_primitive, S_bounds, MergeResult, loop_free, constraint, bio_flag)
                     if flag:
                         CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
                         ColorFlag, DAG_new = ca.ColorAssignment(MergeResult, CommunityNumToNodes, G_primitive, DAG, bio_flag, ColorOptions)
