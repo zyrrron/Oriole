@@ -82,7 +82,7 @@ def reportMergeIssue(G_primitive, out_path, solutionfile, MergeResult, ErrorLog,
         return
 
     f_out.write(f"Target N is: {target_n}. Stop caused by: {ErrorLog}. \n")
-    f_out.write(f"After {timestep} steps merge attempts, we decrease the number of communities from {len(CommunityNumToNodesBeforeMerge)} to ")
+    f_out.write(f"After {timestep} attempts of different merging strategy, we decrease the number of communities from {len(CommunityNumToNodesBeforeMerge)} to ")
     f_out.write(f"{len(CommunityNumToNodesAfterMerge)}\n")
     print(f"Target N is: {target_n}. Stop caused by: {ErrorLog}.")
     print(f"Current number of communities is decreased from {len(CommunityNumToNodesBeforeMerge)} to {len(CommunityNumToNodesAfterMerge)}!")

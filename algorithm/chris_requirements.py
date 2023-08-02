@@ -41,7 +41,7 @@ def VerifyAndMerge():
         VerifyResult = inf.createInitialCommunities(G_primitive)
 
         # Start to merge in different max channels for cell-cell communication
-        urange = [100, 30, 10]
+        urange = range(4,5)
         # if S_bounds[1] == 4:
         #     urange = range(4, 11)
         # if S_bounds[1] == 3:
@@ -87,7 +87,7 @@ def VerifyAndMerge():
                         CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
                         ColorFlag, DAG_new = ca.ColorAssignment(MergeResult, CommunityNumToNodes, G_primitive, DAG, bio_flag, ColorOptions)
                     if ColorFlag:
-                        iof.reportMergeIssue(G_primitive, out_path, f'/sol_after_merge_{S_bounds[1]}_{upperbound}.txt', MergeResult, MergeErrorLog, timestep2, VerifyResult, target_n)
+                        iof.reportMergeIssue(G_primitive, out_path, f'/sol_after_merge_{S_bounds[1]}_{upperbound}.txt', MergeResult, MergeErrorLog, attempts, VerifyResult, target_n)
                         iof.writeColoredEdgeList(out_path, f'/sol_after_merge_{S_bounds[1]}_{upperbound}_colored.txt', DAG_new)
 
                 if ColorFlag:
