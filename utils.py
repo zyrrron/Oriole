@@ -282,7 +282,7 @@ def loadData(s, settings):
 	height = 50
 	# "attempts" means the number of possible merging paths we will collect, note that each path includes multiple partition results
 	# "height2": the depth of searching possible merging solution for un-neighbor communities in every propaganda checking
-	attempts = 5
+	attempts = 3
 	height2 = 2
 	# Negative upper bound for each propaganda checking
 	ub =  5
