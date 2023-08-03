@@ -1,7 +1,7 @@
 5 out black
 12 out black
 a 1 black
-1 2 color0
+1 2 color2
 1 3 gray
 b 7 black
 7 8 gray
