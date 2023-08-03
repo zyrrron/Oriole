@@ -1,2 +1,2 @@
-Target N is: 3. Stop caused by: {'2 attempts runs out'}. 
-After 2 attempts of different merging strategy, we decrease the number of communities from 15 to 4
+Target N is: 3. Stop caused by: {'No more attempts'}. 
+After 10000 attempts of different merging strategy, we decrease the number of communities from 8 to 4
