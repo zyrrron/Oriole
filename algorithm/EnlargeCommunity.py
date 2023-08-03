@@ -185,6 +185,7 @@ def tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, ti
     # 2. meet time constraint
     while timestep >= 0 and attempts > 0:
         path_set = set()
+        print(timestep, len(MergeResult))
         MergeCommunities, totalNum, count, SearchStep, attempts, MergeResult = prepareMerge(totalNum, count, SearchStep, MergeResult, attempts, Result, constraint, bio_flag, G, S_bounds)
 
         # Try to merge the communities in the order of MergeCommunities
@@ -219,7 +220,7 @@ def tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, ti
     return MergeResultList, MergeResult, ll
 
 
-# Merging Method 1: Enlarge Communities in the Merge stage using height level neighbor propaganda checking. (every time try to merge multiple communities)
+# Enlarge Communities in the Merge stage using height level neighbor propaganda checking. (every time try to merge multiple communities)
 def enlargeCommunityMerge(G, S_bounds, constraint, loop_free, timestep, Result, target_n, bio_flag, height, height2, attempts, ub):
     MergeResult = copy.deepcopy(Result)
     MergeResultList, MergeResult, ll = tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, timestep, loop_free, Result, attempts, ub)
