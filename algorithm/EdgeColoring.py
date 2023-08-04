@@ -143,6 +143,12 @@ def findColor(MergeResult, CommunityNumToNodes, DAG, ColorOptions, CommEdgeColor
             depth = 3
             SearchEdge = 500
             flag, SearchEdge = PropagandaChecking_recursive(u, v, MergeResult, CommunityNumToNodes, NewColorInfo, ColorOptions, bio_flag, depth, SearchEdge)
+
+            if flag:
+                print(timestep, SearchEdge, flag, "successful color assignment!")
+            else:
+                print(timestep, SearchEdge, flag, "failed color assignment!")
+
             if flag:
 
                 # Temporarily remove the edge from CellToCellEdges, if all edges can be colored correctly, it will be an empty list
@@ -253,7 +259,7 @@ def startColoring(ColorOptions):
 
 
 # Assume we have totally 4 different cell-cell communication molecular, set 4 as the input parameter. Then we will give the solution with numbers.
-# ColorOptions = ["black", "gray", "color1", "color2", "color3", "color4"]
-# startColoring(ColorOptions)
+ColorOptions = ["black", "gray", "color1", "color2", "color3", "color4", "color5", "color6", "color7", "color8", "color9", "color10"]
+startColoring(ColorOptions)
 
 

@@ -185,7 +185,7 @@ def tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, ti
     # 2. meet time constraint
     while timestep >= 0 and attempts > 0:
         path_set = set()
-        print(timestep, len(MergeResult))
+        print(timestep, totalNum)
         MergeCommunities, totalNum, count, SearchStep, attempts, MergeResult = prepareMerge(totalNum, count, SearchStep, MergeResult, attempts, Result, constraint, bio_flag, G, S_bounds)
 
         # Try to merge the communities in the order of MergeCommunities
