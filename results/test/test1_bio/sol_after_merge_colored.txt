@@ -1,0 +1,11 @@
+d out black
+c out black
+c a color2
+c d color2
+a e color3
+e c color1
+e d color1
+b a color1
+b c color3
+in b black
+in e black
