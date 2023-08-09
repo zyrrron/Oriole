@@ -144,14 +144,14 @@ def findColor(MergeResult, CommunityNumToNodes, ColorOptions, CommEdgeColorInfo,
     # If Forward = False, that means it comes back from edges failed to be colored. So we need try other colors for this
     Forward = True
     EdgeTotalNum = len(CellToCellEdges)
-    index, RearIndex = EdgeTotalNum - 1, EdgeTotalNum - 1
+    index = EdgeTotalNum - 1
     NewColorInfo = copy.deepcopy(CommEdgeColorInfo)
 
     # index == 0 means there is no more edges to color, the process is complete, return the current status
-    while 0 <= index < EdgeTotalNum:
+    while 0 <= index:
 
         # If the first edge cannot be colored successfully by the first color, same with other colors. So we can return False directly.
-        if index == RearIndex and not Forward:
+        if index >= EdgeTotalNum-1 and not Forward:
             return NewColorInfo, False, timestep
 
         # Check if the time limit has been reached, return the current status
@@ -175,9 +175,9 @@ def findColor(MergeResult, CommunityNumToNodes, ColorOptions, CommEdgeColorInfo,
             if checkNeighborColor(u, v, NewColorInfo[ComU][u][v]["Color"], NeighborEdges, NewColorInfo, MergeResult, bio_flag) and Forward:
 
                 # Update index and go to the next iteration
+                print(timestep, -1, True, (u, v), NewColorInfo[ComU][u][v], "color has been assigned successfully before this step!")
                 index -= 1
                 timestep -= 1
-                print(timestep, -1, True, (u, v), NewColorInfo[ComU][u][v], "color has been assigned successfully before this step!")
                 continue
 
         # No matter if the current edge (u,v) was colored, we need to update the to be checked color list according to the tried colors.
