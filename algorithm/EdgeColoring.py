@@ -60,7 +60,7 @@ def PropagandaChecking_recursive(u, v, MergeResult, CommunityNumToNodes, ColorIn
     # max depth is arrived, return back
     # max number of edges we want to check in this
     if depth <= 0 or SearchEdge < 0:
-        return True, SearchEdge
+        return True, 0
 
     # index is the pointer for the edge to be checked in the next iteration. Go through back from end to begin
     # Keep trying to assign colors to the neighbor edges of (u, v) until NeighborEdges are all successfully colored or the first edge to be checked
@@ -71,7 +71,7 @@ def PropagandaChecking_recursive(u, v, MergeResult, CommunityNumToNodes, ColorIn
 
         # If the edges we have searched is more than the value of given original SearchEdge, it means the edge coloring still has possibility to find
         # correct coloring assignment in the future, we can accept this non-deterministic and return True
-        if SearchEdge < 0:
+        if SearchEdge <= 0:
             return True, 0
         SearchEdge -= 1
 
@@ -129,81 +129,10 @@ def assignColorForEdge(u, v, CommEdgeColorInfo, ComU, ComV, Color):
     return CommEdgeColorInfo
 
 
-# Find appropriate color for the given edge, recursive
-def findColor_r(MergeResult, CommunityNumToNodes, ColorOptions, CommEdgeColorInfo, CellToCellEdges, timestep, bio_flag):
-
-    if timestep < 0:
-        # print("time runs out!")
-        return CommEdgeColorInfo, False, timestep
-
-    # if this list is empty, that means no more edges can be colored later.
-    if not CellToCellEdges:
-        return CommEdgeColorInfo, True, timestep
-
-    # Find the tail element of the current CellToCellEdges list. It is an edge. Find this edge's terminal nodes, terminal cell
-    u, v = CellToCellEdges[-1]
-    ComU, ComV = MergeResult[u], MergeResult[v]
-    ColorFlag = False
-    NewColorInfo = copy.deepcopy(CommEdgeColorInfo)
-
-    # If this edge (u,v) was colored, skip to the next edge
-    if CommEdgeColorInfo[MergeResult[u]][u][v]["Color"] != "black":
-        CellToCellEdges.pop()
-        NewColorInfo, ColorFlag, timestep = findColor_r(MergeResult, CommunityNumToNodes, ColorOptions, NewColorInfo,
-                                                           CellToCellEdges, timestep - 1, bio_flag)
-        if not ColorFlag:
-            CellToCellEdges.append((u, v))
-
-    else:
-        # Assign a color
-        for Color in ColorOptions:
-
-            # Assign the color to the current edge, then update CommEdgeColorInfo, go to the next edge
-            NewColorInfo = assignColorForEdge(u, v, NewColorInfo, ComU, ComV, Color)
-
-            # For bio definition, we can set the same color for the edges outgoing from the same node.
-            if bio_flag:
-                for vv in NewColorInfo[MergeResult[u]][u]:
-                    if vv != v and NewColorInfo[MergeResult[u]][u][vv]['Type'] == "Outgoing":
-                        NewColorInfo = assignColorForEdge(u, vv, NewColorInfo, ComU, MergeResult[vv], Color)
-
-            # Check if the current color works for the chosen edge (u, v), the depth of recursion in propaganda checking is set to 5
-            depth = 3
-            SearchEdge = 500
-            flag, SearchEdge = PropagandaChecking_recursive(u, v, MergeResult, CommunityNumToNodes, NewColorInfo, ColorOptions, bio_flag, depth, SearchEdge)
-            print(timestep, SearchEdge, flag, (u, v))
-
-
-            if flag:
-
-                # Temporarily remove the edge from CellToCellEdges, if all edges can be colored correctly, it will be an empty list
-                # If the color assignment doesn't follow the constraints, we will add the edge back in the first backtracking step
-                CellToCellEdges.pop()
-                NewColorInfo, ColorFlag, timestep = findColor_r(MergeResult, CommunityNumToNodes, ColorOptions, NewColorInfo,
-                                                         CellToCellEdges, timestep - 1, bio_flag)
-
-                # If the current color assignment can give us the solution for the whole graph, return back
-                # If the current color cannot be assigned, go backtracking (first backtracking) and try another color until all the colors used
-                if ColorFlag:
-                    break
-                else:
-                    CellToCellEdges.append((u, v))
-
-    # If no color can be assigned to this edge, go backtracking (second backtracking)
-    if not ColorFlag:
-
-        # CommEdgeColorInfo was not changed in the color assignment, so we can directly return the original CommEdgeColorInfo
-        return CommEdgeColorInfo, False, timestep
-
-    # If ColorFlag == True, that means we find the color assignment solution, return to the last level
-    else:
-        return NewColorInfo, True, timestep
-
-
 # Find appropriate color for the given edge, iterative
 def findColor(MergeResult, CommunityNumToNodes, ColorOptions, CommEdgeColorInfo, CellToCellEdges, timestep, bio_flag):
 
-    CellToCellEdges = [('c', 'd'), ('b', 'c'), ('b', 'a'), ('c', 'a'), ('e', 'c'), ('a', 'e'), ('e', 'd')]
+    # CellToCellEdges = [('c', 'd'), ('b', 'c'), ('b', 'a'), ('c', 'a'), ('e', 'c'), ('a', 'e'), ('e', 'd')]
 
     # Create dictionary LeftColor, key is an edge, value shows all the colors have not been tried for this edge yet.
     # Loop through the elements in the list CellToCellEdges
@@ -215,88 +144,96 @@ def findColor(MergeResult, CommunityNumToNodes, ColorOptions, CommEdgeColorInfo,
     # If Forward = False, that means it comes back from edges failed to be colored. So we need try other colors for this
     Forward = True
     EdgeTotalNum = len(CellToCellEdges)
-    stack = [(CellToCellEdges, CommEdgeColorInfo, timestep, Forward)]
+    index, RearIndex = EdgeTotalNum - 1, EdgeTotalNum - 1
+    NewColorInfo = copy.deepcopy(CommEdgeColorInfo)
 
-    while stack:
-        CellToCellEdges, CommEdgeColorInfo, timestep, Forward = stack.pop()
+    # index == 0 means there is no more edges to color, the process is complete, return the current status
+    while 0 <= index < EdgeTotalNum:
 
         # If the first edge cannot be colored successfully by the first color, same with other colors. So we can return False directly.
-        if len(CellToCellEdges) == EdgeTotalNum and not Forward:
-            return CommEdgeColorInfo, False, timestep
+        if index == RearIndex and not Forward:
+            return NewColorInfo, False, timestep
 
         # Check if the time limit has been reached, return the current status
         if timestep < 0:
-            return CommEdgeColorInfo, False, timestep
+            return NewColorInfo, False, timestep
 
-        # If there are no more edges to color, the process is complete, return the current status
-        if not CellToCellEdges:
-            return CommEdgeColorInfo, True, timestep
-
-        # Get the last edge in the list of cell-cell edges, and the colors left to be assigned.
+        # Get the index-th edge in the list of cell-cell edges, and the colors left to be assigned.
         # ColorFlag shows if there is one color that can be accepted
-        u, v = CellToCellEdges[-1]
+        u, v = CellToCellEdges[index]
         ComU, ComV = MergeResult[u], MergeResult[v]
         ColorFlag = False
-        NewColorInfo = copy.deepcopy(CommEdgeColorInfo)
 
         # If the current edge (u, v) was already colored
         if NewColorInfo[ComU][u][v]["Color"] != "black":
 
-            # If the current edge's color meet all the constraints now and it is not come backward (backward means it fails to color the later edges).
+            # If the current edge's color meet all the constraints now and it is not come backward
+            # (backward means it fails to color the (index-1)-th edge).
             # Then continue to the next edge
+            # If that edge's color cannot meet all the constraints now, try other colors in the later part. No need for extra action here.
             NeighborEdges = ef.findNeighborEdges(u, v, MergeResult, CommunityNumToNodes, NewColorInfo, bio_flag)
             if checkNeighborColor(u, v, NewColorInfo[ComU][u][v]["Color"], NeighborEdges, NewColorInfo, MergeResult, bio_flag) and Forward:
 
-                # Push current important variables to stack. Then remove the edge we checked in this iteration and go to the next iteration.
-                # Add 1 to the number of searched edges.
-                stack.append((CellToCellEdges, NewColorInfo, timestep - 1, True))
-                CellToCellEdges.pop()
+                # Update index and go to the next iteration
+                index -= 1
+                timestep -= 1
                 print(timestep, -1, True, (u, v), NewColorInfo[ComU][u][v], "color has been assigned successfully before this step!")
                 continue
 
-            # If that edge's color cannot meet all the constraints now, try other colors in the later part
-            else:
-                NewColorInfo[ComU][u][v]["Color"] = "black"
-
         # No matter if the current edge (u,v) was colored, we need to update the to be checked color list according to the tried colors.
+        # Try different colors for the current edge (u, v) until color list is empty
         Colors = LeftColor[(u, v)]
-
-        # Try different colors for the current edge (u, v)
         for Color in Colors:
 
-            # Try a new color, assign it to edge (u, v), remove this color from the Leftcolor list for edge (u, v)
+            # Try a new color, assign it to edge (u, v), remove this color from the LeftColor list for edge (u, v)
             LeftColor[(u, v)].remove(Color)
             NewColorInfo = assignColorForEdge(u, v, NewColorInfo, ComU, ComV, Color)
 
+            # Set same color to the same-source edge (u, vv)
+            # If this edge has color, don't change it. Because this color has been accepted in the previous iterations.
+            for vv in NewColorInfo[ComU][u]:
+                if NewColorInfo[ComU][u][vv]["Color"] == "black" and NewColorInfo[ComU][u][vv]["Type"] == "Outgoing" and vv != v:
+                    if Color in LeftColor[(u, vv)]:
+                        LeftColor[(u, vv)].remove(Color)
+                        ComVV = MergeResult[vv]
+                        NewColorInfo = assignColorForEdge(u, vv, NewColorInfo, ComU, ComVV, Color)
+
             # The depth of recursion in the propaganda checking step
-            depth = 3
             # The number of edges to search during the propaganda checking step
-            SearchEdge_upperbound = 500
             # Propaganda checking with constraints for depth and number of edge to be searched
-            flag, SearchEdge_checked = PropagandaChecking_recursive(u, v, MergeResult, CommunityNumToNodes, NewColorInfo, ColorOptions, bio_flag, depth, SearchEdge_upperbound)
+            depth = 3
+            SearchEdge_upperbound = 500
+            flag, SearchEdge_left = PropagandaChecking_recursive(u, v, MergeResult, CommunityNumToNodes, NewColorInfo, ColorOptions, bio_flag, depth, SearchEdge_upperbound)
 
             # output "SearchEdge_check = -1" means color has been assigned before this step
             # output "SearchEdge_check = 0" means searched upperbound number of edges
             # output "SearchEdge_check = 500" means color has been assigned before this step
             if flag:
-                print(timestep, f"{SearchEdge_upperbound - SearchEdge_checked} edge(s) are checked", flag, (u, v), NewColorInfo[MergeResult[u]][u][v])
+                print(timestep, f"{SearchEdge_upperbound - SearchEdge_left} edge(s) are checked", flag, (u, v), NewColorInfo[MergeResult[u]][u][v])
             else:
-                print(timestep, f"{SearchEdge_upperbound - SearchEdge_checked} edge(s) are checked", flag, (u, v), f"{Color} failed!")
+                print(timestep, f"{SearchEdge_upperbound - SearchEdge_left} edge(s) are checked", flag, (u, v), f"{Color} failed!")
 
-            # If a valid color is found for the current edge, continue with the next edge
+            # No matter if the color in this iteration is correct for the edge (uu, vv), timestep--
+            # If it is correct, break the loop and update edge index, ColorFlag, Forward
+            # If not, keep searching the colors until the colors list is empty
+            timestep -= 1
             if flag:
-                CellToCellEdges.pop()
-                stack.append((CellToCellEdges, NewColorInfo, timestep - 1, True))
+                index -= 1
+                Forward = True
                 ColorFlag = True
                 break
 
         # If no valid color is found for the current edge, backtrack to the previous edge and try another color for the previous edge
         if not ColorFlag:
-            CellToCellEdges.append((u, v))
-            stack.append((CellToCellEdges, CommEdgeColorInfo, timestep - 1, False))
+            index += 1
+            Forward = False
+            edge = (u, v)
+            LeftColor[edge] = copy.deepcopy(ColorOptions)
+
+        print(index)
 
     # If no color can be assigned to any edge, return False
-    return CommEdgeColorInfo, False, timestep
+    return NewColorInfo, True, timestep
 
 
 # Create a dictionary, key is the community number, value is a dictionary.
@@ -391,7 +328,7 @@ def startColoring(ColorOptions):
 
 # Assume we have totally 4 different cell-cell communication molecular, set 4 as the input parameter. Then we will give the solution with numbers.
 # , "color4", "color5", "color6", "color7", "color8", "color9", "color10"
-ColorOptions = ["black", "gray", "color1", "color2", "color3"]
+ColorOptions = ["black", "gray", "color0", "color1", "color2", "color3"]
 startColoring(ColorOptions)
 
 

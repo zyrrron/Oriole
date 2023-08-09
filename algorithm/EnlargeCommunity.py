@@ -142,9 +142,7 @@ def prepareMerge(totalNum, count, SearchStep, MergeResult, attempts, Result, con
         count = 1
         totalNum = ll
 
-    # print(f"There are {attempts} attempts left: Current number of communities: {ll}!")
-    # print(f"Current number of communities: {totalNum}, stay in this number for {count} times")
-    # If no change has been done to the MergeResult after this loop, then it will go to the same merging solution as the SearchStep=1.
+    # If no change has been done to the MergeResult after the checking above, we should change a different way to order the to-be-merged communities.
     # We can skip this attempt because we have known the answer yet.
     if count == 3:
         if attempts > 0:
@@ -164,9 +162,11 @@ def prepareMerge(totalNum, count, SearchStep, MergeResult, attempts, Result, con
                 SearchStep += 1
 
     # Find all possible to-be-merged communities and sort them with rewards. Scan them in this order.
-    # In the initial step, searchstep will determine the communities to be merged in this step.
-    # if SearchStep == 1, all communities will be in the to-be-merged list, if it is 5, findMergeCommunities() will only return 5th, 10th, 15th,...
-    # (products of 5) elements in the original dictionary and other communities are selected in random to achieve the expected length of the list.
+    # SearchStep determine the order of communities to be merged
+    # If SearchStep == 1, all communities will be in the to-be-merged list.
+    # For the 1st attempt, we don't change the order of reward list in each merge round.
+    # A merge round means go through the while loop in tryMerge()
+    # For the n-th attempt, SearchStep will be set as n, in each merge round, we will set a random seed as n to order the merge list.
     if count == 1:
         MergeCommunities = ccf.findMergeCommunities(G, MergeResult, constraint, bio_flag, SearchStep)
 
@@ -183,9 +183,9 @@ def tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, ti
     # There are 2 possible conditions to return back
     # 1. meet target n constraint
     # 2. meet time constraint
+    # SearchStep determine the order of communities to be merged
     while timestep >= 0 and attempts > 0:
         path_set = set()
-        print(timestep, totalNum)
         MergeCommunities, totalNum, count, SearchStep, attempts, MergeResult = prepareMerge(totalNum, count, SearchStep, MergeResult, attempts, Result, constraint, bio_flag, G, S_bounds)
 
         # Try to merge the communities in the order of MergeCommunities
@@ -215,6 +215,7 @@ def tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, ti
         # After leaving from the for loop, we may have a successful merge or not.
         # Keep checking until all communities are checked.
         timestep -= 1
+        # print(f"attempt {attempts}: ", f"{timestep} timesteps left, ", f"{totalNum} cells in solution now.")
 
     ll = len(uf.mapCommunityToNodes(MergeResult))
     return MergeResultList, MergeResult, ll
@@ -260,12 +261,13 @@ def enlargeCommunityMerge_chris(G, S_bounds, constraint, loop_free, timestep, Re
     d = {}
     for i in range(len(MergeResultList)):
 
-        # calculate the number of cells now
+        # calculate the number of cells for each merge result now
         ll = len(collections.Counter(list(MergeResultList[i].values())))
-        d[i] = ll
+        if 60 < ll < 70:
+            d[i] = ll
 
 
-    # Sort the given dictionary
+    # Sort the given dictionary, tmp is a dictionary with key = index in MergeResult, value = length of that merge result
     print(f"{len(d)} possible solutions to be checked for edge coloring assignment!")
     tmp = sorted(d.items(), key=lambda x: (x[1], x[0]), reverse=False)
     tmp = dict(tmp)

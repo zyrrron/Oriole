@@ -64,12 +64,12 @@ def VerifyAndMerge():
                 print()
 
             else:
-
                 # Start merging from the community with the least incoming or outgoing edges.
                 # Try different searching order may find more optimal solution and get rid of the local optimal
                 # height2 is used for combining the un-neighbored gates, stop in a limited searching height.
-                attempts = 2
+                attempts = 50
                 height2 = 5
+                print(f"There are totally {attempts} attempts. Now start merging!")
                 MergeResult, MergeFlag, MergeErrorLog, ColorFlag, DAG_new = ec.enlargeCommunityMerge_chris(G_primitive, S_bounds,
                                     constraint, loop_free, timestep2, VerifyResult, target_n, bio_flag, height, height2, DAG, ColorOptions, attempts, ub)
 

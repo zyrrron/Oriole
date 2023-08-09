@@ -17,6 +17,7 @@ test3	../benchmark/test/test3	./lib	TRUE	1,4	5	high	2,2	4	TRUE	C	0	../results/te
 test3_bio	../benchmark/test/test3	./lib	TRUE	1,4	5	high	2,2	4	TRUE	C	1	../results/test/test3_bio
 test4	../benchmark/test/test4	./lib	TRUE	1,5	7	high	2,2	4	TRUE	C	0	../results/test/test4
 test4_bio	../benchmark/test/test4	./lib	TRUE	1,5	7	low	2,2	4	TRUE	C	1	../results/test/test4_bio
+test5_bio	../benchmark/test/test5	./lib	TRUE	1,2	7	low	2,2	4	TRUE	C	1	../results/test/test5_bio
 case1	../benchmark/bionetwork/lauren_group/case1	./lib	TRUE	1,3	2	low	2,2	4	TRUE	C	1	../results/bionetwork/lauren_group/case1
 case1_h	../benchmark/bionetwork/lauren_group/case1	./lib	TRUE	1,3	2	high	2,2	4	TRUE	C	1	../results/bionetwork/lauren_group/case1_h
 case2	../benchmark/bionetwork/lauren_group/case2	./lib	TRUE	1,7	2	low	2,2	4	TRUE	C	1	../results/bionetwork/lauren_group/case2

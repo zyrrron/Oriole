@@ -283,7 +283,7 @@ def findPendingCommunities(G, result, constraint, bio_flag):
 
 
 # Find the next community or communities to merge
-def findMergeCommunities(G, result, constraint, bio_flag, SearchStep = 1):
+def findMergeCommunities(G, result, constraint, bio_flag, SearchStep=1):
     MergeCommunities = {}
     CommunityNumToNodes = uf.mapCommunityToNodes(result)
 
@@ -295,35 +295,17 @@ def findMergeCommunities(G, result, constraint, bio_flag, SearchStep = 1):
     tmp = sorted(MergeCommunities.items(), key=lambda x: (x[1], x[0]), reverse=True)
     MergeCommunities = dict(tmp)
 
-    # Make some changes on the sorted MergeCommunities according to SearchStep
-    MergeCommunities = changeOrder(MergeCommunities, SearchStep)
+    # Make some changes on the sorted MergeCommunities according to SearchStep, don't change if it is 1
+    if SearchStep != 1:
+        MergeCommunities = changeOrder(MergeCommunities, SearchStep)
     return MergeCommunities
 
 
+# Change the order of the sorted merge communities list assigning SearchStep as random seed
+def changeOrder(d, step):
 
-# Change the order of the sorted merge communities list
-def changeOrder(l, step):
-    ll = {}
-
-    # N is the number of communities we will try to merge in the first step.
-    N = len(l) // 3
-    count = 1
-    for ele in l:
-
-        # if reward is too small, don't add it.
-        if count == step and l[ele] > 0:
-            ll[ele] = l[ele]
-            count = 1
-        else:
-            count += 1
-
-    # If the total number of ll is smaller than N, add element with positive reward to achieve N.
-    if len(ll) < N:
-        i = len(ll)
-        while i < N:
-            rv = random.choice(list(l.keys()))
-            if rv not in ll.keys():
-                ll[rv] = l[rv]
-                i += 1
-
-    return ll
+    random.seed(step)
+    keys = list(d.keys())
+    random.shuffle(keys)
+    shuffled_d = {key: d[key] for key in keys}
+    return shuffled_d
