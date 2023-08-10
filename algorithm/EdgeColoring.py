@@ -136,10 +136,10 @@ def findColor(MergeResult, CommunityNumToNodes, ColorOptions, CommEdgeColorInfo,
 
     # Create dictionary LeftColor, key is an edge, value shows all the colors have not been tried for this edge yet.
     # Loop through the elements in the list CellToCellEdges
-    # Assign the ColorOptions list as the value for each key in the dictionary
-    LeftColor = {}
+    # Assign the pointer in the ColorOptions list as the value for each key in the dictionary NextColorIndex
+    NextColorIndex = {}
     for edge in CellToCellEdges:
-        LeftColor[edge] = copy.deepcopy(ColorOptions)
+        NextColorIndex[edge] = 0
 
     # If Forward = False, that means it comes back from edges failed to be colored. So we need try other colors for this
     Forward = True
@@ -182,19 +182,20 @@ def findColor(MergeResult, CommunityNumToNodes, ColorOptions, CommEdgeColorInfo,
 
         # No matter if the current edge (u,v) was colored, we need to update the to be checked color list according to the tried colors.
         # Try different colors for the current edge (u, v) until color list is empty
-        Colors = LeftColor[(u, v)]
+        Colors = ColorOptions[NextColorIndex[(u, v)]:]
         for Color in Colors:
 
             # Try a new color, assign it to edge (u, v), remove this color from the LeftColor list for edge (u, v)
-            LeftColor[(u, v)].remove(Color)
+            NextColorIndex[(u, v)] += 1
             NewColorInfo = assignColorForEdge(u, v, NewColorInfo, ComU, ComV, Color)
 
             # Set same color to the same-source edge (u, vv)
             # If this edge has color, don't change it. Because this color has been accepted in the previous iterations.
             for vv in NewColorInfo[ComU][u]:
                 if NewColorInfo[ComU][u][vv]["Color"] == "black" and NewColorInfo[ComU][u][vv]["Type"] == "Outgoing" and vv != v:
-                    if Color in LeftColor[(u, vv)]:
-                        LeftColor[(u, vv)].remove(Color)
+                    Colors = ColorOptions[NextColorIndex[(u, vv)]:]
+                    if Color in Colors:
+                        NextColorIndex[(u, vv)] += 1
                         ComVV = MergeResult[vv]
                         NewColorInfo = assignColorForEdge(u, vv, NewColorInfo, ComU, ComVV, Color)
 
@@ -227,10 +228,9 @@ def findColor(MergeResult, CommunityNumToNodes, ColorOptions, CommEdgeColorInfo,
         if not ColorFlag:
             index += 1
             Forward = False
-            edge = (u, v)
-            LeftColor[edge] = copy.deepcopy(ColorOptions)
+            NextColorIndex[(u, v)] = 0
 
-        print(index)
+        print(index, ColorOptions[NextColorIndex[(u, v)]:])
 
     # If no color can be assigned to any edge, return False
     return NewColorInfo, True, timestep
