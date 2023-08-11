@@ -193,8 +193,8 @@ def findColor(MergeResult, CommunityNumToNodes, ColorOptions, CommEdgeColorInfo,
             # If this edge has color, don't change it. Because this color has been accepted in the previous iterations.
             for vv in NewColorInfo[ComU][u]:
                 if NewColorInfo[ComU][u][vv]["Color"] == "black" and NewColorInfo[ComU][u][vv]["Type"] == "Outgoing" and vv != v:
-                    Colors = ColorOptions[NextColorIndex[(u, vv)]:]
-                    if Color in Colors:
+                    Colors_VV = ColorOptions[NextColorIndex[(u, vv)]:]
+                    if Color in Colors_VV:
                         NextColorIndex[(u, vv)] += 1
                         ComVV = MergeResult[vv]
                         NewColorInfo = assignColorForEdge(u, vv, NewColorInfo, ComU, ComVV, Color)
@@ -230,7 +230,7 @@ def findColor(MergeResult, CommunityNumToNodes, ColorOptions, CommEdgeColorInfo,
             Forward = False
             NextColorIndex[(u, v)] = 0
 
-        print(index, ColorOptions[NextColorIndex[(u, v)]:])
+        print(index, (u,v), ColorOptions[NextColorIndex[(u, v)]:])
 
     # If no color can be assigned to any edge, return False
     return NewColorInfo, True, timestep
