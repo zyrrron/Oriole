@@ -191,13 +191,14 @@ def findColor(MergeResult, CommunityNumToNodes, ColorOptions, CommEdgeColorInfo,
 
             # Set same color to the same-source edge (u, vv)
             # If this edge has color, don't change it. Because this color has been accepted in the previous iterations.
+            # Bcause the current color index is the first color that allow its one previously-checked neighbor meet all constraints
+            # The previous colors before the current color index were all failed.
             for vv in NewColorInfo[ComU][u]:
                 if NewColorInfo[ComU][u][vv]["Color"] == "black" and NewColorInfo[ComU][u][vv]["Type"] == "Outgoing" and vv != v:
-                    Colors_VV = ColorOptions[NextColorIndex[(u, vv)]:]
-                    if Color in Colors_VV:
-                        NextColorIndex[(u, vv)] += 1
-                        ComVV = MergeResult[vv]
-                        NewColorInfo = assignColorForEdge(u, vv, NewColorInfo, ComU, ComVV, Color)
+                    NextColorIndex[(u, vv)] = NextColorIndex[(u, v)]
+                    ComVV = MergeResult[vv]
+                    NewColorInfo = assignColorForEdge(u, vv, NewColorInfo, ComU, ComVV, Color)
+                    print("Neighbor edges: ", (u, vv), ColorOptions[NextColorIndex[(u, vv)]:])
 
             # The depth of recursion in the propaganda checking step
             # The number of edges to search during the propaganda checking step
@@ -298,7 +299,6 @@ def ColorAssignment(MergeResult, CommunityNumToNodes, G_primitive, DAG, bio_flag
             else:
                 Color = CommEdgeColorInfo[MergeResult[u]][u][v]["Color"]
         DAG.add_edge(u, v, color=Color)
-
     return ColorFlag, DAG
 
 
@@ -308,14 +308,12 @@ def startColoring(ColorOptions):
 
     # Verify samples iteratively
     for s in samples:
-
         # Load merge result
         G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, _, _, bio_flag, _, _, _, _, _ = utils.loadData(s, settings)
         target_n = math.ceil(len(G_primitive.nodes) / S_bounds[1])
         MergeResult = iof.loadSolution(f"{out_path}/sol_after_merge.txt", s)
         DAG = utils.load_graph(settings, s)
         CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
-
         ColorFlag, DAG = ColorAssignment(MergeResult, CommunityNumToNodes, G_primitive, DAG, bio_flag, ColorOptions)
 
         if ColorFlag:
