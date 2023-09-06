@@ -1,0 +1,13 @@
+read_verilog ../RCA.v ../RCA4.v ../RCA16.v ../RCA64.v
+splitnets
+hierarchy -top RCA64
+flatten
+proc
+techmap
+opt
+abc -g NOR
+opt
+opt_clean
+show -format pdf -prefix ../RCA64/RCA64_yosys
+write_edif ../RCA64/RCA64.edif
+write_json ../RCA64/RCA64.json

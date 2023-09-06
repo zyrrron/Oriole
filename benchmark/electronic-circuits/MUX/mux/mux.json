@@ -1,0 +1,258 @@
+{
+  "creator": "Yosys 0.25+94 (git sha1 0f2cb80a2, clang 10.0.0-4ubuntu1 -fPIC -Os)",
+  "modules": {
+    "mux": {
+      "attributes": {
+        "dynports": "00000000000000000000000000000001",
+        "top": "00000000000000000000000000000001",
+        "src": "../mux.v:23.1-34.10"
+      },
+      "parameter_default_values": {
+        "WIDTH": "00000000000000000000000000000010"
+      },
+      "ports": {
+        "D0[0]": {
+          "direction": "input",
+          "bits": [ 2 ]
+        },
+        "D0[1]": {
+          "direction": "input",
+          "offset": 1,
+          "bits": [ 3 ]
+        },
+        "D1[0]": {
+          "direction": "input",
+          "bits": [ 4 ]
+        },
+        "D1[1]": {
+          "direction": "input",
+          "offset": 1,
+          "bits": [ 5 ]
+        },
+        "S": {
+          "direction": "input",
+          "bits": [ 6 ]
+        },
+        "Y[0]": {
+          "direction": "output",
+          "bits": [ 7 ]
+        },
+        "Y[1]": {
+          "direction": "output",
+          "offset": 1,
+          "bits": [ 8 ]
+        }
+      },
+      "cells": {
+        "$abc$81$auto$blifparse.cc:386:parse_blif$82": {
+          "hide_name": 1,
+          "type": "$_NOT_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 6 ],
+            "Y": [ 9 ]
+          }
+        },
+        "$abc$81$auto$blifparse.cc:386:parse_blif$83": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 4 ],
+            "B": [ 6 ],
+            "Y": [ 10 ]
+          }
+        },
+        "$abc$81$auto$blifparse.cc:386:parse_blif$84": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 2 ],
+            "B": [ 9 ],
+            "Y": [ 11 ]
+          }
+        },
+        "$abc$81$auto$blifparse.cc:386:parse_blif$85": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 10 ],
+            "B": [ 11 ],
+            "Y": [ 7 ]
+          }
+        },
+        "$abc$81$auto$blifparse.cc:386:parse_blif$86": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 6 ],
+            "B": [ 5 ],
+            "Y": [ 12 ]
+          }
+        },
+        "$abc$81$auto$blifparse.cc:386:parse_blif$87": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 9 ],
+            "B": [ 3 ],
+            "Y": [ 13 ]
+          }
+        },
+        "$abc$81$auto$blifparse.cc:386:parse_blif$88": {
+          "hide_name": 1,
+          "type": "$_NOR_",
+          "parameters": {
+          },
+          "attributes": {
+          },
+          "port_directions": {
+            "A": "input",
+            "B": "input",
+            "Y": "output"
+          },
+          "connections": {
+            "A": [ 12 ],
+            "B": [ 13 ],
+            "Y": [ 8 ]
+          }
+        }
+      },
+      "netnames": {
+        "$abc$81$new_n10_": {
+          "hide_name": 1,
+          "bits": [ 11 ],
+          "attributes": {
+          }
+        },
+        "$abc$81$new_n12_": {
+          "hide_name": 1,
+          "bits": [ 12 ],
+          "attributes": {
+          }
+        },
+        "$abc$81$new_n13_": {
+          "hide_name": 1,
+          "bits": [ 13 ],
+          "attributes": {
+          }
+        },
+        "$abc$81$new_n8_": {
+          "hide_name": 1,
+          "bits": [ 9 ],
+          "attributes": {
+          }
+        },
+        "$abc$81$new_n9_": {
+          "hide_name": 1,
+          "bits": [ 10 ],
+          "attributes": {
+          }
+        },
+        "D0[0]": {
+          "hide_name": 0,
+          "bits": [ 2 ],
+          "attributes": {
+            "src": "../mux.v:26.20-26.22"
+          }
+        },
+        "D0[1]": {
+          "hide_name": 0,
+          "bits": [ 3 ],
+          "offset": 1,
+          "attributes": {
+            "src": "../mux.v:26.20-26.22"
+          }
+        },
+        "D1[0]": {
+          "hide_name": 0,
+          "bits": [ 4 ],
+          "attributes": {
+            "src": "../mux.v:27.20-27.22"
+          }
+        },
+        "D1[1]": {
+          "hide_name": 0,
+          "bits": [ 5 ],
+          "offset": 1,
+          "attributes": {
+            "src": "../mux.v:27.20-27.22"
+          }
+        },
+        "S": {
+          "hide_name": 0,
+          "bits": [ 6 ],
+          "attributes": {
+            "src": "../mux.v:28.8-28.9"
+          }
+        },
+        "Y[0]": {
+          "hide_name": 0,
+          "bits": [ 7 ],
+          "attributes": {
+            "src": "../mux.v:29.21-29.22"
+          }
+        },
+        "Y[1]": {
+          "hide_name": 0,
+          "bits": [ 8 ],
+          "offset": 1,
+          "attributes": {
+            "src": "../mux.v:29.21-29.22"
+          }
+        }
+      }
+    }
+  }
+}

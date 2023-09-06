@@ -1,0 +1,14 @@
+read_verilog ../priority_encoder4.v ../priority_encoder32.v
+splitnets
+hierarchy -top priority_encoder32
+flatten
+proc
+techmap
+opt
+abc -g NOR
+opt
+opt_clean
+show -format pdf -prefix ../priority_encoder32/priority_encoder32_yosys
+write_edif ../priority_encoder32/priority_encoder32.edif
+write_json ../priority_encoder32/priority_encoder32.json
+

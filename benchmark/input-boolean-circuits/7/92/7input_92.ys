@@ -1,0 +1,14 @@
+read_verilog 7input_92.v
+flatten
+splitnets -ports
+hierarchy -auto-top
+proc
+techmap
+opt
+abc -g NOR
+opt
+hierarchy -auto-top
+opt_clean -purge
+show -format pdf -prefix ./92/7input_92_yosys
+write_edif ./92/7input_92.edif
+write_json ./92/7input_92.json

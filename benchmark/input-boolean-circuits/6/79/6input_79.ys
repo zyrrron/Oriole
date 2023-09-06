@@ -1,0 +1,14 @@
+read_verilog 6input_79.v
+flatten
+splitnets -ports
+hierarchy -auto-top
+proc
+techmap
+opt
+abc -g NOR
+opt
+hierarchy -auto-top
+opt_clean -purge
+show -format pdf -prefix ./79/6input_79_yosys
+write_edif ./79/6input_79.edif
+write_json ./79/6input_79.json

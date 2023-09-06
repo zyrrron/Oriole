@@ -1,0 +1,38 @@
+digraph "priority_encoder4" {
+label="priority_encoder4";
+rankdir="LR";
+remincross=true;
+n5 [ shape=octagon, label="in", color="black", fontcolor="black" ];
+n6 [ shape=octagon, label="out", color="black", fontcolor="black" ];
+c9 [ shape=record, label="{{<p7> A}|$140\n$_NOT_|{<p8> Y}}" ];
+x0 [ shape=record, style=rounded, label="<s0> 1:1 - 0:0 " ];
+x0:e -> c9:p7:w [arrowhead=odiamond, arrowtail=odiamond, dir=both, color="black", label=""];
+c11 [ shape=record, label="{{<p7> A|<p10> B}|$141\n$_NOR_|{<p8> Y}}" ];
+x1 [ shape=record, style=rounded, label="<s0> 2:2 - 0:0 " ];
+x1:e -> c11:p7:w [arrowhead=odiamond, arrowtail=odiamond, dir=both, color="black", label=""];
+c12 [ shape=record, label="{{<p7> A|<p10> B}|$142\n$_NOR_|{<p8> Y}}" ];
+x2 [ shape=record, style=rounded, label="<s0> 3:3 - 0:0 " ];
+x2:e -> c12:p7:w [arrowhead=odiamond, arrowtail=odiamond, dir=both, color="black", label=""];
+c13 [ shape=record, label="{{<p7> A}|$143\n$_NOT_|{<p8> Y}}" ];
+x3 [ shape=record, style=rounded, label="<s0> 0:0 - 0:0 " ];
+c13:p8:e -> x3:w [arrowhead=odiamond, arrowtail=odiamond, dir=both, color="black", label=""];
+c14 [ shape=record, label="{{<p7> A|<p10> B}|$144\n$_NOR_|{<p8> Y}}" ];
+x4 [ shape=record, style=rounded, label="<s0> 2:2 - 0:0 " ];
+x4:e -> c14:p7:w [arrowhead=odiamond, arrowtail=odiamond, dir=both, color="black", label=""];
+x5 [ shape=record, style=rounded, label="<s0> 3:3 - 0:0 " ];
+x5:e -> c14:p10:w [arrowhead=odiamond, arrowtail=odiamond, dir=both, color="black", label=""];
+c15 [ shape=record, label="{{<p7> A}|$145\n$_NOT_|{<p8> Y}}" ];
+x6 [ shape=record, style=rounded, label="<s0> 0:0 - 1:1 " ];
+c15:p8:e -> x6:w [arrowhead=odiamond, arrowtail=odiamond, dir=both, color="black", label=""];
+c14:p8:e -> c15:p7:w [color="black", label=""];
+c9:p8:e -> c11:p10:w [color="black", label=""];
+c11:p8:e -> c12:p10:w [color="black", label=""];
+c12:p8:e -> c13:p7:w [color="black", label=""];
+n5:e -> x0:s0:w [color="black", label=""];
+n5:e -> x1:s0:w [color="black", label=""];
+n5:e -> x2:s0:w [color="black", label=""];
+n5:e -> x4:s0:w [color="black", label=""];
+n5:e -> x5:s0:w [color="black", label=""];
+x3:s0:e -> n6:w [color="black", label=""];
+x6:s0:e -> n6:w [color="black", label=""];
+}

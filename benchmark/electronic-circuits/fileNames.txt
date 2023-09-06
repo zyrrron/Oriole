@@ -1,0 +1,1 @@
+ALU,gray,gray4,gray8,gray16,gray64,mux,mux4,mux8,mux16,mux32,mux64,parity,parity4,parity8,parity16,parity32,parity64,priority_encoder4,priority_encoder8,priority_encoder16,priority_encoder32,priority_encoder64,RCA,RCA4,RCA8,RCA16,RCA32,RCA64,voter,voter2,voter4,voter8,voter16,voter32,hexDisplay,multiplier,tree3,

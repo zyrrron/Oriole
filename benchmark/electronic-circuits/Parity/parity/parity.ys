@@ -1,0 +1,14 @@
+read_verilog ../parity.v
+splitnets
+hierarchy -top parity
+flatten
+proc
+techmap
+opt
+abc -g NOR
+opt
+opt_clean
+show -format pdf -prefix ../parity/parity_yosys
+write_edif ../parity/parity.edif
+write_json ../parity/parity.json
+

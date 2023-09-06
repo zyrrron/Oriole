@@ -1,0 +1,14 @@
+read_verilog 8input_93.v
+flatten
+splitnets -ports
+hierarchy -auto-top
+proc
+techmap
+opt
+abc -g NOR
+opt
+hierarchy -auto-top
+opt_clean -purge
+show -format pdf -prefix ./93/8input_93_yosys
+write_edif ./93/8input_93.edif
+write_json ./93/8input_93.json

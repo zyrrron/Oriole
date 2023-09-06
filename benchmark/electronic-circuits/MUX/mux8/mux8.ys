@@ -1,0 +1,14 @@
+read_verilog ../mux.v ../mux8.v
+splitnets
+hierarchy -top mux8
+flatten
+proc
+techmap
+opt
+abc -g NOR
+opt
+opt_clean
+show -format pdf -prefix ../mux8/mux8_yosys
+write_edif ../mux8/mux8.edif
+write_json ../mux8/mux8.json
+

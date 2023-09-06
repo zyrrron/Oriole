@@ -1,0 +1,14 @@
+read_verilog 6input_35.v
+flatten
+splitnets -ports
+hierarchy -auto-top
+proc
+techmap
+opt
+abc -g NOR
+opt
+hierarchy -auto-top
+opt_clean -purge
+show -format pdf -prefix ./35/6input_35_yosys
+write_edif ./35/6input_35.edif
+write_json ./35/6input_35.json

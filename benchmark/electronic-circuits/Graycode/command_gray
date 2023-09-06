@@ -1,0 +1,10 @@
+read -vlog95 ../Bio/gray.v ../Bio/gray16.v
+splitnets
+hierarchy -top binary2gray_16; flatten
+proc
+techmap
+opt
+abc -g NOR
+opt
+opt_clean
+show -format pdf -viewer gv

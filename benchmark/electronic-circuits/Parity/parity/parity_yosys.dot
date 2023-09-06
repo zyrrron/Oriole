@@ -1,0 +1,29 @@
+digraph "parity" {
+label="parity";
+rankdir="LR";
+remincross=true;
+n5 [ shape=octagon, label="a", color="black", fontcolor="black" ];
+n6 [ shape=octagon, label="out", color="black", fontcolor="black" ];
+c9 [ shape=record, label="{{<p7> A}|$82\n$_NOT_|{<p8> Y}}" ];
+x0 [ shape=record, style=rounded, label="<s0> 0:0 - 0:0 " ];
+x0:e -> c9:p7:w [arrowhead=odiamond, arrowtail=odiamond, dir=both, color="black", label=""];
+c10 [ shape=record, label="{{<p7> A}|$83\n$_NOT_|{<p8> Y}}" ];
+x1 [ shape=record, style=rounded, label="<s0> 1:1 - 0:0 " ];
+x1:e -> c10:p7:w [arrowhead=odiamond, arrowtail=odiamond, dir=both, color="black", label=""];
+c12 [ shape=record, label="{{<p7> A|<p11> B}|$84\n$_NOR_|{<p8> Y}}" ];
+x2 [ shape=record, style=rounded, label="<s0> 0:0 - 0:0 " ];
+x2:e -> c12:p7:w [arrowhead=odiamond, arrowtail=odiamond, dir=both, color="black", label=""];
+x3 [ shape=record, style=rounded, label="<s0> 1:1 - 0:0 " ];
+x3:e -> c12:p11:w [arrowhead=odiamond, arrowtail=odiamond, dir=both, color="black", label=""];
+c13 [ shape=record, label="{{<p7> A|<p11> B}|$85\n$_NOR_|{<p8> Y}}" ];
+c14 [ shape=record, label="{{<p7> A|<p11> B}|$86\n$_NOR_|{<p8> Y}}" ];
+c9:p8:e -> c13:p7:w [color="black", label=""];
+c10:p8:e -> c13:p11:w [color="black", label=""];
+c12:p8:e -> c14:p7:w [color="black", label=""];
+c13:p8:e -> c14:p11:w [color="black", label=""];
+n5:e -> x0:s0:w [color="black", label=""];
+n5:e -> x1:s0:w [color="black", label=""];
+n5:e -> x2:s0:w [color="black", label=""];
+n5:e -> x3:s0:w [color="black", label=""];
+c14:p8:e -> n6:w [color="black", label=""];
+}

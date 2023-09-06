@@ -1,0 +1,5 @@
+Total Number of Comms,Solution
+3,"defaultdict(<class 'list'>, {'1': ['1'], '2': ['2', '3'], '4': ['4', '5']})"
+4,"defaultdict(<class 'list'>, {'1': ['1'], '2': ['2'], '3': ['3'], '4': ['4', '5']})"
+4,"defaultdict(<class 'list'>, {'1': ['1'], '2': ['2'], '3': ['3', '5'], '4': ['4']})"
+5,"defaultdict(<class 'list'>, {'1': ['1'], '2': ['2'], '3': ['3'], '4': ['4'], '5': ['5']})"

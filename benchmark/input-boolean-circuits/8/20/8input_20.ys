@@ -1,0 +1,14 @@
+read_verilog 8input_20.v
+flatten
+splitnets -ports
+hierarchy -auto-top
+proc
+techmap
+opt
+abc -g NOR
+opt
+hierarchy -auto-top
+opt_clean -purge
+show -format pdf -prefix ./20/8input_20_yosys
+write_edif ./20/8input_20.edif
+write_json ./20/8input_20.json

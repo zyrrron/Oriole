@@ -1,0 +1,2 @@
+Target N is: 44. Stop caused by: {'200 attempts runs out'}. 
+After 10000 steps merge attempts, we decrease the number of communities from 131 to 45

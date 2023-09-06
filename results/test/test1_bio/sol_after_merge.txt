@@ -1,0 +1,5 @@
+Community 1: ['a']
+Community 2: ['b']
+Community 3: ['c']
+Community 4: ['d']
+Community 5: ['e']

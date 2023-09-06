@@ -1,0 +1,14 @@
+read_verilog ../mux.v ../mux16.v
+splitnets
+hierarchy -top mux16
+flatten
+proc
+techmap
+opt
+abc -g NOR
+opt
+opt_clean
+show -format pdf -prefix ../mux16/mux16_yosys
+write_edif ../mux16/mux16.edif
+write_json ../mux16/mux16.json
+

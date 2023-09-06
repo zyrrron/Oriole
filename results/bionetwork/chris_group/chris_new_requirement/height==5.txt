@@ -1,0 +1,26 @@
+Processing sample md5_opt
+Current number of communities: 131, stay in this number for 1 times
+Current number of communities: 66, stay in this number for 1 times
+Current number of communities: 59, stay in this number for 1 times
+Merge failed in the current target N!
+Error caused by:  {'Time runs out'}
+Current number of communities is decreased from 131 to 59!
+130 59
+Processing sample md5_opt
+Current number of communities: 131, stay in this number for 1 times
+Current number of communities: 66, stay in this number for 1 times
+Current number of communities: 59, stay in this number for 1 times
+Merge failed in the current target N!
+Error caused by:  {'Time runs out'}
+Current number of communities is decreased from 131 to 59!
+60 59
+Processing sample md5_opt
+Current number of communities: 131, stay in this number for 1 times
+Current number of communities: 67, stay in this number for 1 times
+Current number of communities: 63, stay in this number for 1 times
+Merge failed in the current target N!
+Error caused by:  {'Time runs out'}
+Current number of communities is decreased from 131 to 63!
+8 63
+
+Process finished with exit code 0

@@ -1,0 +1,14 @@
+read_verilog 6input_46.v
+flatten
+splitnets -ports
+hierarchy -auto-top
+proc
+techmap
+opt
+abc -g NOR
+opt
+hierarchy -auto-top
+opt_clean -purge
+show -format pdf -prefix ./46/6input_46_yosys
+write_edif ./46/6input_46.edif
+write_json ./46/6input_46.json

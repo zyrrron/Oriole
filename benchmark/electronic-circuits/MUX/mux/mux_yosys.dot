@@ -1,0 +1,36 @@
+digraph "mux" {
+label="mux";
+rankdir="LR";
+remincross=true;
+n6 [ shape=octagon, label="D0[0]", color="black", fontcolor="black" ];
+n7 [ shape=octagon, label="D0[1]", color="black", fontcolor="black" ];
+n8 [ shape=octagon, label="D1[0]", color="black", fontcolor="black" ];
+n9 [ shape=octagon, label="D1[1]", color="black", fontcolor="black" ];
+n10 [ shape=octagon, label="S", color="black", fontcolor="black" ];
+n11 [ shape=octagon, label="Y[0]", color="black", fontcolor="black" ];
+n12 [ shape=octagon, label="Y[1]", color="black", fontcolor="black" ];
+c15 [ shape=record, label="{{<p13> A}|$82\n$_NOT_|{<p14> Y}}" ];
+c17 [ shape=record, label="{{<p13> A|<p16> B}|$83\n$_NOR_|{<p14> Y}}" ];
+c18 [ shape=record, label="{{<p13> A|<p16> B}|$84\n$_NOR_|{<p14> Y}}" ];
+c19 [ shape=record, label="{{<p13> A|<p16> B}|$85\n$_NOR_|{<p14> Y}}" ];
+c20 [ shape=record, label="{{<p13> A|<p16> B}|$86\n$_NOR_|{<p14> Y}}" ];
+c21 [ shape=record, label="{{<p13> A|<p16> B}|$87\n$_NOR_|{<p14> Y}}" ];
+c22 [ shape=record, label="{{<p13> A|<p16> B}|$88\n$_NOR_|{<p14> Y}}" ];
+c18:p14:e -> c19:p16:w [color="black", label=""];
+n10:e -> c15:p13:w [color="black", label=""];
+n10:e -> c17:p16:w [color="black", label=""];
+n10:e -> c20:p13:w [color="black", label=""];
+c19:p14:e -> n11:w [color="black", label=""];
+c22:p14:e -> n12:w [color="black", label=""];
+c20:p14:e -> c22:p13:w [color="black", label=""];
+c21:p14:e -> c22:p16:w [color="black", label=""];
+n4 [ shape=point ];
+c15:p14:e -> n4:w [color="black", label=""];
+n4:e -> c18:p16:w [color="black", label=""];
+n4:e -> c21:p13:w [color="black", label=""];
+c17:p14:e -> c19:p13:w [color="black", label=""];
+n6:e -> c18:p13:w [color="black", label=""];
+n7:e -> c21:p16:w [color="black", label=""];
+n8:e -> c17:p13:w [color="black", label=""];
+n9:e -> c20:p16:w [color="black", label=""];
+}

@@ -1,0 +1,14 @@
+read_verilog 8input_42.v
+flatten
+splitnets -ports
+hierarchy -auto-top
+proc
+techmap
+opt
+abc -g NOR
+opt
+hierarchy -auto-top
+opt_clean -purge
+show -format pdf -prefix ./42/8input_42_yosys
+write_edif ./42/8input_42.edif
+write_json ./42/8input_42.json

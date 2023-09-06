@@ -1,0 +1,14 @@
+read_verilog 7input_33.v
+flatten
+splitnets -ports
+hierarchy -auto-top
+proc
+techmap
+opt
+abc -g NOR
+opt
+hierarchy -auto-top
+opt_clean -purge
+show -format pdf -prefix ./33/7input_33_yosys
+write_edif ./33/7input_33.edif
+write_json ./33/7input_33.json

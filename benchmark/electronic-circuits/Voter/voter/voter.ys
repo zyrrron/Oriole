@@ -1,0 +1,14 @@
+read_verilog ../voter.v
+splitnets
+hierarchy -top voter
+flatten
+proc
+techmap
+opt
+abc -g NOR
+opt
+opt_clean
+show -format pdf -prefix ../voter/voter_yosys
+write_edif ../voter/voter.edif
+write_json ../voter/voter.json
+

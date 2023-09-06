@@ -1,0 +1,14 @@
+read_verilog ../gray.v ../gray16.v
+splitnets
+hierarchy -top binary2gray_16
+flatten
+proc
+techmap
+opt
+abc -g NOR
+opt
+opt_clean
+show -format pdf -prefix ../gray16/gray16_yosys
+write_edif ../gray16/gray16.edif
+write_json ../gray16/gray16.json
+

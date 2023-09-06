@@ -1,0 +1,13 @@
+read_verilog ../RCA.v ../RCA4.v
+splitnets
+hierarchy -top RCA4
+flatten
+proc
+techmap
+opt
+abc -g NOR
+opt
+opt_clean
+show -format pdf -prefix ../RCA4/RCA4_yosys
+write_edif ../RCA4/RCA4.edif
+write_json ../RCA4/RCA4.json

@@ -1,0 +1,14 @@
+read_verilog 8input_16.v
+flatten
+splitnets -ports
+hierarchy -auto-top
+proc
+techmap
+opt
+abc -g NOR
+opt
+hierarchy -auto-top
+opt_clean -purge
+show -format pdf -prefix ./16/8input_16_yosys
+write_edif ./16/8input_16.edif
+write_json ./16/8input_16.json

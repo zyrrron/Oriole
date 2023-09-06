@@ -1,0 +1,13 @@
+a 1 gray
+1 2 gray
+b 7 gray
+7 5 color4
+c 8 gray
+8 5 gray
+2 4 color3
+2 5 color2
+5 3 color0
+5 4 color1
+5 9 gray
+6 5 gray
+9 6 gray
