@@ -38,7 +38,7 @@ def VerifyAndMerge():
             continue
 
         # Start to merge in different max channels for cell-cell communication
-        urange = [5,4]
+        urange = [constraint[0]]
 
         for upperbound in urange:
             print(f"Current max cell-cell channels for a cell: {upperbound}")
@@ -93,7 +93,8 @@ def VerifyAndMerge():
                 # Start merging from the community with the least incoming or outgoing edges.
                 # Try different searching order may find more optimal solution and get rid of the local optimal
                 # height2 is used for combining the un-neighbored gates, stop in a limited searching height.
-                height2 = 5
+                height2 = 3
+                CurrentVerifyResult = iof.loadSolution(f"{out_path}/sol_after_verify_{S_bounds[1]}_{constraint[0]}.txt", s)
                 print(f"There are totally {attempts} attempts. Now start merging!")
                 MergeResult, MergeFlag, MergeErrorLog, ColorFlag, DAG_new = ec.enlargeCommunityMerge_chris(G_primitive, S_bounds, out_path,
                                     constraint, loop_free, timestep2, CurrentVerifyResult, target_n, bio_flag, height, height2, DAG, ColorOptions, attempts, ub)
@@ -139,4 +140,4 @@ def VerifyAndMerge():
     print()
 
 
-VerifyAndMerge()
+# VerifyAndMerge()

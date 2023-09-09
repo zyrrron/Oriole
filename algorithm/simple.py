@@ -5,15 +5,15 @@ import csv
 import collections
 import UpdateFunctions as uf
 import matplotlib.pyplot as plt
-G = nx.read_edgelist("../benchmark/electronic-circuits/MUX/mux4/DAG.edgelist", nodetype = str, create_using=nx.DiGraph())
+G = nx.read_edgelist("../benchmark/sha256-master/src/rtl/sha256_core_nor/DAG.edgelist", nodetype = str, create_using=nx.DiGraph())
 print(G.number_of_nodes(), G.number_of_edges())
 in_nodes, out_nodes, nonprimitives = utils.get_nonprimitive_nodes(G)
 G1 = utils.get_G_primitive(G, nonprimitives)
 print(G1.number_of_nodes(), G1.number_of_edges())
-pos = nx.spring_layout(G, seed=42)
-nx.draw_networkx(G, with_labels=True)
-plt.title("Directed Acyclic Graph (DAG)")
-plt.show()
+# pos = nx.spring_layout(G, seed=42)
+# nx.draw_networkx(G, with_labels=True)
+# plt.title("Directed Acyclic Graph (DAG)")
+# plt.show()
 
 # nx.draw_networkx(G, with_labels=True)
 # Display the plot

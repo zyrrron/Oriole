@@ -100,7 +100,7 @@ def findPropagandizedNeighborComm(G, c, CurrentResult, height, res, path, S_boun
             reward_Neighbors[com] = reward_path_current
 
             # If there are more than NegativeUpperBound times negative rewards continuously, stop searching in this path.
-            if reward_current < -1:
+            if reward_current < 0:
                 save_reward = False
                 count = 0
                 for i in range(len(reward_path)-1,-1,-1):
@@ -114,7 +114,7 @@ def findPropagandizedNeighborComm(G, c, CurrentResult, height, res, path, S_boun
             if save_reward:
                 rewards[tmp] = reward_current
 
-                # If the reward is less than -1, we don't save it into rewards
+                # If the reward is less than 0, we don't save it into rewards
                 MergeCommListStr.append(tmp)
 
             # But we will save all the path has less than NegativeUpperBound continuous negative rewards

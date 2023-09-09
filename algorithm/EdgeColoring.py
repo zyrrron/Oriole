@@ -326,7 +326,7 @@ def startColoring(ColorOptions, SingleFlag=True):
         ColorFlag = True
         DAG = utils.load_graph(settings, s)
         # Allow 500 trace back steps.
-        timestep_reback = 10000
+        timestep_reback = 5000
 
         if SingleFlag:
             # Only check one solution file
@@ -357,14 +357,7 @@ def startColoring(ColorOptions, SingleFlag=True):
                 writer.writerow(["Solution index", "Edge index", "Total cell-cell edges", "Edges colored", "Color percentage"])
 
             # Check merge solution respectively
-            step = 1
-            if len(ColorOptions) <= 8:
-                step = 100
-            for i in range(10500, len(MergeResultList), step):
-            # for i in range(len(MergeResultList)):
-            # for i in top_names:
-            #     if i < 1000:
-            #         continue
+            for i in range(len(MergeResultList)):
                 SolLength, MergeResult = MergeResultList[i]
                 if SolLength != PreviousSolLength:
                     PreviousSolLength = SolLength
@@ -389,7 +382,7 @@ def startColoring(ColorOptions, SingleFlag=True):
 
 # Assume we have totally 4 different cell-cell communication molecular, set 4 as the color parameter.
 # Set color list
-# upperbounds = [6,5]
+# upperbounds = [6]
 # for upperbound in upperbounds:
 #     print(f"try to assign with {upperbound} colors")
 #     ColorOptions = ["black", "gray"]
