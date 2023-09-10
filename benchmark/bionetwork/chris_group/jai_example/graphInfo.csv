@@ -1,0 +1,7 @@
+benchmark,node,edge,PrimitiveNode,PrimitiveEdge
+md5_opt_ExceptXORXNOR,88,159,70,100
+md5_opt_all,62,107,44,56
+md5_opt_jai,149,220,131,180
+md5_opt_nand,151,223,133,180
+md5_opt_nor2,149,220,131,180
+md5_opt_old,149,220,131,180

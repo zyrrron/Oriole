@@ -1,0 +1,14 @@
+read_verilog ../md5_core.v ../defines.h
+splitnets
+hierarchy -top md5_core
+flatten
+proc; opt -full; memory; opt -full; fsm; opt -full 
+techmap; opt -full
+abc -g NOR
+splitnets -ports; opt -full
+opt_clean
+clean -purge
+flatten
+write_edif ../md5/md5.edif
+write_json ../md5/md5.json
+show -format pdf -prefix ../md5/md5_yosys
