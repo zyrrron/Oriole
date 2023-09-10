@@ -112,6 +112,8 @@ def read_json(inputfile):
 			# get gate type
 			if sl.strip().startswith('"type"'):
 				gatetype = re.search('_(.*)_', sl.strip())
+				if not gatetype:
+					continue
 				gates[s]['type'] = gatetype.group(1)
 			# get input(s)
 			if sl.strip().startswith('"A": [') or sl.strip().startswith('"B": [') or sl.strip().startswith('"C": [') or sl.strip().startswith('"D": [') or sl.strip().startswith('"S": ['):
@@ -304,13 +306,13 @@ def loadData(s, settings):
 	# time step for merging stage
 	timestep2 = 10000
 	# height: searching depth for each community merging propaganda checking
-	height = 8
+	height = 3
 	# "attempts" means the number of possible merging paths we will collect, note that each path includes multiple partition results
 	# "height2": the depth of searching possible merging solution for un-neighbor communities in every propaganda checking
-	attempts = 200
-	height2 = 5
+	attempts = 10
+	height2 = 3
 	# Upper bound for continuously negative reward path in each propaganda checking
-	ub = 5
+	ub = 3
 	begin_time_current_step = time.time()
 
 	# load graph
