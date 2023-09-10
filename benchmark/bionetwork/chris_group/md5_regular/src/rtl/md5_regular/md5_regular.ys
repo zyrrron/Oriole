@@ -1,0 +1,13 @@
+read_verilog ../md5_core.v ../md5.v
+splitnets
+hierarchy -top md5_core
+flatten
+proc
+techmap
+opt
+abc -g NOR
+opt
+opt_clean
+write_json ../md5_regular/md5_regular.json
+write_edif ../md5_regular/md5_regular.edif
+show -format pdf -prefix ../md5_regular/md5_regular_yosys
