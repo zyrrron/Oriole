@@ -3,17 +3,18 @@ import UpdateFunctions as uf
 import networkx as nx
 
 
-def writeSolution(out_path, filename, G, CurrentResult):
+def writeSolution(out_path, filename, G, CurrentResult, CostTime):
     outfile = out_path + filename
     if not os.path.exists(out_path):
         os.makedirs(out_path)
     f_out = open(outfile, 'w')
     if len(CurrentResult) == 0:
         print(f"Current number of communities is 1!")
+        f_out.write(f"Time Cost: {CostTime}s\n")
         f_out.write(f'Community 1: {list(G.nodes)}')
     else:
         NewCommunityNumToNodes, CurrentResult = uf.updateCommunityNum(CurrentResult)
-
+        f_out.write(f"Time Cost: {CostTime}s\n")
         # Print and save the current solution
         # print(NewCommunityNumToNodes)
         for key in NewCommunityNumToNodes:
@@ -69,7 +70,7 @@ def loadSolution(path, s):
 
 
 # If current number of communities in the merge solution is bigger than target N, report issue
-def reportMergeIssue(G_primitive, out_path, solutionfile, MergeResult, ErrorLog, timestep, VerifyResult, target_n, str=""):
+def reportMergeIssue(G_primitive, out_path, solutionfile, MergeResult, ErrorLog, attempt_range, VerifyResult, target_n, CostTime, str=""):
     outfile = out_path + f'/error_report{str}.txt'
     if not os.path.exists(out_path):
         os.makedirs(out_path)
@@ -82,12 +83,11 @@ def reportMergeIssue(G_primitive, out_path, solutionfile, MergeResult, ErrorLog,
         return
 
     f_out.write(f"Target N is: {target_n}. Stop caused by: {ErrorLog}. \n")
-    f_out.write(f"After {timestep} attempts of different merging strategy, we decrease the number of communities from {len(CommunityNumToNodesBeforeMerge)} to ")
-    f_out.write(f"{len(CommunityNumToNodesAfterMerge)}\n")
+    f_out.write(f"During {attempt_range} attempts of different merging strategy, we decrease the number of communities ")
+    f_out.write(f"from {len(CommunityNumToNodesBeforeMerge)} to {len(CommunityNumToNodesAfterMerge)}\n")
+    f_out.write(f"Time Cost: {CostTime}s\n")
     print(f"Target N is: {target_n}. Stop caused by: {ErrorLog}.")
     print(f"Current number of communities is decreased from {len(CommunityNumToNodesBeforeMerge)} to {len(CommunityNumToNodesAfterMerge)}!")
 
-    NewCommunityNumToNodes, CurrentResult = uf.updateCommunityNum(MergeResult)
-
     # Print and save the current solution
-    writeSolution(out_path, solutionfile, G_primitive, MergeResult)
+    writeSolution(out_path, solutionfile, G_primitive, MergeResult, CostTime)
