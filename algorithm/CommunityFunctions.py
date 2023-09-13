@@ -55,7 +55,7 @@ def findAllNeighborsComm(G, c, CurrentResult):
 
 
 # Find all neighbor communities and neighbor of neighbor communities
-def findPropagandizedNeighborComm(G, c, CurrentResult, height, res, path, S_bound, size, reward_path, rewards, constraint, bio_flag, path_set, ub):
+def findPropagateNeighborComm(G, c, CurrentResult, height, res, path, S_bound, size, reward_path, rewards, constraint, bio_flag, path_set, ub):
 
     NegativeUpperBound = ub
     if height <= 0:
@@ -136,7 +136,7 @@ def findPropagandizedNeighborComm(G, c, CurrentResult, height, res, path, S_boun
         tempvalue = CommunityNumToNodes[com]
         for node in CommunityNumToNodes[com]:
             CurrentResult[node] = c
-        res, rewards, path_set = findPropagandizedNeighborComm(G, c, CurrentResult, height-1, res, path, S_bound, size_new,
+        res, rewards, path_set = findPropagateNeighborComm(G, c, CurrentResult, height-1, res, path, S_bound, size_new,
                                             reward_Neighbors[com], rewards, constraint, bio_flag, path_set, ub)
         for node in tempvalue:
             CurrentResult[node] = com

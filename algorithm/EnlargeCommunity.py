@@ -72,7 +72,7 @@ def prepareCommOrder(G, CenterCommunity, CurrentResult, constraint, bio_flag, he
         # calculate the rewards provided by all neighbor communities and the n-height neighbors of the neighbors if we add them into the current community
         # This procedure is called propagation checking
         CommunityNumToNodes = uf.mapCommunityToNodes(CurrentResult)
-        PropagandizedNeighborComm, rewards, path_set = ccf.findPropagandizedNeighborComm(G, CenterCommunity, CurrentResult, height-1, {height: CenterCommunity},
+        PropagandizedNeighborComm, rewards, path_set = ccf.findPropagateNeighborComm(G, CenterCommunity, CurrentResult, height-1, {height: CenterCommunity},
                                                                                [CenterCommunity], S_bound, len(CommunityNumToNodes[CenterCommunity]),
                                                                                [0], {}, constraint, bio_flag, path_set, ub)
 
@@ -198,7 +198,7 @@ def tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, ti
     totalNum = 0
     count = 1
     MergeResultList = [MergeResult]
-    SearchStep = 1
+    SearchStep = attempt_range[0]
     Neighborflag = True
 
     # There are 2 possible conditions to return back
@@ -296,10 +296,11 @@ def enlargeCommunityMerge(G, S_bounds, out_path, constraint, loop_free, timestep
 
     Result = renameKey(Result)
     MergeResult = copy.deepcopy(Result)
+    attempt_range_original = copy.deepcopy(attempt_range)
     MergeResultList, MergeResult, ll = tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, timestep, loop_free, Result,
                                                 attempt_range, ub)
 
-    MergeResultList, tmp, d_new = sortAndSaveMergeResultList(S_bounds, out_path, constraint, MergeResultList, MergeResult, attempt_range)
+    MergeResultList, tmp, d_new = sortAndSaveMergeResultList(S_bounds, out_path, constraint, MergeResultList, MergeResult, attempt_range_original)
     MergeResult = d_new[0][1]
 
     # If the current number of communities is bigger than what we expected (target_n), return False
@@ -318,7 +319,7 @@ def enlargeCommunityMerge_chris(G, S_bounds, out_path, constraint, loop_free, ti
     MergeResultList, MergeResult, ll = tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, timestep, loop_free, Result,
                                                 attempt_range, ub)
 
-    MergeResultList, tmp, d_new = sortAndSaveMergeResultList(S_bounds, out_path, constraint, MergeResultList, MergeResult, Result, attempt_range)
+    MergeResultList, tmp, d_new = sortAndSaveMergeResultList(S_bounds, out_path, constraint, MergeResultList, MergeResult, attempt_range)
 
     # If we can find a solution with all edge colored correctly, then return the merge result. Otherwise, try another one in the merge result list
     currentlengh = len(CommunityNumToNodes)

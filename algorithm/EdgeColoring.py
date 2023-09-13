@@ -323,22 +323,22 @@ def startColoring(ColorOptions, SingleFlag=True):
     for s in samples:
 
         # Load merge result
-        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, _, _, bio_flag, _, _, _, _, _ = utils.loadData(s, settings)
+        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, _, _, bio_flag, _, _, _, attempt_range, _ = utils.loadData(s, settings)
         ColorFlag = True
         DAG = utils.load_graph(settings, s)
-        # Allow 500 trace back steps.
+        # Allow 5000 trace back steps.
         timestep_reback = 5000
         begin_time = time.time()
 
         if SingleFlag:
             # Only check one solution file
-            MergeResult = iof.loadSolution(f"{out_path}/sol_after_merge_{S_bounds[1]}_{constraint[0]}.txt", s)
+            MergeResult = iof.loadSolution(f"{out_path}/sol_after_merge_{S_bounds[1]}_{constraint[0]}_{attempt_range}.txt", s)
             CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
             ColorFlag, DAG, EdgeIndex, TotalEdges = ColorAssignment(MergeResult, CommunityNumToNodes, G_primitive, DAG, bio_flag, ColorOptions, timestep_reback)
 
         else:
             # Check a list of potential solution with minimum length
-            json_file = open(f"{out_path}/merge_result_list_{S_bounds[1]}_{constraint[0]}.json", "r")
+            json_file = open(f"{out_path}/merge_result_list_{S_bounds[1]}_{constraint[0]}_{attempt_range}.json", "r")
             json_data = json_file.read()
             json_file.close()
             MergeResultList = json.loads(json_data)
@@ -359,7 +359,7 @@ def startColoring(ColorOptions, SingleFlag=True):
                 writer.writerow(["Solution index", "Edge index", "Total cell-cell edges", "Edges colored", "Color percentage"])
 
             # Check merge solution respectively
-            for i in range(len(MergeResultList)):
+            for i in range(0,len(MergeResultList), 500):
                 SolLength, MergeResult = MergeResultList[i]
                 if SolLength != PreviousSolLength:
                     PreviousSolLength = SolLength
@@ -372,29 +372,29 @@ def startColoring(ColorOptions, SingleFlag=True):
                 writer.writerow([i, EdgeIndex, TotalEdges, TotalEdges - EdgeIndex - 1, (TotalEdges - EdgeIndex - 1) / TotalEdges])
                 if ColorFlag:
                     CostTime = time.time() - begin_time
-                    iof.writeSolution(out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint[0]}_{len(ColorOptions)-2}.txt', G_primitive, MergeResult, CostTime)
+                    iof.writeSolution(out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint[0]}_{attempt_range}_{len(ColorOptions)-2}.txt', G_primitive, MergeResult, CostTime)
                     break
 
         if ColorFlag:
             # Write edge list with color
-            iof.writeColoredEdgeList(out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint[0]}_{len(ColorOptions)-2}_colored.txt', DAG)
+            iof.writeColoredEdgeList(out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint[0]}_{attempt_range}_{len(ColorOptions)-2}_colored.txt', DAG)
         else:
             print("Cannot find appropriate solution for edge coloring!")
-            iof.writeColoredEdgeList(out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint[0]}_{len(ColorOptions)-2}_colored.txt', DAG)
+            iof.writeColoredEdgeList(out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint[0]}_{attempt_range}_{len(ColorOptions)-2}_colored.txt', DAG)
 
 
 # Assume we have totally 4 different cell-cell communication molecular, set 4 as the color parameter.
 # Set color list
-# upperbounds = [6]
-# for upperbound in upperbounds:
-#     print(f"try to assign with {upperbound} colors")
-#     ColorOptions = ["black", "gray"]
-#     for i in range(upperbound):
-#         ColorOptions.append(f"color{i}")
-#
-#
-#     # SingleFlag = True: Only check one solution file
-#     # SingleFlag = False: Check a list of potential solution
-#     startColoring(ColorOptions, False)
+upperbounds = [6]
+for upperbound in upperbounds:
+    print(f"try to assign with {upperbound} colors")
+    ColorOptions = ["black", "gray"]
+    for i in range(upperbound):
+        ColorOptions.append(f"color{i}")
+
+
+    # SingleFlag = True: Only check one solution file
+    # SingleFlag = False: Check a list of potential solution
+    startColoring(ColorOptions, False)
 
 
