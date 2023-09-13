@@ -1,5 +1,1 @@
-<<<<<<< HEAD
 Error caused by: {'Community 5 cannot be solved! Try increasing ub, height, or height2'}. Please check constraints and the edges connected to this node.
-=======
-Error caused by: {'5'}. Please check constraints and the edges connected to this node.
->>>>>>> 0ccf3ba2738260c0f0acd7337a7a3327fe9d62b4

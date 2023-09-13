@@ -301,6 +301,10 @@ def loadData(s, settings):
 	priority = settings[s]['priority']
 	bio_flag = int(settings[s]['BioFlag'])
 	out_path = settings[s]['output_path']
+	attempt_range = []
+	tmp = settings[s]['attempt_range'].split(',')
+	for i in tmp:
+		attempt_range.append(eval(i))
 	# time step for verification stage
 	timestep = 10000
 	# time step for merging stage
@@ -309,11 +313,10 @@ def loadData(s, settings):
 	height = 3
 	# "attempts" means the number of possible merging paths we will collect, note that each path includes multiple partition results
 	# "height2": the depth of searching possible merging solution for un-neighbor communities in every propaganda checking
-	attempts = 10
 	height2 = 3
 	# Upper bound for continuously negative reward path in each propaganda checking
 	ub = 3
-	begin_time_current_step = time.time()
+
 
 	# load graph
 	G = load_graph_undirected(settings, s)
@@ -327,4 +330,4 @@ def loadData(s, settings):
 		G_primitive = copy.deepcopy(DAG)
 
 	return G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, timestep, timestep2, \
-		bio_flag, height, DAG, height2, attempts, ub
+		bio_flag, height, DAG, height2, attempt_range, ub

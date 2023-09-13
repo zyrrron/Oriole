@@ -6,12 +6,13 @@ import os
 import EnlargeCommunity as ec
 sys.path.append("../Oriole")
 import utils
+import time
 import networkx as nx
 import EdgeFunctions as ef
 import CommunityFunctions as ccf
 import InOutFunctions as iof
 import InitiateFunctions as inf
-import collections
+import copy
 import csv
 import EdgeColoring as ca
 
@@ -25,15 +26,18 @@ def VerifyAndMerge():
     # Verify samples iteratively
     for s in samples:
         res = []
+        begin_time = time.time()
 
         # Run and load verification result
-        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, timestep1, timestep2, bio_flag, height, DAG, height2, attempts, ub = utils.loadData(
-            s, settings)
+        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, timestep1, timestep2, bio_flag, height, \
+        DAG, height2, attempt_range, ub = utils.loadData(s, settings)
+        attempt_range_original = copy.deepcopy(attempt_range)
         target_n = math.ceil(len(G_primitive.nodes) / S_bounds[1])
         print(f"Current max gate per cell is {S_bounds[1]}")
         # If the max size for one community is bigger than the current total number of the nodes, output it and continue the next sample
         if len(G_primitive.nodes) < S_bounds[1]:
-            iof.writeSolution(out_path, f'/sol_after_verify_{S_bounds[1]}.txt', G_primitive, [])
+            CostTime = time.time() - begin_time
+            iof.writeSolution(out_path, f'/sol_after_verify_{S_bounds[1]}.txt', G_primitive, [], CostTime)
             print("All nodes can be put in one community!")
             continue
 
@@ -52,7 +56,8 @@ def VerifyAndMerge():
             if len(PendingCommunities) == 0:
                 print("No issue with current nodes, verification passed!")
                 VerifyResult = CurrentVerifyResult
-                iof.writeSolution(out_path, f'/sol_after_verify_{S_bounds[1]}_{upperbound}.txt', G_primitive, CurrentVerifyResult)
+                CostTime = time.time() - begin_time
+                iof.writeSolution(out_path, f'/sol_after_verify_{S_bounds[1]}_{upperbound}.txt', G_primitive, CurrentVerifyResult, CostTime)
             else:
                 print("PendingCommunities: ", PendingCommunities)
 
@@ -71,19 +76,22 @@ def VerifyAndMerge():
                     print("Verification passed!")
 
                     # Write current verify solution into a output file
-                    iof.writeSolution(out_path, f'/sol_after_verify_{S_bounds[1]}_{upperbound}.txt', G_primitive, VerifyResult)
+                    CostTime = time.time() - begin_time
+                    iof.writeSolution(out_path, f'/sol_after_verify_{S_bounds[1]}_{upperbound}.txt', G_primitive, VerifyResult, CostTime)
                 else:
                     iof.reportIssue(out_path, ErrorLog, f"_{S_bounds[1]}_{upperbound}")
                     continue
 
-            # Set color list
+            # Set color list, merge+edge coloring time start
+            begin_time = time.time()
             ColorOptions = ["black", "gray"]
             for i in range(upperbound):
                 ColorOptions.append(f"color{i}")
 
             # If S_bound[1] is big enough to take all the nodes in one community
             if S_bounds[1] >= len(G_primitive.nodes):
-                iof.writeSolution(out_path, f'/sol_after_merge_{S_bounds[1]}_{upperbound}.txt', G_primitive, [])
+                CostTime = time.time() - begin_time
+                iof.writeSolution(out_path, f'/sol_after_merge_{S_bounds[1]}_{upperbound}_{attempt_range_original}.txt', G_primitive, [], CostTime)
                 res.append(1)
                 print("All nodes can be put in one community!")
                 print(upperbound, 1)
@@ -95,9 +103,9 @@ def VerifyAndMerge():
                 # height2 is used for combining the un-neighbored gates, stop in a limited searching height.
                 height2 = 3
                 CurrentVerifyResult = iof.loadSolution(f"{out_path}/sol_after_verify_{S_bounds[1]}_{constraint[0]}.txt", s)
-                print(f"There are totally {attempts} attempts. Now start merging!")
+                print(f"Check {attempt_range} attempt range. Now start merging!")
                 MergeResult, MergeFlag, MergeErrorLog, ColorFlag, DAG_new = ec.enlargeCommunityMerge_chris(G_primitive, S_bounds, out_path,
-                                    constraint, loop_free, timestep2, CurrentVerifyResult, target_n, bio_flag, height, height2, DAG, ColorOptions, attempts, ub)
+                                    constraint, loop_free, timestep2, CurrentVerifyResult, target_n, bio_flag, height, height2, DAG, ColorOptions, attempt_range, ub)
 
                 # Check if the new result is better than the previous one with bigger intercellular constraint
                 # if not, don't save it and go to the next one
@@ -106,7 +114,8 @@ def VerifyAndMerge():
                 if MergeFlag:
 
                     # Write current merge solution into an output file
-                    iof.writeSolution(out_path, f'/sol_after_merge_{S_bounds[1]}_{upperbound}.txt', G_primitive, MergeResult)
+                    CostTime = time.time() - begin_time
+                    iof.writeSolution(out_path, f'/sol_after_merge_{S_bounds[1]}_{upperbound}_{attempt_range_original}.txt', G_primitive, MergeResult, CostTime)
                     iof.writeColoredEdgeList(out_path, f'/sol_after_merge_{S_bounds[1]}_{upperbound}_colored.txt', DAG_new)
                 else:
                     MergeResult, flag = MG.merge_final_check(G_primitive, S_bounds, MergeResult, loop_free, constraint, bio_flag)
@@ -114,7 +123,8 @@ def VerifyAndMerge():
                         CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
                         ColorFlag, DAG_new, _, _ = ca.ColorAssignment(MergeResult, CommunityNumToNodes, G_primitive, DAG, bio_flag, ColorOptions, 5000)
                     if ColorFlag:
-                        iof.reportMergeIssue(G_primitive, out_path, f'/sol_after_merge_{S_bounds[1]}_{upperbound}.txt', MergeResult, MergeErrorLog, attempts, VerifyResult, target_n, f"_{S_bounds[1]}_{upperbound}")
+                        CostTime = time.time() - begin_time
+                        iof.reportMergeIssue(G_primitive, out_path, f'/sol_after_merge_{S_bounds[1]}_{upperbound}_{attempt_range_original}.txt', MergeResult, MergeErrorLog, attempt_range_original, VerifyResult, target_n, CostTime, f"_{S_bounds[1]}_{upperbound}")
                         iof.writeColoredEdgeList(out_path, f'/sol_after_merge_{S_bounds[1]}_{upperbound}_colored.txt', DAG_new)
 
                 if ColorFlag:

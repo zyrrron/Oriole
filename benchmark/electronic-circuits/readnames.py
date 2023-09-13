@@ -26,7 +26,7 @@ def print_subfolder_names():
                     nodeNew, edgeNew = G1.number_of_nodes(), G1.number_of_edges()
 
                     # non-primitive nodes will also be checked
-                    l = f"{folder_name}\t../benchmark/electronic-circuits/{rootName}/{folder_name}\t./lib\tFALSE\t1,7\t3\tlow\t2,2\t4\tTRUE\tC\t0\t./results/{rootName}/{folder_name}"
+                    l = f"{folder_name}\t../benchmark/electronic-circuits/{rootName}/{folder_name}\t./lib\tFALSE\t1,7\t3\tlow\t2,2\t4\tTRUE\tC\t0\t[1,5]\t./results/{rootName}/{folder_name}"
                     dictD[rootName].append([folder_name, l, folder_name, nodeOld, edgeOld, nodeNew, edgeNew])
 
             # have only one edge list file inside
@@ -39,7 +39,7 @@ def print_subfolder_names():
                 nodeNew, edgeNew = G1.number_of_nodes(), G1.number_of_edges()
 
                 # non-primitive nodes will also be checked
-                l = f"{rootName}\t../benchmark/electronic-circuits/{rootName}\t./lib\tFALSE\t1,7\t3\tlow\t2,2\t4\tTRUE\tC\t0\t./results/{rootName}"
+                l = f"{rootName}\t../benchmark/electronic-circuits/{rootName}\t./lib\tFALSE\t1,7\t3\tlow\t2,2\t4\tTRUE\tC\t0\t[1,5]\t./results/{rootName}"
                 dictD[rootName].append([rootName, l, rootName, nodeOld, edgeOld, nodeNew, edgeNew])
 
     dictD = dict(sorted(dictD.items()))

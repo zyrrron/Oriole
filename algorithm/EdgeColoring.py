@@ -8,6 +8,7 @@ import csv
 import utils
 import EdgeFunctions as ef
 import collections
+import time
 
 
 def checkNeighborColor(u, v, CenterColor, NeighborEdges, ColorInfo, MergeResult, bio_flag):
@@ -327,6 +328,7 @@ def startColoring(ColorOptions, SingleFlag=True):
         DAG = utils.load_graph(settings, s)
         # Allow 500 trace back steps.
         timestep_reback = 5000
+        begin_time = time.time()
 
         if SingleFlag:
             # Only check one solution file
@@ -369,7 +371,8 @@ def startColoring(ColorOptions, SingleFlag=True):
                 ColorFlag, DAG, EdgeIndex, TotalEdges = ColorAssignment(MergeResult, CommunityNumToNodes, G_primitive, DAG, bio_flag, ColorOptions, timestep_reback)
                 writer.writerow([i, EdgeIndex, TotalEdges, TotalEdges - EdgeIndex - 1, (TotalEdges - EdgeIndex - 1) / TotalEdges])
                 if ColorFlag:
-                    iof.writeSolution(out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint[0]}_{len(ColorOptions)-2}.txt', G_primitive, MergeResult)
+                    CostTime = time.time() - begin_time
+                    iof.writeSolution(out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint[0]}_{len(ColorOptions)-2}.txt', G_primitive, MergeResult, CostTime)
                     break
 
         if ColorFlag:
