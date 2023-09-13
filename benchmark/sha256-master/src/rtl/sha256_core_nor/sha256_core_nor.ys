@@ -1,0 +1,14 @@
+read_verilog ../sha256_core.v ../sha256_k_constants.v ../sha256_w_mem.v ../sha256.v
+splitnets
+hierarchy -top sha256_core
+flatten
+proc
+techmap
+opt
+abc -g NOR
+opt
+opt_clean
+write_json ../sha256_core_nor/sha256_core_nor.json
+write_edif ../sha256_core_nor/sha256_core_nor.edif
+show -format pdf -prefix ../sha256_core_nor/sha256_core_nor_yosys
+
