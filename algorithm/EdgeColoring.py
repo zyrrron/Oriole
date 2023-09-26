@@ -157,12 +157,12 @@ def findColor(MergeResult, CommunityNumToNodes, ColorOptions, CommEdgeColorInfo,
 
         # If the first edge cannot be colored successfully by the first color, same with other colors. So we can return False directly.
         if index >= EdgeTotalNum-1 and not Forward:
-            # print("Edge index:", index, ", Time step:", timestep, ", Edges colored: ", EdgeTotalNum-index-1, ", Color percentage:", 1-((index+1) / EdgeTotalNum))
+            print("Edge index:", index, ", Time step:", timestep, ", Edges colored: ", EdgeTotalNum-index-1, ", Color percentage:", 1-((index+1) / EdgeTotalNum))
             return NewColorInfo, False, timestep, index
 
         # Check if the time limit has been reached, return the current status
         if index > timestep:
-            # print("Edge index:", index, ", Time step left:", timestep, ", Edges colored: ", EdgeTotalNum-index-1, ", Color percentage:", 1-((index+1) / EdgeTotalNum))
+            print("Edge index:", index, ", Time step left:", timestep, ", Edges colored: ", EdgeTotalNum-index-1, ", Color percentage:", 1-((index+1) / EdgeTotalNum))
             return NewColorInfo, False, timestep, index
 
         # Get the index-th edge in the list of cell-cell edges, and the colors left to be assigned.
@@ -315,19 +315,24 @@ def ColorAssignment(MergeResult, CommunityNumToNodes, G_primitive, DAG, bio_flag
     return ColorFlag, DAG, EdgeIndex, len(CellToCellEdges)
 
 
-def startColoring(ColorOptions, SingleFlag=True):
+def startColoring(upperbounds, SingleFlag=True):
+
     # Load samples and settings
     samples, settings = utils.loadSettings()
 
     # Assign colors to each cell-cell edge iteratively
-    for s in samples:
+    for ele in range(len(samples)):
+        s = samples[ele]
+        upperbound = upperbounds[ele]
+        print(f"try to assign with {upperbound} colors")
+        ColorOptions = ["black", "gray"]
+        for j in range(upperbound):
+            ColorOptions.append(f"color{j}")
 
         # Load merge result
         G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, _, _, bio_flag, _, _, _, attempt_range, _ = utils.loadData(s, settings)
         ColorFlag = True
         DAG = utils.load_graph(settings, s)
-        # Allow 5000 trace back steps.
-        timestep_reback = 5000
         begin_time = time.time()
 
         if SingleFlag:
@@ -344,6 +349,19 @@ def startColoring(ColorOptions, SingleFlag=True):
             MergeResultList = json.loads(json_data)
             PreviousSolLength = 0
 
+            # check result list with different attempt range
+            # Allow 500000 trace back steps.
+            timestep_reback = 1000000
+            checklist = range(0, len(MergeResultList))
+            if attempt_range == [1, 5]:
+                checklist = [7196]
+            elif attempt_range == [5, 10]:
+                timestep_reback = 1000000
+                checklist = [12490]
+            elif attempt_range == [1, 4]:
+                timestep_reback = 10000
+                checklist = range(0, len(MergeResultList), 1000)
+
             # timestepOld = 10000
             # with open(f"{out_path}/EdgeIndexInfo_{timestepOld}.csv", "r") as csv_file:
             #     reader = csv.reader(csv_file)
@@ -353,13 +371,13 @@ def startColoring(ColorOptions, SingleFlag=True):
 
             # create a csv file saving the deepest edge for one solution has searched.
 
-            EdgeIndexInfo_file = open(f"{out_path}/EdgeIndexInfo_{timestep_reback}_{len(ColorOptions)-2}.csv", "a", newline="")
+            EdgeIndexInfo_file = open(f"{out_path}/EdgeIndexInfo_{attempt_range}_{timestep_reback}_{len(ColorOptions)-2}.csv", "a", newline="")
             writer = csv.writer(EdgeIndexInfo_file)
             if EdgeIndexInfo_file.tell() == 0:
                 writer.writerow(["Solution index", "Edge index", "Total cell-cell edges", "Edges colored", "Color percentage"])
 
             # Check merge solution respectively
-            for i in range(0,len(MergeResultList), 500):
+            for i in checklist:
                 SolLength, MergeResult = MergeResultList[i]
                 if SolLength != PreviousSolLength:
                     PreviousSolLength = SolLength
@@ -375,26 +393,21 @@ def startColoring(ColorOptions, SingleFlag=True):
                     iof.writeSolution(out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint[0]}_{attempt_range}_{len(ColorOptions)-2}.txt', G_primitive, MergeResult, CostTime)
                     break
 
+        CostTime = time.time() - begin_time
         if ColorFlag:
             # Write edge list with color
+            print(f"Find appropriate solution for edge coloring! Run time: {CostTime}")
             iof.writeColoredEdgeList(out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint[0]}_{attempt_range}_{len(ColorOptions)-2}_colored.txt', DAG)
         else:
-            print("Cannot find appropriate solution for edge coloring!")
+            print(f"Cannot find appropriate solution for edge coloring! Run time: {CostTime}")
             iof.writeColoredEdgeList(out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint[0]}_{attempt_range}_{len(ColorOptions)-2}_colored.txt', DAG)
 
 
 # Assume we have totally 4 different cell-cell communication molecular, set 4 as the color parameter.
 # Set color list
-upperbounds = [6]
-for upperbound in upperbounds:
-    print(f"try to assign with {upperbound} colors")
-    ColorOptions = ["black", "gray"]
-    for i in range(upperbound):
-        ColorOptions.append(f"color{i}")
-
-
-    # SingleFlag = True: Only check one solution file
-    # SingleFlag = False: Check a list of potential solution
-    startColoring(ColorOptions, False)
+# SingleFlag = True: Only check one solution file
+# SingleFlag = False: Check a list of potential solution
+upperbounds = [4,6,4,4]
+startColoring(upperbounds, False)
 
 

@@ -139,7 +139,8 @@ def prepareMerge(Neighborflag, totalNum, count, SearchStep, MergeResult, attempt
 
     # If no change has been done to the MergeResult after the checking above, we should change a different way to order the to-be-merged communities.
     # We can skip this attempt because we have known the answer yet.
-    if count == 2 and not Neighborflag:
+    # if un-Neighbor nodes are also checked, we should skip from the current attempt.
+    if count >= 2 and not Neighborflag:
         if attempt_range[1] > attempt_range[0]:
             attempt_range[1] -= 1
             print(f"Attempt {attempt_range[1]}: ", f"{totalNum} cells in total. ", "Try another way to merge!")

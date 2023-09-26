@@ -47,6 +47,7 @@ def loadSolution(path, s):
 
     # read data from verification result
     with open(path) as f:
+        next(f)
         i = 0
         d = []
         for line in f:
