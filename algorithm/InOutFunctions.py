@@ -1,6 +1,7 @@
 import os
 import UpdateFunctions as uf
 import networkx as nx
+import re
 
 
 def writeSolution(out_path, filename, G, CurrentResult, CostTime):
@@ -43,19 +44,18 @@ def reportIssue(out_path, ErrorLog, info=""):
 
 # 1. Save current verification solution and send it to "merging.py"
 # 2. Save current merge solution and send it to "EdgeColoring.py"
-def loadSolution(path, s):
+def loadSolution(path, s=""):
 
     # read data from verification result
     with open(path) as f:
-        next(f)
-        i = 0
         d = []
         for line in f:
-            i += 1
-            line = line.replace('\'','')
-            line = line.split('[')[1]
-            line = line.split(']')[0]
+            if "Time" in line:
+                continue
+            line = line.split('[\'')[1]
+            line = line.split('\']')[0]
             line = line.replace(' ', '')
+            line = line.replace('\'', '')
             line = line.split(',')
             d.append(line)
 
@@ -67,7 +67,7 @@ def loadSolution(path, s):
         for e in ele:
             VerifyResult[e] = str(CommunityNum)
         CommunityNum += 1
-    return VerifyResult
+    return VerifyResult, CommunityNum-1
 
 
 # If current number of communities in the merge solution is bigger than target N, report issue

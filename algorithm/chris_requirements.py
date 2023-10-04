@@ -67,7 +67,7 @@ def VerifyAndMerge():
                 print("PendingCommunity: ", PendingCommunity)
 
                 # Start to solve the worst case by enlarging its size
-                VerifyResult, VerifyFlag, ErrorLog = ec.enlargeCommunity(G_primitive, PendingCommunity, S_bounds, ConstraintType,
+                VerifyResult, VerifyFlag, ErrorLog = ec.enlargeCommunity(G_primitive, PendingCommunity, S_bounds, ConstraintType, timestep1,
                                                                          constraint, loop_free, priority, CurrentVerifyResult, bio_flag, ub, height)
 
                 # If VerifyFlag is false, that means the graph and constraints don't pass the verification, user should change
@@ -102,7 +102,7 @@ def VerifyAndMerge():
                 # Try different searching order may find more optimal solution and get rid of the local optimal
                 # height2 is used for combining the un-neighbored gates, stop in a limited searching height.
                 height2 = 3
-                CurrentVerifyResult = iof.loadSolution(f"{out_path}/sol_after_verify_{S_bounds[1]}_{constraint[0]}.txt", s)
+                CurrentVerifyResult, TotalComm = iof.loadSolution(f"{out_path}/sol_after_verify_{S_bounds[1]}_{constraint[0]}.txt", s)
                 print(f"Check {attempt_range} attempt range. Now start merging!")
                 MergeResult, MergeFlag, MergeErrorLog, ColorFlag, DAG_new = ec.enlargeCommunityMerge_chris(G_primitive, S_bounds, out_path,
                                     constraint, loop_free, timestep2, CurrentVerifyResult, target_n, bio_flag, height, height2, DAG, ColorOptions, attempt_range, ub)

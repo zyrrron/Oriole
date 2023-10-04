@@ -1,2 +1,0 @@
-Target N is: 170. Stop caused by: {'No more attempts'}. 
-After 10000 attempts of different merging strategy, we decrease the number of communities from 1699 to 198

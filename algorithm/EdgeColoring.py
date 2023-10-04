@@ -334,10 +334,11 @@ def startColoring(upperbounds, SingleFlag=True):
         ColorFlag = True
         DAG = utils.load_graph(settings, s)
         begin_time = time.time()
+        timestep_reback = 3000000
 
         if SingleFlag:
             # Only check one solution file
-            MergeResult = iof.loadSolution(f"{out_path}/sol_after_merge_{S_bounds[1]}_{constraint[0]}_{attempt_range}.txt", s)
+            MergeResult, TotalComm = iof.loadSolution(f"{out_path}/sol_after_merge_{S_bounds[1]}_{constraint[0]}_{attempt_range}.txt", s)
             CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
             ColorFlag, DAG, EdgeIndex, TotalEdges = ColorAssignment(MergeResult, CommunityNumToNodes, G_primitive, DAG, bio_flag, ColorOptions, timestep_reback)
 
@@ -351,16 +352,21 @@ def startColoring(upperbounds, SingleFlag=True):
 
             # check result list with different attempt range
             # Allow 500000 trace back steps.
-            timestep_reback = 1000000
-            checklist = range(0, len(MergeResultList))
+            checklist = []
             if attempt_range == [1, 5]:
                 checklist = [7196]
             elif attempt_range == [5, 10]:
-                timestep_reback = 1000000
                 checklist = [12490]
             elif attempt_range == [1, 4]:
-                timestep_reback = 10000
-                checklist = range(0, len(MergeResultList), 1000)
+                timestep_reback = 30000
+                checklist = [0, 1000, 6000, 10000, 11000, 12000]
+            elif attempt_range == [1, 500]:
+                timestep_reback = 5000
+                for i in range(len(MergeResultList)):
+                    if 60 <= MergeResultList[i][0] <= 65:
+                        checklist.append(i)
+            else:
+                checklist = range(0, len(MergeResultList))
 
             # timestepOld = 10000
             # with open(f"{out_path}/EdgeIndexInfo_{timestepOld}.csv", "r") as csv_file:
@@ -407,7 +413,7 @@ def startColoring(upperbounds, SingleFlag=True):
 # Set color list
 # SingleFlag = True: Only check one solution file
 # SingleFlag = False: Check a list of potential solution
-# upperbounds = [6,4,4]
+# upperbounds = [4,4,4,4]
 # startColoring(upperbounds, False)
 
 

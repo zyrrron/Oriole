@@ -91,7 +91,7 @@ def prepareCommOrder(G, CenterCommunity, CurrentResult, constraint, bio_flag, he
 # Check if current community i meets all constraints every time when we move node j into community i.
 # Record it if meets all constraints.
 # Better use recursion here.
-def enlargeCommunity(G, Community, S_bounds, ConstraintType, constraint, loop_free, priority, CurrentResult, bio_flag, ub, height=0, height2=0):
+def enlargeCommunity(G, Community, S_bounds, ConstraintType, timestep, constraint, loop_free, priority, CurrentResult, bio_flag, ub, height=0, height2=0):
     VerifyFlag, ErrorLog = False, {}
 
     rewards_new, CurrentResult_new, path_set, _ = prepareCommOrder(G, Community, CurrentResult, constraint, bio_flag, height, 0, S_bounds, ub, set())
@@ -102,7 +102,7 @@ def enlargeCommunity(G, Community, S_bounds, ConstraintType, constraint, loop_fr
         # Update the current verify result after adding the neighbor community
         # Here we create a new variable CurrentResult_updated, because we can use CurrentResult_new as the original data in the final stage of backtracking
         CurrentResult_updated = ccf.addNeighborComm(CurrentResult_new, c, Community)
-        print("Merge: ", c)
+        # print("Merge: ", c)
 
         # Return to the last level if it arrives to the size constraints, time constraint or current community meets all constraints
         if ccf.checkSize(CurrentResult_updated, Community) > S_bounds[1]:
@@ -122,7 +122,7 @@ def enlargeCommunity(G, Community, S_bounds, ConstraintType, constraint, loop_fr
 
                 # else, check the next one
                 Community = ccf.findWorstCommunity(G, PendingCommunities, CurrentResult_updated, bio_flag)
-                print("Start new pending community: ", Community)
+                # print("Start new pending community: ", Community)
                 CurrentResult_updated, VerifyFlag, ErrorLog = enlargeCommunity(G, Community, S_bounds, ConstraintType,
                                                                              constraint, loop_free, priority,  CurrentResult_updated, bio_flag, ub, height,height2)
         if VerifyFlag:
@@ -253,7 +253,7 @@ def tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, ti
 # Remove duplication merge solution in the list
 # Then sort the un-duplicated solution list
 # Save the list as json and csv
-def sortAndSaveMergeResultList(S_bounds, out_path, constraint, MergeResultList, MergeResult, attempt_range):
+def sortAndSaveMergeResultList(S_bounds, out_path, constraint, MergeResultList, MergeResult, attempt_range, bio_flag):
 
     # Last MergeResult was not added to the list, add it now.
     # reduce duplication in the list
@@ -269,11 +269,17 @@ def sortAndSaveMergeResultList(S_bounds, out_path, constraint, MergeResultList, 
 
     # Sort the given dictionary, tmp is a dictionary with key = index in MergeResult, value = length of that merge result
     print(f"{len(d)} possible solutions to be checked for edge coloring assignment!")
-    tmp = sorted(d.items(), key=lambda x: (x[1], x[0]), reverse=False)
+    tmp = sorted(d.items(), key=lambda x: (x[1], x[0], x[0] == 0), reverse=False)
     tmp = dict(tmp)
 
     # save the sorted merge result list to a json file
     new_d = []
+    if not bio_flag:
+        for i in tmp:
+            new_d.append([tmp[i], MergeResultList[i]])
+            break
+        return MergeResultList, tmp, new_d
+
     with open(f"{out_path}/merge_result_list_{S_bounds[1]}_{constraint[0]}_{attempt_range}.csv", "w", newline="") as csv_file:
         fieldnames = ["Total Number of Comms", "Solution"]
         writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
@@ -301,7 +307,7 @@ def enlargeCommunityMerge(G, S_bounds, out_path, constraint, loop_free, timestep
     MergeResultList, MergeResult, ll = tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, timestep, loop_free, Result,
                                                 attempt_range, ub)
 
-    MergeResultList, tmp, d_new = sortAndSaveMergeResultList(S_bounds, out_path, constraint, MergeResultList, MergeResult, attempt_range_original)
+    MergeResultList, tmp, d_new = sortAndSaveMergeResultList(S_bounds, out_path, constraint, MergeResultList, MergeResult, attempt_range_original, bio_flag)
     MergeResult = d_new[0][1]
 
     # If the current number of communities is bigger than what we expected (target_n), return False
@@ -320,7 +326,7 @@ def enlargeCommunityMerge_chris(G, S_bounds, out_path, constraint, loop_free, ti
     MergeResultList, MergeResult, ll = tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, timestep, loop_free, Result,
                                                 attempt_range, ub)
 
-    MergeResultList, tmp, d_new = sortAndSaveMergeResultList(S_bounds, out_path, constraint, MergeResultList, MergeResult, attempt_range)
+    MergeResultList, tmp, d_new = sortAndSaveMergeResultList(S_bounds, out_path, constraint, MergeResultList, MergeResult, attempt_range, bio_flag)
 
     # If we can find a solution with all edge colored correctly, then return the merge result. Otherwise, try another one in the merge result list
     currentlengh = len(CommunityNumToNodes)

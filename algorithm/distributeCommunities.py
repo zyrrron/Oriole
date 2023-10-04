@@ -28,7 +28,7 @@ def countEdgesForEachCell():
         for maxedge in maxedges:
             info = f"_{maxsize}_{maxedge}_{attempt_range}"
             if os.path.exists(f"{out_path}/sol_after_merge{info}.txt"):
-                MergeResult = iof.loadSolution(f"{out_path}/sol_after_merge{info}.txt", s)
+                MergeResult, TotalComm = iof.loadSolution(f"{out_path}/sol_after_merge{info}.txt", s)
             else:
                 continue
             CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)

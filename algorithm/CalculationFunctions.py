@@ -2,6 +2,16 @@ import EdgeFunctions as ef
 import CommunityFunctions as ccf
 
 
+def calculateCellEdges(G, MergeResult):
+    CellToCellEdges = 0
+    for u, v in G.edges:
+        if u in MergeResult and v in MergeResult:
+            ComU, ComV = MergeResult[u], MergeResult[v]
+            if ComU != ComV:
+                CellToCellEdges += 1
+    return CellToCellEdges
+
+
 def calculateDegreeAndCycle(G, C, R, bio_flag):
     Indegree = len(ccf.findIncomingEdgesComm(G, C, R, bio_flag))
     Outdegree = len(ccf.findOutgoingEdgesComm(G, C, R, bio_flag))

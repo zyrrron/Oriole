@@ -4,7 +4,9 @@ import UpdateFunctions as uf
 import utils
 import EnlargeCommunity as ec
 import time
+import csv
 import math
+import CalculationFunctions as clf
 import copy
 import CommunityFunctions as ccf
 
@@ -12,6 +14,10 @@ import CommunityFunctions as ccf
 def Merge():
     # Load samples and settings
     samples, settings = utils.loadSettings()
+    ResultFile = open(f"MergeResult.csv", "a", newline="")
+    csvwriter = csv.writer(ResultFile)
+    if ResultFile.tell() == 0:
+        csvwriter.writerow(["Benchmark", "Comm before merge", "Comm after merge", "Cell-cell Edges before merge", "Edges after merge"])
 
     # Verify samples iteratively
     for s in samples:
@@ -20,13 +26,16 @@ def Merge():
         # Load verification result
         G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, _, out_path, _, timestep, \
             bio_flag, height, DAG, height2, attempt_range, ub = utils.loadData(s, settings)
+
         attempt_range_original = copy.deepcopy(attempt_range)
         target_n = math.ceil(len(G_primitive.nodes) / S_bounds[1])
-        VerifyResult = iof.loadSolution(f"{out_path}/sol_after_verify_{S_bounds[1]}_{constraint[0]}.txt", s)
-        CommunityNumToNodes = uf.mapCommunityToNodes(VerifyResult)
+        VerifyResult, TotalCommOld = iof.loadSolution(f"{out_path}/sol_after_verify_{S_bounds[1]}_{constraint[0]}.txt", s)
+        CellToCellEdgesOld = clf.calculateCellEdges(G_primitive, VerifyResult)
 
         # If the number of current communities is smaller than target number, return.
-        if len(CommunityNumToNodes) < target_n:
+        if TotalCommOld < target_n:
+
+            csvwriter.writerow([s, TotalCommOld, CellToCellEdgesOld, TotalCommOld, CellToCellEdgesOld])
             print("Verification solution is good enough according to the target number of communities!")
             continue
 
@@ -38,6 +47,7 @@ def Merge():
         # If S_bound[1] is big enough to take all the nodes in one community
         if S_bounds[1] >= len(G_primitive.nodes):
             CostTime = time.time() - begin_time
+            csvwriter.writerow([s, TotalCommOld, CellToCellEdgesOld, 1, 0])
             iof.writeSolution(out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint[0]}_{attempt_range}.txt', G_primitive, [], CostTime)
             print("All nodes can be put in one community!")
             continue
@@ -50,9 +60,14 @@ def Merge():
 
         CostTime = time.time() - begin_time
         print(f"Time Cost: {CostTime}")
+
+        # Save merge result comparison table
+        CellToCellEdges = clf.calculateCellEdges(G_primitive, MergeResult)
+        csvwriter.writerow([s, TotalCommOld, CellToCellEdgesOld, len(uf.mapCommunityToNodes(MergeResult)), CellToCellEdges])
+
+        # Write current merge solution into an output file
         if MergeFlag:
             print(f"Merge passed according to the target N: {target_n}!")
-            # Write current merge solution into an output file
             iof.writeSolution(out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint[0]}_{attempt_range}.txt', G_primitive, MergeResult, CostTime)
         else:
             MergeResult_new, flag = merge_final_check(G_primitive, S_bounds, MergeResult, loop_free, constraint, bio_flag)

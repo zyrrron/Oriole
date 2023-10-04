@@ -310,16 +310,16 @@ def loadData(s, settings):
 	# time step for merging stage
 	timestep2 = 10000
 	# height: searching depth for each community merging propaganda checking
-	height = 5
+	height = 8
 	# "attempts" means the number of possible merging paths we will collect, note that each path includes multiple partition results
 	# "height2": the depth of searching possible merging solution for un-neighbor communities in every propaganda checking
-	height2 = 5
+	height2 = 3
 	# Upper bound for continuously negative reward path in each propaganda checking
 	ub = 5
 
 
 	# load graph
-	G = load_graph_undirected(settings, s)
+	# G = load_graph_undirected(settings, s)
 	DAG = load_graph(settings, s)
 
 	in_nodes, out_nodes, nonprimitives = get_nonprimitive_nodes(DAG)

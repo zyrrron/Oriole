@@ -7,7 +7,7 @@ def updateCommunityNum(CurrentResult):
     CurrentResult_new = copy.deepcopy(CurrentResult)
 
     # Sort the dictionary by int(key)
-    tmp = sorted(CurrentResult_new.items(), key=lambda x: str(x[0]))
+    tmp = sorted(CurrentResult_new.items(), key=lambda x: (len(str(x[0])), str(x[0])))
     CurrentResult_new = dict(tmp)
 
     CommunityNumToNodes = mapCommunityToNodes(CurrentResult_new)

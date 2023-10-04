@@ -39,7 +39,7 @@ def print_subfolder_names():
                 nodeNew, edgeNew = G1.number_of_nodes(), G1.number_of_edges()
 
                 # non-primitive nodes will also be checked
-                l = f"{rootName}\t../benchmark/electronic-circuits/{rootName}\t./lib\tFALSE\t1,8\t3\tlow\t2,2\t4\tTRUE\tC\t0\t1,11\t../results/electronic-circuits/{rootName}"
+                l = f"{rootName}\t../benchmark/electronic-circuits/{rootName}\t./lib\tFALSE\t1,8\t3\tlow\t3,3\t6\tTRUE\tC\t0\t1,11\t../results/electronic-circuits/{rootName}"
                 dictD[rootName].append([rootName, l, rootName, nodeOld, edgeOld, nodeNew, edgeNew])
 
     dictD = dict(sorted(dictD.items()))
