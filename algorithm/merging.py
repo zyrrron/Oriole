@@ -68,7 +68,7 @@ def Merge():
         # Write current merge solution into an output file
         if MergeFlag:
             print(f"Merge passed according to the target N: {target_n}!")
-            iof.writeSolution(out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint[0]}_{attempt_range}.txt', G_primitive, MergeResult, CostTime)
+            iof.writeSolution(out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint[0]}_{attempt_range_original}.txt', G_primitive, MergeResult, CostTime)
         else:
             MergeResult_new, flag = merge_final_check(G_primitive, S_bounds, MergeResult, loop_free, constraint, bio_flag)
             if flag:

@@ -306,7 +306,7 @@ def loadData(s, settings):
 	for i in tmp:
 		attempt_range.append(eval(i))
 	# time step for verification stage
-	timestep = 10000
+	timestep = 100
 	# time step for merging stage
 	timestep2 = 10000
 	# height: searching depth for each community merging propaganda checking

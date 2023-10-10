@@ -1,8 +1,0 @@
-Community 1: ['1', '11', '17', '18', '19', '5', '6']
-Community 2: ['10']
-Community 3: ['12', '14', '16']
-Community 4: ['13', '8']
-Community 5: ['15', '2', '7']
-Community 6: ['20']
-Community 7: ['3', '4']
-Community 8: ['9']

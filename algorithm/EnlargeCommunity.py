@@ -98,6 +98,10 @@ def enlargeCommunity(G, Community, S_bounds, ConstraintType, timestep, constrain
 
     # start the middle part of backtracking
     for c in rewards_new:
+        if timestep < 0:
+            return CurrentResult_new, VerifyFlag, {f"Community {Community} cannot be solved! Try increasing timestep"}, timestep
+        else:
+            timestep -= 1
 
         # Update the current verify result after adding the neighbor community
         # Here we create a new variable CurrentResult_updated, because we can use CurrentResult_new as the original data in the final stage of backtracking
@@ -118,16 +122,16 @@ def enlargeCommunity(G, Community, S_bounds, ConstraintType, timestep, constrain
 
                 # If no other pending communities, return current result.
                 if len(PendingCommunities) == 0:
-                    return CurrentResult_updated, True, {}
+                    return CurrentResult_updated, True, {}, timestep
 
                 # else, check the next one
                 Community = ccf.findWorstCommunity(G, PendingCommunities, CurrentResult_updated, bio_flag)
                 # print("Start new pending community: ", Community)
-                CurrentResult_updated, VerifyFlag, ErrorLog = enlargeCommunity(G, Community, S_bounds, ConstraintType,
+                CurrentResult_updated, VerifyFlag, ErrorLog, timestep = enlargeCommunity(G, Community, S_bounds, ConstraintType, timestep,
                                                                              constraint, loop_free, priority,  CurrentResult_updated, bio_flag, ub, height,height2)
         if VerifyFlag:
-            return CurrentResult_updated, VerifyFlag, ErrorLog
-    return CurrentResult_new, VerifyFlag, {f"Community {Community} cannot be solved! Try increasing ub, height, or height2"}
+            return CurrentResult_updated, VerifyFlag, ErrorLog, timestep
+    return CurrentResult_new, VerifyFlag, {f"Community {Community} cannot be solved! Try increasing ub, height, or height2"}, timestep
 
 
 # In this function, we only provide the list of as-center-to-be-merged communities, in order of calculated center-merging rewards.

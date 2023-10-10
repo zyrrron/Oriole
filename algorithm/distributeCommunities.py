@@ -13,9 +13,10 @@ def countEdgesForEachCell():
 
     # Load samples and settings
     samples, settings = utils.loadSettings()
-    csvpath = "../results/bionetwork/chris_group/jai_example"
+    csvpath = "../results/sha256_core_nor/sha256_core_nor_8_bio"
     SoltionNum = {}
-    maxedges = [6,5,4]
+    maxedges = [4]
+    maxcolor = -1
 
     # Check samples iteratively
     for s in samples:
@@ -59,7 +60,10 @@ def countEdgesForEachCell():
             y_values = list(NumOfSize.values())
 
             plt.bar(x_labels, y_values)
-            plt.title(f"Distribution for Max size: {maxsize}, Max Intercellular Edge: {maxedge}")
+            if maxcolor < 0:
+                plt.title(f"Distribution for Max size: {maxsize}, Max Intercellular Edge: {maxedge}")
+            else:
+                plt.title(f"Distribution for Max size: {maxsize}, Max Intercellular Edge: {maxedge}, Max Color: {maxcolor}")
             plt.xlabel("# of gates")
             plt.ylabel("Count")
             plt.gca().xaxis.set_major_locator(ticker.MaxNLocator(integer=True))

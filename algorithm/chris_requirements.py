@@ -67,7 +67,7 @@ def VerifyAndMerge():
                 print("PendingCommunity: ", PendingCommunity)
 
                 # Start to solve the worst case by enlarging its size
-                VerifyResult, VerifyFlag, ErrorLog = ec.enlargeCommunity(G_primitive, PendingCommunity, S_bounds, ConstraintType, timestep1,
+                VerifyResult, VerifyFlag, ErrorLog, _ = ec.enlargeCommunity(G_primitive, PendingCommunity, S_bounds, ConstraintType, timestep1,
                                                                          constraint, loop_free, priority, CurrentVerifyResult, bio_flag, ub, height)
 
                 # If VerifyFlag is false, that means the graph and constraints don't pass the verification, user should change
