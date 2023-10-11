@@ -1,4 +1,6 @@
 # After verification stage, we will work on the solution optimization
+import sys
+sys.path.append("../")
 import InOutFunctions as iof
 import UpdateFunctions as uf
 import utils
@@ -104,4 +106,4 @@ def merge_final_check(G, S_bounds, r, loop_free, constraint, bio_flag):
     return MergeResult, flag
 
 
-# Merge()
+Merge()

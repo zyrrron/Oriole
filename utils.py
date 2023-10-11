@@ -33,7 +33,7 @@ import copy
 # import scipy.cluster.vq as vq
 # import scipy
 import re
-from pycallgraph2.output import GraphvizOutput
+# from pycallgraph2.output import GraphvizOutput
 
 
 ##########################################

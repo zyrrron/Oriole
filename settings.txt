@@ -42,6 +42,7 @@ case2_h	../benchmark/bionetwork/lauren_group/case2	./lib	TRUE	1,7	2	high	2,2	4	T
 test	../benchmark/bionetwork/chris_group/jai_example/md5_opt	./lib	TRUE	1,8	60	low	2,2	4	TRUE	C	1	1,2	../results/bionetwork/chris_group/jai_example/test
 md5_regular_8_1_5	../benchmark/bionetwork/chris_group/md5_regular/src/rtl/md5_regular	./lib	TRUE	1,8	60	low	2,2	4	TRUE	C	1	1,5	../results/bionetwork/chris_group/md5_regular
 md5_regular_8_5_10	../benchmark/bionetwork/chris_group/md5_regular/src/rtl/md5_regular	./lib	TRUE	1,8	60	low	2,2	4	TRUE	C	1	5,10	../results/bionetwork/chris_group/md5_regular
+md5_regular_8_10_30	../benchmark/bionetwork/chris_group/md5_regular/src/rtl/md5_regular	./lib	TRUE	1,8	60	low	2,2	4	TRUE	C	1	10,30	../results/bionetwork/chris_group/md5_regular
 md5_regular_8_4_nc	../benchmark/bionetwork/chris_group/md5_regular/src/rtl/md5_regular	./lib	TRUE	1,8	60	low	2,2	4	TRUE	C	0	1,10	../results/bionetwork/chris_group/md5_regular_8_nc
 md5_regular_12_4_nc	../benchmark/bionetwork/chris_group/md5_regular/src/rtl/md5_regular	./lib	TRUE	1,12	60	low	2,2	4	TRUE	C	0	1,10	../results/bionetwork/chris_group/md5_regular_12_nc
 md5_regular_20_4_nc	../benchmark/bionetwork/chris_group/md5_regular/src/rtl/md5_regular	./lib	TRUE	1,20	60	low	2,2	4	TRUE	C	0	1,10	../results/bionetwork/chris_group/md5_regular_20_nc
