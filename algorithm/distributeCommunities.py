@@ -13,10 +13,10 @@ def countEdgesForEachCell():
 
     # Load samples and settings
     samples, settings = utils.loadSettings()
-    csvpath = "../results/sha256_core_nor/sha256_core_nor_8_bio"
+    csvpath = "../results/sha256/sha256_8"
     SoltionNum = {}
     maxedges = [4]
-    maxcolor = -1
+    maxcolor = 8
 
     # Check samples iteratively
     for s in samples:
@@ -27,7 +27,7 @@ def countEdgesForEachCell():
         maxsize = S_bounds[1]
         ResultList = [s]
         for maxedge in maxedges:
-            info = f"_{maxsize}_{maxedge}_{attempt_range}"
+            info = f"_{maxsize}_{maxedge}_{maxcolor}"
             if os.path.exists(f"{out_path}/sol_after_merge{info}.txt"):
                 MergeResult, TotalComm = iof.loadSolution(f"{out_path}/sol_after_merge{info}.txt", s)
             else:
@@ -72,6 +72,7 @@ def countEdgesForEachCell():
             for x, y in zip(x_labels, y_values):
                 plt.text(x, y, str(y), ha='center', va='bottom')
             plt.savefig(f"{out_path}/distribution_chart{info}.png")
+            plt.close()
             # plt.show()
 
         SoltionNum[s] = ResultList

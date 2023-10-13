@@ -51,8 +51,11 @@ def prepareCommOrder(G, CenterCommunity, CurrentResult, constraint, bio_flag, he
     # No more neighbors can be added into this center community. So try the communities without connected edges
     if count == 2:
         flag = False
-        return {}, CurrentResult_new, path_set, flag
 
+        # return without merging un-neighbor nodes
+        # return {}, CurrentResult_new, path_set, flag
+
+        # try merging un-neighbor nodes
         CommunityNumToNodes = uf.mapCommunityToNodes(CurrentResult)
         if CenterCommunity in CommunityNumToNodes and len(CommunityNumToNodes[CenterCommunity]) < S_bound[1]:
 
@@ -144,10 +147,10 @@ def prepareMerge(Neighborflag, totalNum, count, SearchStep, MergeResult, attempt
     # If no change has been done to the MergeResult after the checking above, we should change a different way to order the to-be-merged communities.
     # We can skip this attempt because we have known the answer yet.
     # if un-Neighbor nodes are also checked, we should skip from the current attempt.
-    if count >= 2 and not Neighborflag:
+    if not Neighborflag:
         if attempt_range[1] > attempt_range[0]:
             attempt_range[1] -= 1
-            print(f"Attempt {attempt_range[1]}: ", f"{totalNum} cells in total. ", "Try another way to merge!")
+            print(f"Attempt {attempt_range[1]}: ", f"{ll} cells in total. ", "Try another way to merge!")
 
             # Time to quit
             if attempt_range[1] <= attempt_range[0]:
@@ -212,11 +215,12 @@ def tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, ti
     # SearchStep determine the order of communities to be merged
     while timestep >= 0:
         path_set = set()
+        print(totalNum, len(uf.mapCommunityToNodes(MergeResult)), count, timestep, Neighborflag)
         MergeCommunities, totalNum, count, SearchStep, attempt_range, MergeResult = prepareMerge(Neighborflag, totalNum, count, SearchStep, MergeResult, attempt_range, Result, constraint, bio_flag, G, S_bounds)
 
         if attempt_range[1] <= attempt_range[0]:
             break
-        # print(totalNum, len(MergeCommunities), count)
+
         # Try to merge the communities in the order of MergeCommunities
         for Community in MergeCommunities:
 

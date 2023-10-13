@@ -1,7 +1,0 @@
-Attempts,benchmark,benchmark information,,,,total number of cells in each partition result,,,,,,,,
-,,,,,,cell size <= 8,,,cell size <= 12,,,cell size <= 20,,
-,,node,edge,PrimitiveNode,PrimitiveEdge,Cell-cell edges <= 6,<= 5,<= 4,<= 6,<= 5,<= 4,<= 6,<= 5,<= 4
-Attempt = 50,md5_opt_ExceptXORXNOR,88,159,70,100,10,10,NA,7,7,NA,4,5,NA
-,md5_opt_all,62,107,44,56,6,6,8,5,6,8,3,4,5
-,md5_opt_nand,151,223,133,180,24,31,65,16,32,63,12,31,55
-,md5_opt_nor2,149,220,131,180,22,33,96,17,46,92,15,43,80
