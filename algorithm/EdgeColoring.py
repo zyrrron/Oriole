@@ -334,7 +334,7 @@ def startColoring(upperbounds, SingleFlag=True):
         ColorFlag = True
         DAG = utils.load_graph(settings, s)
         begin_time = time.time()
-        timestep_reback = 3000
+        timestep_reback = 20000
 
         if SingleFlag:
             # Only check one solution file
@@ -357,13 +357,13 @@ def startColoring(upperbounds, SingleFlag=True):
                 checklist = [7196]
             elif attempt_range == [5, 10]:
                 checklist = [12490]
-            elif attempt_range == [1, 500]:
+            elif attempt_range == [1, 10]:
                 timestep_reback = 5000
                 for i in range(len(MergeResultList)):
-                    if 60 <= MergeResultList[i][0] <= 65:
+                    if 92 <= MergeResultList[i][0] <= 93:
                         checklist.append(i)
             else:
-                checklist = range(1, len(MergeResultList), 100)
+                checklist = range(8000, len(MergeResultList), 200)
 
             # timestepOld = 10000
             # with open(f"{out_path}/EdgeIndexInfo_{timestepOld}.csv", "r") as csv_file:
@@ -410,7 +410,7 @@ def startColoring(upperbounds, SingleFlag=True):
 # Set color list
 # SingleFlag = True: Only check one solution file
 # SingleFlag = False: Check a list of potential solution
-# upperbounds = [8, 7, 6]
-# startColoring(upperbounds, False)
+upperbounds = [7, 6]
+startColoring(upperbounds, False)
 
 

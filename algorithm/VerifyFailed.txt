@@ -111,3 +111,4 @@ md5_opt_nand_12_4_nc
 md5_opt_nor2_20_4_nc
 md5_opt_nand_20_4_nc
 mux16
+test6_bio

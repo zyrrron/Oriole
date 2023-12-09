@@ -15,7 +15,7 @@ def countEdgesForEachCell():
     samples, settings = utils.loadSettings()
     csvpath = "../results/sha256/sha256_8"
     SoltionNum = {}
-    maxedges = [4]
+    maxedges = [6]
     maxcolor = 8
 
     # Check samples iteratively
@@ -27,7 +27,7 @@ def countEdgesForEachCell():
         maxsize = S_bounds[1]
         ResultList = [s]
         for maxedge in maxedges:
-            info = f"_{maxsize}_{maxedge}_{maxcolor}"
+            info = f"_{maxsize}_{maxedge}_{attempt_range}_{maxcolor}"
             if os.path.exists(f"{out_path}/sol_after_merge{info}.txt"):
                 MergeResult, TotalComm = iof.loadSolution(f"{out_path}/sol_after_merge{info}.txt", s)
             else:

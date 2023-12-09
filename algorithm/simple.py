@@ -11,21 +11,21 @@ import matplotlib.pyplot as plt
 # G1 = utils.get_G_primitive(G, nonprimitives)
 # print(G1.number_of_nodes(), G1.number_of_edges())
 # 打开文件并读取内容
-with open('../settings.txt', 'r') as file:
-    lines = file.readlines()
-
-# 创建一个空列表来存储第一列的值
-column1_values = []
-
-# 遍历每一行，分割并提取第一列的值
-for line in lines[68:105]:
-    columns = line.strip().split('\t')  # 如果是制表符分隔，使用'\t'，如果是空格分隔，使用' '
-    if columns:  # 确保行中有内容
-        column1_values.append(columns[0])
-
-# 输出提取的第一列值
-for value in column1_values:
-    print(value, end=",")
+# with open('../settings.txt', 'r') as file:
+#     lines = file.readlines()
+#
+# # 创建一个空列表来存储第一列的值
+# column1_values = []
+#
+# # 遍历每一行，分割并提取第一列的值
+# for line in lines[68:105]:
+#     columns = line.strip().split('\t')  # 如果是制表符分隔，使用'\t'，如果是空格分隔，使用' '
+#     if columns:  # 确保行中有内容
+#         column1_values.append(columns[0])
+#
+# # 输出提取的第一列值
+# for value in column1_values:
+#     print(value, end=",")
 
 # pos = nx.spring_layout(G, seed=42)
 # nx.draw_networkx(G, with_labels=True)
