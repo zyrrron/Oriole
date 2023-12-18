@@ -1,0 +1,1 @@
+Error caused by: {'Community 7564 cannot be solved! Try increasing ub, height, or height2'}. Please check constraints and the edges connected to this node.
