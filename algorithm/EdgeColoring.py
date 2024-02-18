@@ -410,7 +410,7 @@ def startColoring(upperbounds, SingleFlag=True):
 # Set color list
 # SingleFlag = True: Only check one solution file
 # SingleFlag = False: Check a list of potential solution
-upperbounds = [7, 6]
-startColoring(upperbounds, False)
+# upperbounds = [7, 6]
+# startColoring(upperbounds, False)
 
 

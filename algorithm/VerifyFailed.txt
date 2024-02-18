@@ -102,7 +102,6 @@
 test3
 test5
 test6
-test3_bio
 md5_opt_nor2_8_4_nc
 md5_opt_nand_8_4_nc
 md5_opt_ExceptXORXNOR_8_4_nc
@@ -111,4 +110,4 @@ md5_opt_nand_12_4_nc
 md5_opt_nor2_20_4_nc
 md5_opt_nand_20_4_nc
 mux16
-test6_bio
+md5_regular_20_4_nc
