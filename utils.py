@@ -306,16 +306,16 @@ def loadData(s, settings):
 	for i in tmp:
 		attempt_range.append(eval(i))
 	# time step for verification stage
-	timestep = 100
+	timestep = 3000
 	# time step for merging stage
 	timestep2 = 10000
 	# height: searching depth for each community merging propaganda checking
-	height = 3
+	height = 2
 	# "attempts" means the number of possible merging paths we will collect, note that each path includes multiple partition results
 	# "height2": the depth of searching possible merging solution for un-neighbor communities in every propaganda checking
 	height2 = 2
 	# Upper bound for continuously negative reward path in each propaganda checking
-	ub = 3
+	ub = 2
 
 
 	# load graph

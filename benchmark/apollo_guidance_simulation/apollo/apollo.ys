@@ -1,14 +1,14 @@
-read_verilog ../agc.v
+read_verilog ../fpga_agc.v
 flatten
 splitnets -ports
 hierarchy -auto-top
 proc
 techmap
 opt
-abc -g NOR,AND,NAND,OR
+abc -g NOR
 opt
 hierarchy -auto-top
 opt_clean -purge
-show -format pdf -prefix ../agc/agc_yosys
-write_edif ../agc/agc.edif
-write_json ../agc/agc.json
+show -format pdf -prefix ../apollo/apollo_yosys
+write_edif ../apollo/apollo.edif
+write_json ../apollo/apollo.json

@@ -1,1 +1,1 @@
-test0,test2,test4,test7,test2_bio,md5_opt_all_8_4_nc,md5_opt_all_12_4_nc,md5_opt_ExceptXORXNOR_12_4_nc,md5_opt_all_20_4_nc,md5_opt_ExceptXORXNOR_20_4_nc
+test0,test2,test4,test7,test2_bio,md5_opt_all_8_4_nc,md5_opt_all_12_4_nc,md5_opt_ExceptXORXNOR_12_4_nc,md5_opt_all_20_4_nc,md5_opt_ExceptXORXNOR_20_4_ncagc_8_6,agc_8_6,agc_8_6,test8_bio,test8_bio,test8_bio,test8_bio,test8_bio,

@@ -9,6 +9,5 @@ abc -g NOR
 opt
 opt_clean
 write_json ../sha256_core_nor/sha256_core_nor.json
-write_edif ../sha256_core_nor/sha256_core_nor.edif
 show -format pdf -prefix ../sha256_core_nor/sha256_core_nor_yosys
-
+dot -Ksfdp -Tpdf '../sha256_core_nor/sha256_core_nor_yosys.dot' > '../sha256_core_nor/sha256_core_nor_yosys.pdf'

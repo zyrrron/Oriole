@@ -221,12 +221,17 @@ def tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, ti
         if attempt_range[1] <= attempt_range[0]:
             break
 
+        # RewardCounter shows how many communities we have tried.
         # Try to merge the communities in the order of MergeCommunities
+        RewardCounter = 0
         for Community in MergeCommunities:
 
             # Find all neighbor communities around the chosen community.
             # And get the sorted rewards dictionary for all the propagated neighbor communities
             rewards_sorted, _, path_set, Neighborflag = prepareCommOrder(G, Community, MergeResult, constraint, bio_flag, height, height2, S_bounds, ub, path_set, count)
+            RewardCounter += 1
+            if RewardCounter % 1000 == 0:
+                print(f"Have tried to merge {RewardCounter}th community candidate, now we have {len(uf.mapCommunityToNodes(MergeResult))} communities.")
 
             for key in rewards_sorted:
 
