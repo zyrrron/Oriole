@@ -1,0 +1,4 @@
+Time Cost: 0.00995492935180664s
+Community 1: ['h_c', 'adp_c', 'atp_c', 'coa_c', 'f6p_c', 'fdp_c', 'h2o_c', 'pyr_c', 'nadh_c', 'accoa_c']
+Community 2: ['6pgc_c']
+Community 3: ['6pgl_c']
