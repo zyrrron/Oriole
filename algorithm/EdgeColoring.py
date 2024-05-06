@@ -334,7 +334,7 @@ def startColoring(upperbounds, SingleFlag=True):
         ColorFlag = True
         DAG = utils.load_graph(settings, s)
         begin_time = time.time()
-        timestep_reback = 30000
+        timestep_reback = 50000
 
         if SingleFlag:
             # Only check one solution file
@@ -355,7 +355,7 @@ def startColoring(upperbounds, SingleFlag=True):
             # if attempt_range == [1, 5]:
             #     checklist = [7196]
 
-            checklist = range(0, 4001, 200)
+            checklist = range(0, 6001, 300)
 
             # timestepOld = 10000
             # with open(f"{out_path}/EdgeIndexInfo_{timestepOld}.csv", "r") as csv_file:
@@ -402,7 +402,7 @@ def startColoring(upperbounds, SingleFlag=True):
 # Set color list
 # SingleFlag = True: Only check one solution file
 # SingleFlag = False: Check a list of potential solution
-upperbounds = [4,8,7,6]
+upperbounds = [15,14,11,10,8,7,6]
 startColoring(upperbounds, False)
 
 
