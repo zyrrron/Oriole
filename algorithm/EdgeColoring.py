@@ -334,7 +334,7 @@ def startColoring(upperbounds, SingleFlag=True):
         ColorFlag = True
         DAG = utils.load_graph(settings, s)
         begin_time = time.time()
-        timestep_reback = 50000
+        timestep_reback = 10000
 
         if SingleFlag:
             # Only check one solution file
@@ -354,8 +354,10 @@ def startColoring(upperbounds, SingleFlag=True):
             # Allow 500000 trace back steps.
             # if attempt_range == [1, 5]:
             #     checklist = [7196]
-
-            checklist = range(0, 6001, 300)
+            if upperbound == 8:
+                checklist = range(5300, 6000, 100)
+            else:
+                checklist = range(6000, 10001, 100)
 
             # timestepOld = 10000
             # with open(f"{out_path}/EdgeIndexInfo_{timestepOld}.csv", "r") as csv_file:
@@ -366,7 +368,7 @@ def startColoring(upperbounds, SingleFlag=True):
 
             # create a csv file saving the deepest edge for one solution has searched.
 
-            EdgeIndexInfo_file = open(f"{out_path}/EdgeIndexInfo_{attempt_range}_{timestep_reback}_{len(ColorOptions)-2}.csv", "a", newline="")
+            EdgeIndexInfo_file = open(f"{out_path}/EdgeIndexInfo_{constraint[0]}_{attempt_range}_{timestep_reback}_{len(ColorOptions)-2}.csv", "a", newline="")
             writer = csv.writer(EdgeIndexInfo_file)
             if EdgeIndexInfo_file.tell() == 0:
                 writer.writerow(["Solution index", "Edge index", "Total cell-cell edges", "Edges colored", "Color percentage"])
@@ -402,7 +404,7 @@ def startColoring(upperbounds, SingleFlag=True):
 # Set color list
 # SingleFlag = True: Only check one solution file
 # SingleFlag = False: Check a list of potential solution
-upperbounds = [15,14,11,10,8,7,6]
-startColoring(upperbounds, False)
+# upperbounds = [7,6]
+# startColoring(upperbounds, False)
 
 
