@@ -86,4 +86,4 @@ def Verification():
             iof.reportIssue(out_path, ErrorLog)
 
 
-Verification()
+# Verification()

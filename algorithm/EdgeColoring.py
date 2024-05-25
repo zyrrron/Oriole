@@ -330,11 +330,11 @@ def startColoring(upperbounds, SingleFlag=True):
             ColorOptions.append(f"color{j}")
 
         # Load merge result
-        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, _, _, bio_flag, _, _, _, attempt_range, _ = utils.loadData(s, settings)
+        # Allow 500000 trace back steps.
+        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, _, _, bio_flag, _, DAG, _, attempt_range, _ = utils.loadData(s, settings)
         ColorFlag = True
-        DAG = utils.load_graph(settings, s)
         begin_time = time.time()
-        timestep_reback = 10000
+        timestep_reback = 50000
 
         if SingleFlag:
             # Only check one solution file
@@ -350,14 +350,8 @@ def startColoring(upperbounds, SingleFlag=True):
             MergeResultList = json.loads(json_data)
             PreviousSolLength = 0
 
-            # check result list with different attempt range
-            # Allow 500000 trace back steps.
-            # if attempt_range == [1, 5]:
-            #     checklist = [7196]
-            if upperbound == 8:
-                checklist = range(5300, 6000, 100)
-            else:
-                checklist = range(6000, 10001, 100)
+            # create the check result list
+            checklist = range(len(MergeResultList))
 
             # timestepOld = 10000
             # with open(f"{out_path}/EdgeIndexInfo_{timestepOld}.csv", "r") as csv_file:
@@ -400,11 +394,12 @@ def startColoring(upperbounds, SingleFlag=True):
             iof.writeColoredEdgeList(out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint[0]}_{attempt_range}_{len(ColorOptions)-2}_colored.txt', DAG)
 
 
-# Assume we have totally 4 different cell-cell communication molecular, set 4 as the color parameter.
-# Set color list
+# Assume we have at most n different cell-cell communication molecular for one benchmark,
+# set n as the element in the below color list: "color_upperbounds".
+color_upperbounds = [8]
+
 # SingleFlag = True: Only check one solution file
 # SingleFlag = False: Check a list of potential solution
-# upperbounds = [7,6]
-# startColoring(upperbounds, False)
+startColoring(color_upperbounds, False)
 
 

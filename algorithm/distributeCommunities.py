@@ -15,7 +15,7 @@ def countEdgesForEachCell():
     samples, settings = utils.loadSettings()
     csvpath = "../results/sha256_core_nor/sha256_core_nor_13_bio"
     SoltionNum = {}
-    maxedges = [6]
+    maxedges = [5]
     maxcolor = 8
 
     # Check samples iteratively

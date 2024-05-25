@@ -21,6 +21,7 @@ def generateEdgeList():
         JSON_file = graph_path + '/' + s + '.json'
         # load json file
         ports, gates = ut.read_json(JSON_file)
+        ut.generateGateDict(gates, graph_path)
         ut.synthesize_graph(ports, gates, graph_path, t=10)
 
 

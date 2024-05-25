@@ -1,5 +1,11 @@
 sample	graph_path	lib_path	primitive_only	S_bounds	target_n	high_low_flag	high_constraint	low_constraint	loop_free	priority	BioFlag	attempt_range	timestep_v	timestep_m	height	height2	ub	output_path
-apollo	./benchmark/apollo_guidance_simulation/apollo	./lib	TRUE	1,8	4	low	2,2	6	TRUE	C	0	1,11	3000	10000	3	3	3	../results/apollo/apollo_8_6
+ascon1	../benchmark/ascon/asconRound1/1b	./lib	TRUE	1,13	1	low	2,2	8	TRUE	C	1	1,11	3000	10000	3	3	3	../results/ascon/asconRound1/ascon1b_13_8
+ascon2	../benchmark/ascon/asconRound1/2b	./lib	TRUE	1,13	1	low	2,2	8	TRUE	C	1	1,11	3000	10000	3	3	3	../results/ascon/asconRound1/ascon2b_13_8
+ascon4	../benchmark/ascon/asconRound1/4b	./lib	TRUE	1,13	1	low	2,2	8	TRUE	C	1	1,11	3000	10000	3	3	3	../results/ascon/asconRound1/ascon4b_13_8
+ascon8	../benchmark/ascon/asconRound1/8b	./lib	TRUE	1,13	1	low	2,2	8	TRUE	C	1	1,11	3000	10000	3	3	3	../results/ascon/asconRound1/ascon8b_13_8
+ascon64	../benchmark/ascon/asconRound1/64b	./lib	TRUE	1,13	1	low	2,2	8	TRUE	C	1	1,11	3000	10000	3	3	3	../results/ascon/asconRound1/ascon64b_13_8
+ascon	../benchmark/ascon/asconRound1/General	./lib	TRUE	1,13	1	low	2,2	8	TRUE	C	1	1,11	3000	10000	3	3	3	../results/ascon/asconRound1/ascon_13_8
+apollo	../benchmark/apollo_guidance_simulation/apollo	./lib	TRUE	1,8	4	low	2,2	6	TRUE	C	0	1,11	3000	10000	3	3	3	../results/apollo/apollo
 agc_8_4	../benchmark/agc-Digital-Automatic-Gain-Control/src/agc	./lib	FALSE	1,8	4	low	2,2	4	TRUE	C	0	1,11	3000	10000	3	3	3	../results/AutoGainC/agc_8_4
 agc_8_5	../benchmark/agc-Digital-Automatic-Gain-Control/src/agc	./lib	FALSE	1,8	4	low	2,2	5	TRUE	C	0	1,11	3000	10000	3	3	3	../results/AutoGainC/agc_8_5
 agc_8_6	../benchmark/agc-Digital-Automatic-Gain-Control/src/agc	./lib	FALSE	1,8	4	low	2,2	6	TRUE	C	0	1,11	3000	10000	3	3	3	../results/AutoGainC/agc_8_6
@@ -58,6 +64,7 @@ sha256_core_20	../benchmark/sha256-master/src/rtl/sha256_core	./lib	TRUE	1,20	7	
 sha256_core_8_10_nc	../benchmark/sha256-master/src/rtl/sha256_core	./lib	TRUE	1,8	7	low	2,2	10	TRUE	C	0	1,11	3000	10000	3	3	3	../results/sha256/sha256_8_nc
 sha256_core_12_10_nc	../benchmark/sha256-master/src/rtl/sha256_core	./lib	TRUE	1,12	7	low	2,2	10	TRUE	C	0	1,11	3000	10000	3	3	3	../results/sha256/sha256_12_nc
 sha256_core_20_10_nc	../benchmark/sha256-master/src/rtl/sha256_core	./lib	TRUE	1,20	7	low	2,2	10	TRUE	C	0	1,11	3000	10000	3	3	3	../results/sha256/sha256_20_nc
+sha256_core_nor	../benchmark/sha256-master/src/rtl/sha256_core_nor	./lib	TRUE	1,8	7	low	2,2	4	TRUE	C	1	1,4	3000	10000	3	3	3	../results/sha256_core_nor/sha256_core_nor
 sha256_core_nor_8	../benchmark/sha256-master/src/rtl/sha256_core_nor	./lib	TRUE	1,8	7	low	2,2	4	TRUE	C	1	1,4	3000	10000	3	3	3	../results/sha256_core_nor/sha256_core_nor_8_bio
 sha256_core_nor_12	../benchmark/sha256-master/src/rtl/sha256_core_nor	./lib	TRUE	1,12	7	low	2,2	4	TRUE	C	1	1,4	3000	10000	3	3	3	../results/sha256_core_nor/sha256_core_nor_12_bio
 sha256_core_nor_20	../benchmark/sha256-master/src/rtl/sha256_core_nor	./lib	TRUE	1,20	7	low	2,2	4	TRUE	C	1	1,4	3000	10000	3	3	3	../results/sha256_core_nor/sha256_core_nor_20_bio

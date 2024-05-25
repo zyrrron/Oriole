@@ -132,7 +132,6 @@ def synthesize_graph(ports, gates, outdir, t):
 	G = nx.DiGraph()
 	# start from the output, add edges
 	edges = []
-	print(gates)
 	for p in ports:
 		if ports[p]['direction'] == 'output':
 			b = ports[p]['bits']
@@ -184,6 +183,22 @@ def synthesize_graph(ports, gates, outdir, t):
 		G.add_edge(*e)
 
 	nx.write_edgelist(G, outdir+'/DAG.edgelist')
+
+
+# generate port-gate dictionary.
+def generateGateDict(data, outpath):
+	csv_file = f'{outpath}/port_gate.csv'
+
+	with open(csv_file, 'w', newline='') as file:
+		writer = csv.writer(file)
+
+		writer.writerow(['key', 'input', 'output', 'type'])
+
+		for key, value in data.items():
+			input_data = value['input']
+			output_data = value['output']
+			row = [key, value['type'], input_data, output_data]
+			writer.writerow(row)
 
 
 def load_settings (filename):
