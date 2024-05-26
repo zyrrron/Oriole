@@ -22,8 +22,8 @@ def countEdgesForEachCell():
     for s in samples:
 
         # Load merge result
-        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, timestep, timestep2, bio_flag, height, DAG, \
-        height2, attempt_range, ub = utils.loadData(s, settings)
+        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, out_path, timestep, timestep2, bio_flag, height, DAG, \
+        height2, attempt_range, ub, _, _, _, _ = utils.loadData(s, settings)
         maxsize = S_bounds[1]
         ResultList = [s]
         for maxedge in maxedges:

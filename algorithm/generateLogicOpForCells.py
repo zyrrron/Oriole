@@ -17,8 +17,8 @@ MaxColor = [8]
 samples, settings = utils.loadSettings()
 for ele in range(len(samples)):
     s = samples[ele]
-    G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, timestep, timestep2, \
-    bio_flag, height, DAG, height2, attempt_range, ub = utils.loadData(s, settings)
+    G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, out_path, timestep, timestep2, \
+    bio_flag, height, DAG, height2, attempt_range, ub, _, _, _, _ = utils.loadData(s, settings)
     MergeResult, TotalComm = iof.loadSolution(f"{out_path}/sol_after_merge_{S_bounds[1]}_{constraint[0]}_{attempt_range}_{MaxColor[ele]}.txt", s)
     CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
 

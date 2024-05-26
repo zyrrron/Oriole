@@ -9,14 +9,12 @@ import InOutFunctions as iof
 
 # Load samples and settings
 samples, settings = utils.loadSettings()
-ColorNums = [4,6]
 for s_index in range(len(samples)):
 
     # Load merge result
     s = samples[s_index]
-    ColorNum = ColorNums[s_index]
-    G, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, \
-    out_path, _, _, bio_flag, _, DAG, _, attempt_range, _ = utils.loadData(s, settings)
+    G, S_bounds, primitive_only, ConstraintType, constraint, loop_free, out_path, _, _, bio_flag, _, DAG, _, attempt_range, \
+    _, ColorNum, _, _, _ = utils.loadData(s, settings)
     MergeResult, TotalComm = iof.loadSolution(f"{out_path}/sol_after_merge_{S_bounds[1]}_{constraint[0]}_{attempt_range}_{ColorNum}.txt", s)
     CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
 

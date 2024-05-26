@@ -26,8 +26,8 @@ def Merge():
         begin_time = time.time()
 
         # Load verification result
-        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, _, out_path, _, timestep, \
-            bio_flag, height, DAG, height2, attempt_range, ub = utils.loadData(s, settings)
+        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, out_path, _, timestep, \
+            bio_flag, height, DAG, height2, attempt_range, ub, _, _, _, _ = utils.loadData(s, settings)
 
         attempt_range_original = copy.deepcopy(attempt_range)
         target_n = math.ceil(len(G_primitive.nodes) / S_bounds[1])

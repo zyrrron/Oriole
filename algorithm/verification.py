@@ -36,8 +36,8 @@ def Verification():
         begin_time = time.time()
 
         # Load data and check if we can directly put all the nodes in one community
-        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, timestep, timestep2, \
-            bio_flag, height, DAG, height2, attempts, ub = utils.loadData(s, settings)
+        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, out_path, timestep, timestep2, \
+            bio_flag, height, DAG, height2, attempts, ub, _, _, _, _ = utils.loadData(s, settings)
         CellEdgeBeforeVerify, CommBeforeVerify = G_primitive.number_of_edges(), G_primitive.number_of_nodes()
 
         # If the max size for one community is bigger than the current total number of the nodes, output it and continue the next sample
@@ -69,7 +69,7 @@ def Verification():
 
         # Start to solve the worst case by enlarging its size
         VerifyResult, VerifyFlag, ErrorLog, _ = ec.enlargeCommunity(G_primitive, PendingCommunity, S_bounds, ConstraintType, timestep,
-                                                       constraint, loop_free, priority, CurrentVerifyResult, bio_flag, ub, height)
+                                                       constraint, loop_free, CurrentVerifyResult, bio_flag, ub, height)
 
         # If VerifyFlag is false, that means the graph and constraints don't pass the verification, user should change
         # it later. If it is ture, save the result. Then we go to the merging stage.

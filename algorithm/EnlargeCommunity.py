@@ -94,7 +94,7 @@ def prepareCommOrder(G, CenterCommunity, CurrentResult, constraint, bio_flag, he
 # Check if current community i meets all constraints every time when we move node j into community i.
 # Record it if meets all constraints.
 # Better use recursion here.
-def enlargeCommunity(G, Community, S_bounds, ConstraintType, timestep, constraint, loop_free, priority, CurrentResult, bio_flag, ub, height=0, height2=0):
+def enlargeCommunity(G, Community, S_bounds, ConstraintType, timestep, constraint, loop_free, CurrentResult, bio_flag, ub, height=0, height2=0):
     VerifyFlag, ErrorLog = False, {}
 
     rewards_new, CurrentResult_new, path_set, _ = prepareCommOrder(G, Community, CurrentResult, constraint, bio_flag, height, 0, S_bounds, ub, set())
@@ -131,7 +131,7 @@ def enlargeCommunity(G, Community, S_bounds, ConstraintType, timestep, constrain
                 Community = ccf.findWorstCommunity(G, PendingCommunities, CurrentResult_updated, bio_flag)
                 # print("Start new pending community: ", Community)
                 CurrentResult_updated, VerifyFlag, ErrorLog, timestep = enlargeCommunity(G, Community, S_bounds, ConstraintType, timestep,
-                                                                             constraint, loop_free, priority,  CurrentResult_updated, bio_flag, ub, height,height2)
+                                                                             constraint, loop_free, CurrentResult_updated, bio_flag, ub, height,height2)
         if VerifyFlag:
             return CurrentResult_updated, VerifyFlag, ErrorLog, timestep
     return CurrentResult_new, VerifyFlag, {f"Community {Community} cannot be solved! Try increasing ub, height, or height2"}, timestep

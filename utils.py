@@ -313,7 +313,6 @@ def loadData(s, settings):
 	loop_free = False
 	if settings[s]['loop_free'].lower() == 'true':
 		loop_free = True
-	priority = settings[s]['priority']
 	bio_flag = int(settings[s]['BioFlag'])
 	out_path = settings[s]['output_path']
 
@@ -333,6 +332,16 @@ def loadData(s, settings):
 	height2 = int(settings[s]['height2'])
 	ub = int(settings[s]['ub'])
 
+	# parameters for edge coloring.
+	# Assume we have at most n different cell-cell communication molecular for one benchmark,
+	# set n as the element in the below color list: "color_upperbounds".
+	# SingleFlag = True: Only check one solution file
+	# SingleFlag = False: Check a list of potential solution
+	color_upperbound = settings[s]['color_upperbound']
+	trace_back = settings[s]['timestep_traceback']
+	check_interval = settings[s]['check_interval']
+	SingleFlag = settings[s]['SingleFlag']
+
 
 	# load graph
 	# G = load_graph_undirected(settings, s)
@@ -345,5 +354,5 @@ def loadData(s, settings):
 	else:
 		G_primitive = copy.deepcopy(DAG)
 
-	return G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, priority, out_path, timestep, timestep2, \
-		bio_flag, height, DAG, height2, attempt_range, ub
+	return G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, out_path, timestep, timestep2, \
+		bio_flag, height, DAG, height2, attempt_range, ub, color_upperbound, trace_back, check_interval, SingleFlag
