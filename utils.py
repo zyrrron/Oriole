@@ -337,10 +337,13 @@ def loadData(s, settings):
 	# set n as the element in the below color list: "color_upperbounds".
 	# SingleFlag = True: Only check one solution file
 	# SingleFlag = False: Check a list of potential solution
-	color_upperbound = settings[s]['color_upperbound']
-	trace_back = settings[s]['timestep_traceback']
-	check_interval = settings[s]['check_interval']
-	SingleFlag = settings[s]['SingleFlag']
+	color_upperbound = int(settings[s]['color_upperbound'])
+	trace_back = int(settings[s]['timestep_traceback'])
+	check_interval = int(settings[s]['check_interval'])
+	SingleFlag = True
+	if settings[s]['SingleFlag'] == '1':
+		SingleFlag = False
+
 
 
 	# load graph
