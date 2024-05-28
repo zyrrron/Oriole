@@ -395,6 +395,6 @@ def startColoring():
             iof.writeColoredEdgeList(out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint[0]}_{attempt_range}_{len(ColorOptions)-2}_colored.txt', DAG)
 
 
-startColoring()
+# startColoring()
 
 
