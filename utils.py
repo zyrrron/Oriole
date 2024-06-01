@@ -116,15 +116,19 @@ def read_json(inputfile):
 					continue
 				gates[s]['type'] = gatetype.group(1)
 			# get input(s)
-			if sl.strip().startswith('"A": [') or sl.strip().startswith('"B": [') or sl.strip().startswith('"C": [') or sl.strip().startswith('"D": [') or sl.strip().startswith('"S": ['):
+			if sl.strip().startswith('"A": [') or sl.strip().startswith('"B": [') or sl.strip().startswith('"C": [') or sl.strip().startswith('"D": [') \
+					or sl.strip().startswith('"S": ['):
 				port = re.search('"(.*)"', sl).group(1)
 				bits = sl.split('[')[1].split(']')[0].strip()
 				gates[s]['input'][port] = int(bits)
 			# get output
+			# stop loop after getting output edge ID
 			if sl.strip().startswith('"Y": ['):
 				port = re.search('"(.*)"', sl).group(1)
 				bits = sl.split('[')[1].split(']')[0].strip()
 				gates[s]['output'][port] = int(bits)
+			if sl.strip().startswith('"$auto$'):
+				break
 	return ports, gates
 
 
@@ -177,7 +181,6 @@ def synthesize_graph(ports, gates, outdir, t):
 				gin = [gates[sg]['input']['A'], gates[sg]['input']['B']]
 			if op in gin:
 				edges.append((g, sg))
-				# print('internal', (g, sg))
 
 	for e in edges:
 		G.add_edge(*e)
@@ -313,7 +316,7 @@ def loadData(s, settings):
 	loop_free = False
 	if settings[s]['loop_free'].lower() == 'true':
 		loop_free = True
-	bio_flag = int(settings[s]['BioFlag'])
+	bio_flag = int(settings[s]['ColorFlag'])
 	out_path = settings[s]['output_path']
 
 	# "attempts" means the number of possible merging paths we will collect, note that each path includes multiple partition results

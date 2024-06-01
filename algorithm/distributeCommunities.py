@@ -63,7 +63,7 @@ def countEdgesForEachCell():
             if maxcolor < 0:
                 plt.title(f"Distribution for Max size: {maxsize}, Max Intercellular Edge: {maxedge}")
             else:
-                plt.title(f"Distribution for Max size: {maxsize}, Max Intercellular Edge: {maxedge}, Max Color: {maxcolor}")
+                plt.title(f"Distribution for Max size: {maxsize}, Max Intercellular Color: {maxcolor}")
             plt.xlabel("# of gates")
             plt.ylabel("Count")
             plt.gca().xaxis.set_major_locator(ticker.MaxNLocator(integer=True))

@@ -42,11 +42,11 @@ def reportIssue(out_path, ErrorLog, info=""):
     print("Error caused by: ", ErrorLog)
 
 
-# 1. Save current verification solution and send it to "merging.py"
-# 2. Save current merge solution and send it to "EdgeColoring.py"
+# 1. Load current verification solution and send it to "merging.py"
+# 2. Load current merge solution and send it to "EdgeColoring.py"
 def loadSolution(path, s=""):
 
-    # read data from verification result
+    # read data from verification/merge result
     with open(path) as f:
         d = []
         for line in f:
@@ -61,13 +61,29 @@ def loadSolution(path, s=""):
 
     # 1. change it to the same format in verification stage CurrentResult
     # 2. change it to the same format in merge stage CurrentResult
-    VerifyResult = {}
+    Result = {}
     CommunityNum = 1
     for ele in d:
         for e in ele:
-            VerifyResult[e] = str(CommunityNum)
+            Result[e] = str(CommunityNum)
         CommunityNum += 1
-    return VerifyResult, CommunityNum-1
+    return Result, CommunityNum-1
+
+
+# 2. Load current color assignment and send it to "EdgeColoring.py"
+def loadColorAssignment(path, s=""):
+
+    # read data from color assignment
+    Result = {}
+    with open(path) as f:
+        d = []
+        for line in f:
+            line = line.replace('\n', '')
+            line = line.split(' ')
+            edge = (line[0], line[1])
+            Result[edge] = line[2]
+
+    return Result
 
 
 # If current number of communities in the merge solution is bigger than target N, report issue

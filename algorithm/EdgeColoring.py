@@ -152,8 +152,8 @@ def findColor(MergeResult, CommunityNumToNodes, ColorOptions, CommEdgeColorInfo,
     # index == 0 means there is no more edges to color, the process is complete, return the current status
     while 0 <= index:
 
-        if timestep % 1000 == 0:
-            print(f"Left time steps: {timestep}")
+        # if timestep % 1000 == 0:
+        #     print(f"Left time steps: {timestep}")
 
         # If the first edge cannot be colored successfully by the first color, same with other colors. So we can return False directly.
         if index >= EdgeTotalNum-1 and not Forward:
@@ -351,6 +351,8 @@ def startColoring():
 
             # create the check result list
             checklist = range(0, len(MergeResultList), check_interval)
+            if check_interval == 1:
+                checklist = range(0, 20, check_interval)
             if s == "ascon":
                 checklist = range(150, 250, check_interval)
 
