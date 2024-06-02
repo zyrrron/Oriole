@@ -23,7 +23,7 @@ import tqdm
 
 
 ### save to edgelist 
-# f_out = open('DAG.edgelist', 'w')
+# f_out = open('DAG_old.edgelist', 'w')
 # for edge in list(graph.edges()):
 #     f_out.write(str(edge[0]) + ' ' + str(edge[1]) + ' ' + '{'+'}' + '\n')
 

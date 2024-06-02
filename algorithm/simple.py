@@ -6,7 +6,7 @@ import collections
 import UpdateFunctions as uf
 import matplotlib.pyplot as plt
 
-# G = nx.read_edgelist(f"../benchmark/sha256-master/src/rtl/sha256_core/DAG.edgelist", nodetype = str, create_using=nx.DiGraph())
+# G = nx.read_edgelist(f"../benchmark/sha256-master/src/rtl/sha256_core/DAG_old.edgelist", nodetype = str, create_using=nx.DiGraph())
 # print(G.number_of_nodes(), G.number_of_edges(), dict(nx.degree(G)))
 # in_nodes, out_nodes, nonprimitives = utils.get_nonprimitive_nodes(G)
 # G1 = utils.get_G_primitive(G, nonprimitives)

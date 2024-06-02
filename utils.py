@@ -41,7 +41,7 @@ import re
 ##########################################
 
 def edgelist_filename (settings, sample):
-	return settings[sample]['graph_path']+'/DAG.edgelist'
+	return settings[sample]['graph_path']+'/DAG_old.edgelist'
 
 
 ##########################################
@@ -88,6 +88,11 @@ def read_json(inputfile):
 		# get bits
 		bits = s.split('[')[1].split(']')[0].strip()
 		if ',' in bits:
+			bit_list = bits.split(',')
+			for bit_element in bit_list:
+				SubPortInfo = {'direction': ports[el]['direction'], 'bits': int(bit_element)}
+				SubPortID = f"{el}_{bit_element}"
+				ports[SubPortID] = SubPortInfo
 			del ports[el]
 			continue
 		else:
