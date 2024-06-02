@@ -325,7 +325,7 @@ def startColoring():
 
         # Load merge result
         s = samples[ele]
-        G_primitive, S_bounds, _, _, constraint, _, out_path, _, _, bio_flag, _, DAG, _, attempt_range, _, upperbound, timestep_reback, \
+        G_primitive, S_bounds, target_n, _, _, constraint, _, out_path, _, _, bio_flag, _, DAG, _, attempt_range, _, upperbound, timestep_reback, \
         check_interval, SingleFlag = utils.loadData(s, settings)
         ColorFlag = True
         print(f"try to assign with {upperbound} colors")
@@ -397,6 +397,6 @@ def startColoring():
             iof.writeColoredEdgeList(out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint[0]}_{attempt_range}_{len(ColorOptions)-2}_colored.txt', DAG)
 
 
-# startColoring()
+startColoring()
 
 

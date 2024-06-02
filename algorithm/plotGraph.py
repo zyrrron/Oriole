@@ -13,7 +13,7 @@ for s_index in range(len(samples)):
 
     # Load merge result
     s = samples[s_index]
-    G, S_bounds, primitive_only, ConstraintType, constraint, loop_free, out_path, _, _, bio_flag, _, DAG, _, attempt_range, \
+    G, S_bounds, target_n, primitive_only, ConstraintType, constraint, loop_free, out_path, _, _, bio_flag, _, DAG, _, attempt_range, \
     _, ColorNum, _, _, _ = utils.loadData(s, settings)
     MergeResult, TotalComm = iof.loadSolution(f"{out_path}/sol_after_merge_{S_bounds[1]}_{constraint[0]}_{attempt_range}_{ColorNum}.txt", s)
     CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)

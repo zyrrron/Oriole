@@ -233,3 +233,6 @@ cobra_30_8
 cobra_30_10
 cobra_30_12
 cobra_30_20
+test4_p6
+test4_p6
+test4_p6

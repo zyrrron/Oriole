@@ -29,7 +29,7 @@ def VerifyAndMerge():
         begin_time = time.time()
 
         # Run and load verification result
-        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, out_path, timestep1, timestep2, bio_flag, height, \
+        G_primitive, S_bounds, target_n, primitive_only, ConstraintType, constraint, loop_free, out_path, timestep1, timestep2, bio_flag, height, \
         DAG, height2, attempt_range, ub, _, _, _, _ = utils.loadData(s, settings)
         attempt_range_original = copy.deepcopy(attempt_range)
         target_n = math.ceil(len(G_primitive.nodes) / S_bounds[1])

@@ -18,7 +18,7 @@ for ele in range(len(samples)):
 
     # load settings
     s = samples[ele]
-    G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, out_path, timestep, timestep2, \
+    G_primitive, S_bounds, target_n, primitive_only, ConstraintType, constraint, loop_free, out_path, timestep, timestep2, \
     bio_flag, height, DAG, height2, attempt_range, ub, MaxColor, _, _, _ = utils.loadData(s, settings)
 
     # load partition solution and color assignment

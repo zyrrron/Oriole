@@ -347,8 +347,6 @@ def loadData(s, settings):
 	if settings[s]['SingleFlag'] == '1':
 		SingleFlag = False
 
-
-
 	# load graph
 	# G = load_graph_undirected(settings, s)
 	DAG = load_graph(settings, s)
@@ -360,5 +358,5 @@ def loadData(s, settings):
 	else:
 		G_primitive = copy.deepcopy(DAG)
 
-	return G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, out_path, timestep, timestep2, \
+	return G_primitive, S_bounds, target_n, primitive_only, ConstraintType, constraint, loop_free, out_path, timestep, timestep2, \
 		bio_flag, height, DAG, height2, attempt_range, ub, color_upperbound, trace_back, check_interval, SingleFlag

@@ -26,11 +26,12 @@ def Merge():
         begin_time = time.time()
 
         # Load verification result
-        G_primitive, S_bounds, primitive_only, ConstraintType, constraint, loop_free, out_path, _, timestep, \
+        G_primitive, S_bounds, target_n, primitive_only, ConstraintType, constraint, loop_free, out_path, _, timestep, \
             bio_flag, height, DAG, height2, attempt_range, ub, _, _, _, _ = utils.loadData(s, settings)
 
         attempt_range_original = copy.deepcopy(attempt_range)
-        target_n = math.ceil(len(G_primitive.nodes) / S_bounds[1])
+        if target_n == -1:
+            target_n = math.ceil(len(G_primitive.nodes) / S_bounds[1])
         VerifyResult, TotalCommOld = iof.loadSolution(f"{out_path}/sol_after_verify_{S_bounds[1]}_{constraint[0]}.txt", s)
         CellToCellEdgesOld = clf.calculateCellEdges(G_primitive, VerifyResult)
 
