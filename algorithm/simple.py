@@ -21,7 +21,7 @@ with open('../settings.txt', 'r') as file:
 column1_values = []
 
 # 遍历每一行，分割并提取第一列的值
-for line in lines[135:150]:
+for line in lines[131:146]:
     columns = line.strip().split('\t')  # 如果是制表符分隔，使用'\t'，如果是空格分隔，使用' '
     if columns:  # 确保行中有内容
         column1_values.append(columns[0])

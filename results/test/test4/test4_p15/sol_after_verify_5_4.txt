@@ -1,4 +1,4 @@
-Time Cost: 0.0006864070892333984s
+Time Cost: 0.0006804466247558594s
 Community 1: ['1']
 Community 2: ['2']
 Community 3: ['3']
