@@ -308,6 +308,11 @@ def loadData(s, settings):
 	# obtain user-defined params
 	tmp = settings[s]['S_bounds'].split(',')
 	S_bounds = [eval(i) for i in tmp]
+
+	# if target_n = -1, that means we want to find the most optimal partition solution
+	# target_n can stop running the merging.py when the algorithm found a merge solution that has subgroups less than target_n
+	# If Color Flag = 1, we suggest users set it as -1.
+	# Because the edge coloring stage may not find solution with color assignment also has subgroups less than target_n.
 	target_n = int(settings[s]['target_n'].split(',')[0])
 	primitive_only = settings[s]['primitive_only']
 	ConstraintType = settings[s]['high_low_flag'].split(',')[0]
