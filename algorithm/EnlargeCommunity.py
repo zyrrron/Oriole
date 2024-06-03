@@ -105,6 +105,7 @@ def enlargeCommunity(G, Community, S_bounds, ConstraintType, timestep, constrain
             return CurrentResult_new, VerifyFlag, {f"Community {Community} cannot be solved! Try increasing timestep"}, timestep
         else:
             timestep -= 1
+            print(timestep)
 
         # Update the current verify result after adding the neighbor community
         # Here we create a new variable CurrentResult_updated, because we can use CurrentResult_new as the original data in the final stage of backtracking
