@@ -32,7 +32,7 @@ def Merge():
         attempt_range_original = copy.deepcopy(attempt_range)
         if target_n == -1:
             target_n = math.ceil(len(G_primitive.nodes) / S_bounds[1])
-        VerifyResult, TotalCommOld = iof.loadSolution(f"{out_path}/sol_after_verify_{S_bounds[1]}_{constraint[0]}.txt", s)
+        VerifyResult, TotalCommOld = iof.loadSolution(f"{out_path}/sol_after_verify_{S_bounds[1]}_{constraint}.txt", s)
         CellToCellEdgesOld = clf.calculateCellEdges(G_primitive, VerifyResult)
 
         # If the number of current communities is smaller than target number, return.
@@ -51,7 +51,7 @@ def Merge():
         if S_bounds[1] >= len(G_primitive.nodes):
             CostTime = time.time() - begin_time
             csvwriter.writerow([s, TotalCommOld, CellToCellEdgesOld, 1, 0])
-            iof.writeSolution(out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint[0]}_{attempt_range}.txt', G_primitive, [], CostTime)
+            iof.writeSolution(out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint}_{attempt_range}.txt', G_primitive, [], CostTime)
             print("All nodes can be put in one community!")
             continue
 
@@ -71,15 +71,15 @@ def Merge():
         # Write current merge solution into an output file
         if MergeFlag:
             print(f"Merge passed according to the target N: {target_n}!")
-            iof.writeSolution(out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint[0]}_{attempt_range_original}.txt', G_primitive, MergeResult, CostTime)
+            iof.writeSolution(out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint}_{attempt_range_original}.txt', G_primitive, MergeResult, CostTime)
         else:
             MergeResult_new, flag = merge_final_check(G_primitive, S_bounds, MergeResult, loop_free, constraint, bio_flag)
             if flag:
                 print("New merge result after final check!")
-                iof.reportMergeIssue(G_primitive, out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint[0]}_{attempt_range_original}.txt', MergeResult_new, MergeErrorLog, attempt_range_original, VerifyResult, target_n, CostTime, f"_{S_bounds[1]}_{constraint[0]}")
+                iof.reportMergeIssue(G_primitive, out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint}_{attempt_range_original}.txt', MergeResult_new, MergeErrorLog, attempt_range_original, VerifyResult, target_n, CostTime, f"_{S_bounds[1]}_{constraint[0]}")
             else:
                 print("No changes on the merge result after final check!")
-                iof.reportMergeIssue(G_primitive, out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint[0]}_{attempt_range_original}.txt', MergeResult, MergeErrorLog, attempt_range_original, VerifyResult, target_n, CostTime, f"_{S_bounds[1]}_{constraint[0]}")
+                iof.reportMergeIssue(G_primitive, out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint}_{attempt_range_original}.txt', MergeResult, MergeErrorLog, attempt_range_original, VerifyResult, target_n, CostTime, f"_{S_bounds[1]}_{constraint[0]}")
 
 
 def merge_final_check(G, S_bounds, r, loop_free, constraint, bio_flag):

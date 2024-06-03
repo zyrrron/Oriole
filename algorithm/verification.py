@@ -45,7 +45,7 @@ def Verification():
             CostTime = time.time() - begin_time
             txt2.write(f"{s},")
             csvwriter.writerow([s, CommBeforeVerify, 1, CellEdgeBeforeVerify, 0])
-            iof.writeSolution(out_path, f'/sol_after_verify_{S_bounds[1]}_{constraint[0]}.txt', G_primitive, [], CostTime)
+            iof.writeSolution(out_path, f'/sol_after_verify_{S_bounds[1]}_{constraint}.txt', G_primitive, [], CostTime)
             print("All nodes can be put in one community!")
             continue
 
@@ -58,7 +58,7 @@ def Verification():
             CostTime = time.time() - begin_time
             txt2.write(f"{s},")
             csvwriter.writerow([s, CommBeforeVerify, CommBeforeVerify, CellEdgeBeforeVerify, CellEdgeBeforeVerify])
-            iof.writeSolution(out_path, f'/sol_after_verify_{S_bounds[1]}_{constraint[0]}.txt', G_primitive, CurrentVerifyResult, CostTime)
+            iof.writeSolution(out_path, f'/sol_after_verify_{S_bounds[1]}_{constraint}.txt', G_primitive, CurrentVerifyResult, CostTime)
             continue
         print("PendingCommunities: ", PendingCommunities)
 
@@ -80,7 +80,7 @@ def Verification():
             csvwriter.writerow([s, CommBeforeVerify, len(uf.mapCommunityToNodes(VerifyResult)), CellEdgeBeforeVerify, CellToCellEdges])
             # Write current verify solution into a output file
             CostTime = time.time() - begin_time
-            iof.writeSolution(out_path, f'/sol_after_verify_{S_bounds[1]}_{constraint[0]}.txt', G_primitive, VerifyResult, CostTime)
+            iof.writeSolution(out_path, f'/sol_after_verify_{S_bounds[1]}_{constraint}.txt', G_primitive, VerifyResult, CostTime)
         else:
             txt0.write(f"{s}\n")
             iof.reportIssue(out_path, ErrorLog)
