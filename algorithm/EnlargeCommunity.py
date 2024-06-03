@@ -253,9 +253,9 @@ def tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, ti
                     MergeResult = MergeResult_updated
                     break
 
-        # After leaving from the for loop, we may have a successful merge or not.
-        # Keep checking until all communities are checked.
-        timestep -= 1
+            # After one iteration, we may have a successful merge or not.
+            # Keep checking until all communities are checked.
+            timestep -= 1
         # ll = len(uf.mapCommunityToNodes(MergeResult))
         # print(f"attempt {attempts}: ", f"{timestep} timesteps left, ", f"{ll} cells in solution now.")
 
