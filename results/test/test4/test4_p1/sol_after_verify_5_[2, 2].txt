@@ -1,0 +1,8 @@
+Time Cost: 0.036238908767700195s
+Community 1: ['1']
+Community 2: ['2']
+Community 3: ['3']
+Community 4: ['4']
+Community 5: ['5', '6', '10', '11', '12']
+Community 6: ['7', '8', '9', '13', '14']
+Community 7: ['15']
