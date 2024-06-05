@@ -294,7 +294,7 @@ def sortAndSaveMergeResultList(S_bounds, out_path, constraint, MergeResultList, 
             break
         return MergeResultList, tmp, new_d
 
-    with open(f"{out_path}/merge_result_list_{S_bounds[1]}_{constraint[0]}_{attempt_range}.csv", "w", newline="") as csv_file:
+    with open(f"{out_path}/merge_result_list_{S_bounds[1]}_{constraint}_{attempt_range}.csv", "w", newline="") as csv_file:
         fieldnames = ["Total Number of Comms", "Solution"]
         writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
         writer.writeheader()
@@ -306,7 +306,7 @@ def sortAndSaveMergeResultList(S_bounds, out_path, constraint, MergeResultList, 
             writer.writerow(info_row)
 
     # save the sorted merge result list to a json file
-    with open(f"{out_path}/merge_result_list_{S_bounds[1]}_{constraint[0]}_{attempt_range}.json", "w") as json_file:
+    with open(f"{out_path}/merge_result_list_{S_bounds[1]}_{constraint}_{attempt_range}.json", "w") as json_file:
         json.dump(new_d, json_file)
 
     return MergeResultList, tmp, new_d

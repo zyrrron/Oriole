@@ -313,7 +313,7 @@ def loadData(s, settings):
 	# target_n can stop running the merging.py when the algorithm found a merge solution that has subgroups less than target_n
 	# If Color Flag = 1, we suggest users set it as -1.
 	# Because the edge coloring stage may not find solution with color assignment also has subgroups less than target_n.
-	target_n = int(settings[s]['target_n'].split(',')[0])
+	target_n = -1
 	primitive_only = settings[s]['primitive_only']
 	ConstraintType = settings[s]['high_low_flag'].split(',')[0]
 	constraint = []
@@ -327,6 +327,8 @@ def loadData(s, settings):
 	if settings[s]['loop_free'].lower() == 'true':
 		loop_free = True
 	bio_flag = int(settings[s]['ColorFlag'])
+	if bio_flag == 0:
+		target_n = int(settings[s]['target_n'].split(',')[0])
 	out_path = settings[s]['output_path']
 
 	# "attempts" means the number of possible merging paths we will collect, note that each path includes multiple partition results

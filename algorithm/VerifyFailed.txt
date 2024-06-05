@@ -235,4 +235,9 @@ cobra_30_12
 cobra_30_20
 test4_p6
 test4_p8
+test4_p10test4_p6
+test4_p8
+test4_p10
+test4_p6
+test4_p8
 test4_p10

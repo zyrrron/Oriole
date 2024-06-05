@@ -350,11 +350,11 @@ def startColoring():
             PreviousSolLength = 0
 
             # create the check result list
-            checklist = range(0, len(MergeResultList), check_interval)
-            if check_interval == 1:
-                checklist = range(0, 20, check_interval)
-            if s == "ascon":
-                checklist = range(150, 250, check_interval)
+            checklist = range(0, len(MergeResultList)-1, check_interval)
+            # if check_interval == 1:
+            #     checklist = range(0, 20, check_interval)
+            # if s == "ascon":
+            #     checklist = range(150, 250, check_interval)
 
             # timestepOld = 10000
             # with open(f"{out_path}/EdgeIndexInfo_{timestepOld}.csv", "r") as csv_file:
@@ -397,6 +397,6 @@ def startColoring():
             iof.writeColoredEdgeList(out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint}_{attempt_range}_{len(ColorOptions)-2}_colored.txt', DAG)
 
 
-# startColoring()
+startColoring()
 
 
