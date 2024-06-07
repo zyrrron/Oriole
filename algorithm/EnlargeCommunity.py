@@ -250,7 +250,8 @@ def tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, ti
                 if ((loop_free and ccf.checkLoopComm(G, Community, MergeResult_updated, bio_flag) == 0) or not loop_free) and \
                         ccf.checkInOutComm(G, Community, constraint, MergeResult_updated, bio_flag) == 0:
                     MergeResult_updated = renameKey(MergeResult_updated)
-                    MergeResultList.append(MergeResult_updated)
+                    if bio_flag:
+                        MergeResultList.append(MergeResult_updated)
                     MergeResult = MergeResult_updated
                     break
 
@@ -268,6 +269,9 @@ def tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, ti
 # Then sort the un-duplicated solution list
 # Save the list as json and csv
 def sortAndSaveMergeResultList(S_bounds, out_path, constraint, MergeResultList, MergeResult, attempt_range, bio_flag):
+
+    if not bio_flag:
+        return MergeResultList, [], [[len(MergeResult), MergeResult]]
 
     # Last MergeResult was not added to the list, add it now.
     # reduce duplication in the list
@@ -288,12 +292,6 @@ def sortAndSaveMergeResultList(S_bounds, out_path, constraint, MergeResultList, 
 
     # save the sorted merge result list to a json file
     new_d = []
-    if not bio_flag:
-        for i in tmp:
-            new_d.append([tmp[i], MergeResultList[i]])
-            break
-        return MergeResultList, tmp, new_d
-
     with open(f"{out_path}/merge_result_list_{S_bounds[1]}_{constraint}_{attempt_range}.csv", "w", newline="") as csv_file:
         fieldnames = ["Total Number of Comms", "Solution"]
         writer = csv.DictWriter(csv_file, fieldnames=fieldnames)

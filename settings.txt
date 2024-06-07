@@ -127,7 +127,7 @@ test2	../benchmark/test/test2	TRUE	TRUE	1,4	high	2,2	4	0	4	1,4	3000	10000	3	3	3	
 test2_bio	../benchmark/test/test2	TRUE	TRUE	1,4	high	2,2	4	1	4	1,4	3000	10000	3	3	3	4	10000	1	1	../results/test/test2_bio
 test3	../benchmark/test/test3	TRUE	TRUE	1,4	high	2,2	4	0	5	1,4	3000	10000	3	3	3	4	10000	1	1	../results/test/test3
 test3_bio	../benchmark/test/test3	TRUE	TRUE	1,4	high	2,2	4	1	5	1,4	3000	10000	3	3	3	4	10000	1	1	../results/test/test3_bio
-test4	../benchmark/test/test4	TRUE	TRUE	1,5	high	2,2	4	0	7	1,4	3000	10000	3	3	3	4	10000	1	1	../results/test/test4
+test4	../benchmark/test/test4	TRUE	TRUE	1,5	high	2,2	4	0	4	1,10	10	1000	5	5	5	4	10000	1	1	../results/test/test4
 test4_bio	../benchmark/test/test4	TRUE	TRUE	1,5	high	2,2	4	1	4	1,50	300	1000	3	3	3	4	10000	1	1	../results/test/test4_bio
 test4_p0	../benchmark/test/test4	TRUE	TRUE	1,5	high	2,2	4	1	4	1,10	3	100	5	5	5	4	50	1	1	../results/test/test4/test4_p0
 test4_p1	../benchmark/test/test4	TRUE	FALSE	1,5	high	2,2	4	1	4	1,10	3	100	5	5	5	4	50	1	1	../results/test/test4/test4_p1
