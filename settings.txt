@@ -3,12 +3,14 @@ ascon1	../benchmark/ascon/asconRound1/1b	TRUE	TRUE	1,13	low	2,2	8	1	1	1,11	3000	
 ascon2	../benchmark/ascon/asconRound1/2b	TRUE	TRUE	1,13	low	2,2	8	1	1	1,11	3000	10000	3	3	3	8	10000	1	1	../results/ascon/asconRound1/ascon2b_13_8
 ascon4	../benchmark/ascon/asconRound1/4b	TRUE	TRUE	1,13	low	2,2	8	1	1	1,11	3000	10000	3	3	3	8	10000	1	1	../results/ascon/asconRound1/ascon4b_13_8
 ascon8	../benchmark/ascon/asconRound1/8b	TRUE	TRUE	1,13	low	2,2	8	1	1	1,11	3000	10000	3	3	3	8	50000	1	1	../results/ascon/asconRound1/ascon8b_13_8
-ascon64	../benchmark/ascon/asconRound1/64b	TRUE	TRUE	1,13	low	2,2	8	1	1	1,11	3000	10000	3	3	3	8	10000	100	1	../results/ascon/asconRound1/ascon64b_13_8
-ascon	../benchmark/ascon/asconRound1/General	TRUE	TRUE	1,13	low	2,2	8	1	1	1,11	3000	10000	3	3	3	8	50000	10	1	../results/ascon/asconRound1/ascon_13_8
+ascon64	../benchmark/ascon/asconRound1/64b	TRUE	TRUE	1,13	low	2,2	8	1	1	1,11	3000	10000	3	3	3	8	10000	10	1	../results/ascon/asconRound1/ascon64b_13_8
+ascon	../benchmark/ascon/asconRound1/General	TRUE	TRUE	1,13	low	2,2	8	1	1	1,11	3000	10000	3	3	3	8	50000	100	1	../results/ascon/asconRound1/ascon_13_8
 ascon64_6	../benchmark/ascon/asconRound1/64b	TRUE	TRUE	1,13	low	2,2	6	1	1	1,4	3000	10000	3	3	3	8	10000	100	1	../results/ascon/asconRound1/ascon64b_13_8
-ascon_6	../benchmark/ascon/asconRound1/General	TRUE	TRUE	1,13	low	2,2	6	1	1	1,4	3000	10000	3	3	3	8	10000	10	1	../results/ascon/asconRound1/ascon_13_8
+ascon_6	../benchmark/ascon/asconRound1/General	TRUE	TRUE	1,13	low	2,2	6	1	1	1,4	3000	10000	3	3	3	8	10000	100	1	../results/ascon/asconRound1/ascon_13_8
 ascon64_5	../benchmark/ascon/asconRound1/64b	TRUE	TRUE	1,13	low	2,2	5	1	1	1,4	3000	10000	3	3	3	8	10000	100	1	../results/ascon/asconRound1/ascon64b_13_8
 ascon_5	../benchmark/ascon/asconRound1/General	TRUE	TRUE	1,13	low	2,2	5	1	1	1,4	3000	10000	3	3	3	8	10000	100	1	../results/ascon/asconRound1/ascon_13_8
+ascon64_4	../benchmark/ascon/asconRound1/64b	TRUE	TRUE	1,13	low	2,2	4	1	1	1,4	3000	10000	3	3	3	8	10000	100	1	../results/ascon/asconRound1/ascon64b_13_8
+ascon_4	../benchmark/ascon/asconRound1/General	TRUE	TRUE	1,13	low	2,2	4	1	1	1,4	3000	10000	3	3	3	8	10000	100	1	../results/ascon/asconRound1/ascon_13_8
 apollo	../benchmark/apollo_guidance_simulation/apollo	TRUE	TRUE	1,8	low	2,2	6	0	4	1,11	3000	10000	3	3	3	6	10000	100	1	../results/apollo/apollo
 agc_8_4	../benchmark/agc-Digital-Automatic-Gain-Control/src/agc	TRUE	FALSE	1,8	low	2,2	4	0	4	1,11	3000	10000	3	3	3	4	10000	100	1	../results/AutoGainC/agc_8_4
 agc_8_5	../benchmark/agc-Digital-Automatic-Gain-Control/src/agc	TRUE	FALSE	1,8	low	2,2	5	0	4	1,11	3000	10000	3	3	3	5	10000	100	1	../results/AutoGainC/agc_8_5
@@ -73,7 +75,7 @@ sha256_core_nor_8	../benchmark/sha256-master/src/rtl/sha256_core_nor	TRUE	TRUE	1
 sha256_core_nor_12	../benchmark/sha256-master/src/rtl/sha256_core_nor	TRUE	TRUE	1,12	low	2,2	4	1	1000	1,4	3000	10000	3	3	3	4	10000	100	1	../results/sha256_core_nor/sha256_core_nor_12_bio
 sha256_core_nor_20	../benchmark/sha256-master/src/rtl/sha256_core_nor	TRUE	TRUE	1,20	low	2,2	4	1	1000	1,4	3000	10000	3	3	3	4	10000	100	1	../results/sha256_core_nor/sha256_core_nor_20_bio
 sha256_core_nor_13_5	../benchmark/sha256-master/src/rtl/sha256_core_nor	TRUE	TRUE	1,13	low	2,2	5	1	1000	1,4	3000	10000	3	3	3	5	10000	100	1	../results/sha256_core_nor/sha256_core_nor_13_bio
-sha256_core_nor_13_5_8	../benchmark/sha256-master/src/rtl/sha256_core_nor	TRUE	TRUE	1,13	low	2,2	5	1	1000	1,4	3000	10000	3	3	3	8	10000	10	1	../results/sha256_core_nor/sha256_core_nor_13_bio
+sha256_core_nor_13_5_8	../benchmark/sha256-master/src/rtl/sha256_core_nor	TRUE	TRUE	1,13	low	2,2	5	1	1000	1,4	3000	10000	3	3	3	8	30000	100	1	../results/sha256_core_nor/sha256_core_nor_13_bio
 sha256_core_nor_13_5_9	../benchmark/sha256-master/src/rtl/sha256_core_nor	TRUE	TRUE	1,13	low	2,2	5	1	1000	1,4	3000	10000	3	3	3	9	10000	10	1	../results/sha256_core_nor/sha256_core_nor_13_bio
 sha256_core_nor_13_6_10	../benchmark/sha256-master/src/rtl/sha256_core_nor	TRUE	TRUE	1,13	low	2,2	6	1	1000	1,4	3000	10000	3	3	3	10	10000	10	1	../results/sha256_core_nor/sha256_core_nor_13_bio
 sha256_core_nor_13_6	../benchmark/sha256-master/src/rtl/sha256_core_nor	TRUE	TRUE	1,13	low	2,2	6	1	1000	1,2	3000	10000	3	3	3	6	10000	100	1	../results/sha256_core_nor/sha256_core_nor_13_bio

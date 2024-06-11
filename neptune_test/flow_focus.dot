@@ -1,0 +1,23 @@
+digraph "" {
+	ff -> n1	[key=0,
+		connection_id=c1,
+		connection_ref="{'name': 'c1', 'ID': 'c1', 'entity': 'CHANNEL', 'params': {'data': {'channelWidth': 800, 'connectionSpacing': 1000}}, 'source': {'_\
+component': 'ff', '_port': '1'}, 'sinks': [{'_component': 'n1', '_port': '1'}], 'layer': {'_id': '0', 'name': 'FLOW_0', 'layertype': '\
+FLOW', 'group': '0', 'params': {'data': {}}}, '_paths': []}",
+		sink_port="{'_component': 'n1', '_port': '1'}",
+		source_port="{'_component': 'ff', '_port': '1'}"];
+	n1 -> n2	[key=0,
+		connection_id=c2,
+		connection_ref="{'name': 'c2', 'ID': 'c2', 'entity': 'CHANNEL', 'params': {'data': {'channelWidth': 160, 'connectionSpacing': 1000}}, 'source': {'_\
+component': 'n1', '_port': '1'}, 'sinks': [{'_component': 'n2', '_port': '1'}], 'layer': {'_id': '0', 'name': 'FLOW_0', 'layertype': '\
+FLOW', 'group': '0', 'params': {'data': {}}}, '_paths': []}",
+		sink_port="{'_component': 'n2', '_port': '1'}",
+		source_port="{'_component': 'n1', '_port': '1'}"];
+	n2 -> p	[key=0,
+		connection_id=c3,
+		connection_ref="{'name': 'c3', 'ID': 'c3', 'entity': 'CHANNEL', 'params': {'data': {'channelWidth': 800, 'connectionSpacing': 1000}}, 'source': {'_\
+component': 'n2', '_port': '1'}, 'sinks': [{'_component': 'p', '_port': '1'}], 'layer': {'_id': '0', 'name': 'FLOW_0', 'layertype': '\
+FLOW', 'group': '0', 'params': {'data': {}}}, '_paths': []}",
+		sink_port="{'_component': 'p', '_port': '1'}",
+		source_port="{'_component': 'n2', '_port': '1'}"];
+}
