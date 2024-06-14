@@ -1,0 +1,65 @@
+digraph "" {
+	p1 -> mc	[key=0,
+		connection_id=c1,
+		connection_ref="{'name': 'c1', 'ID': 'c1', 'entity': 'CONNECTION', 'params': {'data': {'connectionSpacing': 1000}}, 'source': {'_component': 'p1', '_\
+port': None}, 'sinks': [{'_component': 'mc', '_port': '1'}], 'layer': {'_id': '0', 'name': 'FLOW_0', 'layertype': 'FLOW', 'group': '\
+0', 'params': {'data': {}}}, '_paths': []}",
+		sink_port="{'_component': 'mc', '_port': '1'}",
+		source_port="{'_component': 'p1', '_port': None}"];
+	p2 -> mc	[key=0,
+		connection_id=c2,
+		connection_ref="{'name': 'c2', 'ID': 'c2', 'entity': 'CONNECTION', 'params': {'data': {'connectionSpacing': 1000}}, 'source': {'_component': 'p2', '_\
+port': None}, 'sinks': [{'_component': 'mc', '_port': '2'}], 'layer': {'_id': '0', 'name': 'FLOW_0', 'layertype': 'FLOW', 'group': '\
+0', 'params': {'data': {}}}, '_paths': []}",
+		sink_port="{'_component': 'mc', '_port': '2'}",
+		source_port="{'_component': 'p2', '_port': None}"];
+	p3 -> dc	[key=0,
+		connection_id=c3,
+		connection_ref="{'name': 'c3', 'ID': 'c3', 'entity': 'CONNECTION', 'params': {'data': {'connectionSpacing': 1000}}, 'source': {'_component': 'p3', '_\
+port': None}, 'sinks': [{'_component': 'dc', '_port': '1'}], 'layer': {'_id': '0', 'name': 'FLOW_0', 'layertype': 'FLOW', 'group': '\
+0', 'params': {'data': {}}}, '_paths': []}",
+		sink_port="{'_component': 'dc', '_port': '1'}",
+		source_port="{'_component': 'p3', '_port': None}"];
+	mc -> p4	[key=0,
+		connection_id=c5,
+		connection_ref="{'name': 'c5', 'ID': 'c5', 'entity': 'CONNECTION', 'params': {'data': {'connectionSpacing': 1000}}, 'source': {'_component': 'mc', '_\
+port': '4'}, 'sinks': [{'_component': 'p4', '_port': None}], 'layer': {'_id': '0', 'name': 'FLOW_0', 'layertype': 'FLOW', 'group': '\
+0', 'params': {'data': {}}}, '_paths': []}",
+		sink_port="{'_component': 'p4', '_port': None}",
+		source_port="{'_component': 'mc', '_port': '4'}"];
+	dc -> mc	[key=0,
+		connection_id=c4,
+		connection_ref="{'name': 'c4', 'ID': 'c4', 'entity': 'CONNECTION', 'params': {'data': {'connectionSpacing': 1000}}, 'source': {'_component': 'dc', '_\
+port': '2'}, 'sinks': [{'_component': 'mc', '_port': '3'}], 'layer': {'_id': '0', 'name': 'FLOW_0', 'layertype': 'FLOW', 'group': '\
+0', 'params': {'data': {}}}, '_paths': []}",
+		sink_port="{'_component': 'mc', '_port': '3'}",
+		source_port="{'_component': 'dc', '_port': '2'}"];
+	cp1 -> v1	[key=0,
+		connection_id=cn1,
+		connection_ref="{'name': 'cn1', 'ID': 'cn1', 'entity': 'CONNECTION', 'params': {'data': {'connectionSpacing': 1000}}, 'source': {'_component': '\
+cp1', '_port': None}, 'sinks': [{'_component': 'v1', '_port': None}, {'_component': 'v4', '_port': None}], 'layer': {'_id': '1', '\
+name': 'FLOW_0', 'layertype': 'CONTROL', 'group': '0', 'params': {'data': {}}}, '_paths': []}",
+		sink_port="{'_component': 'v1', '_port': None}",
+		source_port="{'_component': 'cp1', '_port': None}"];
+	cp1 -> v4	[key=0,
+		connection_id=cn1,
+		connection_ref="{'name': 'cn1', 'ID': 'cn1', 'entity': 'CONNECTION', 'params': {'data': {'connectionSpacing': 1000}}, 'source': {'_component': '\
+cp1', '_port': None}, 'sinks': [{'_component': 'v1', '_port': None}, {'_component': 'v4', '_port': None}], 'layer': {'_id': '1', '\
+name': 'FLOW_0', 'layertype': 'CONTROL', 'group': '0', 'params': {'data': {}}}, '_paths': []}",
+		sink_port="{'_component': 'v4', '_port': None}",
+		source_port="{'_component': 'cp1', '_port': None}"];
+	cp2 -> v3	[key=0,
+		connection_id=cc2,
+		connection_ref="{'name': 'cc2', 'ID': 'cc2', 'entity': 'CONNECTION', 'params': {'data': {'connectionSpacing': 1000}}, 'source': {'_component': '\
+cp2', '_port': None}, 'sinks': [{'_component': 'v3', '_port': None}], 'layer': {'_id': '1', 'name': 'FLOW_0', 'layertype': 'CONTROL', '\
+group': '0', 'params': {'data': {}}}, '_paths': []}",
+		sink_port="{'_component': 'v3', '_port': None}",
+		source_port="{'_component': 'cp2', '_port': None}"];
+	v1 -> v2	[key=0,
+		connection_id=cc1,
+		connection_ref="{'name': 'cc1', 'ID': 'cc1', 'entity': 'CONNECTION', 'params': {'data': {'connectionSpacing': 1000}}, 'source': {'_component': '\
+v1', '_port': None}, 'sinks': [{'_component': 'v2', '_port': None}], 'layer': {'_id': '1', 'name': 'FLOW_0', 'layertype': 'CONTROL', '\
+group': '0', 'params': {'data': {}}}, '_paths': []}",
+		sink_port="{'_component': 'v2', '_port': None}",
+		source_port="{'_component': 'v1', '_port': None}"];
+}
