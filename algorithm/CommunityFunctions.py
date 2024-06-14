@@ -264,7 +264,7 @@ def findWorstCommunity(G, PendingCommunities, CurrentResult, bio_flag):
             maxVal = PendingCommunities[key]
             maxEdges = len(findIncomingEdgesComm(G, key, CurrentResult, bio_flag)) + len(findOutgoingEdgesComm(G, key, CurrentResult, bio_flag))
 
-        # If the number of unmet constraints is equal, choose the one has more edges connected
+        # If the number of unmet constraints for two pending subgroups are equal, choose the one has more edges connected
         if PendingCommunities[key] == maxVal:
             if len(findIncomingEdgesComm(G, key, CurrentResult, bio_flag)) + len(findOutgoingEdgesComm(G, key, CurrentResult,bio_flag)) > maxEdges:
                 maxKey = key
