@@ -190,7 +190,7 @@ def prepareMerge(Neighborflag, totalNum, count, SearchStep, MergeResult, attempt
     return MergeCommunities, totalNum, count, SearchStep, attempt_range, MergeResult
 
 
-# If the current merge result is going to be added to the solution list, rename the key can make reduce more duplication
+# If the current merge result is going to be added to the solution list, rename the key can reduce more duplication
 def renameKey(OldResult):
     NewResult = {}
     CommunityNumToNodes = uf.mapCommunityToNodes(OldResult)
@@ -203,7 +203,7 @@ def renameKey(OldResult):
     return NewResult
 
 
-def tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, timestep, loop_free, Result, attempt_range, ub):
+def tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, timestep, loop_free, Result, attempt_range, ub, target_n):
     totalNum = 0
     count = 1
     MergeResultList = [MergeResult]
@@ -214,7 +214,7 @@ def tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, ti
     # 1. meet target n constraint
     # 2. meet time constraint
     # SearchStep determine the order of communities to be merged
-    while timestep >= 0:
+    while len(uf.mapCommunityToNodes(MergeResult)) > target_n and timestep >= 0:
         path_set = set()
         print(totalNum, len(uf.mapCommunityToNodes(MergeResult)), count, timestep, Neighborflag)
         MergeCommunities, totalNum, count, SearchStep, attempt_range, MergeResult = prepareMerge(Neighborflag, totalNum, count, SearchStep, MergeResult, attempt_range, Result, constraint, bio_flag, G, S_bounds)
@@ -317,7 +317,7 @@ def enlargeCommunityMerge(G, S_bounds, out_path, constraint, loop_free, timestep
     MergeResult = copy.deepcopy(Result)
     attempt_range_original = copy.deepcopy(attempt_range)
     MergeResultList, MergeResult, ll = tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, timestep, loop_free, Result,
-                                                attempt_range, ub)
+                                                attempt_range, ub, target_n)
 
     MergeResultList, tmp, d_new = sortAndSaveMergeResultList(S_bounds, out_path, constraint, MergeResultList, MergeResult, attempt_range_original, bio_flag)
     MergeResult = d_new[0][1]
@@ -336,7 +336,7 @@ def enlargeCommunityMerge_chris(G, S_bounds, out_path, constraint, loop_free, ti
     MergeResult = renameKey(MergeResult)
     CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
     MergeResultList, MergeResult, ll = tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, timestep, loop_free, Result,
-                                                attempt_range, ub)
+                                                attempt_range, ub, target_n)
 
     MergeResultList, tmp, d_new = sortAndSaveMergeResultList(S_bounds, out_path, constraint, MergeResultList, MergeResult, attempt_range, bio_flag)
 

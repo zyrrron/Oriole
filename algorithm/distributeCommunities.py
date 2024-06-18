@@ -14,7 +14,7 @@ def countEdgesForEachCell():
     # Load samples and settings
     samples, settings = utils.loadSettings()
     csvpath = "../results/sha256_core_nor/sha256_core_nor_13_bio"
-    SoltionNum = {}
+    SolutionNum = {}
     maxedges = [5]
     maxcolor = 8
 
@@ -27,10 +27,11 @@ def countEdgesForEachCell():
         maxsize = S_bounds[1]
         ResultList = [s]
         for maxedge in maxedges:
-            info = f"_{maxsize}_{maxedge}_{attempt_range}_{maxcolor}"
+            info = f"_{maxsize}_{constraint}_{attempt_range}_{maxcolor}"
             if os.path.exists(f"{out_path}/sol_after_merge{info}.txt"):
                 MergeResult, TotalComm = iof.loadSolution(f"{out_path}/sol_after_merge{info}.txt", s)
             else:
+                print("file name incorrect!")
                 continue
             CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
             ResultList.append(len(CommunityNumToNodes))
@@ -75,7 +76,7 @@ def countEdgesForEachCell():
             plt.close()
             # plt.show()
 
-        SoltionNum[s] = ResultList
+        SolutionNum[s] = ResultList
     graphInfo = open(f"{csvpath}/SolutionInfo.csv", "w", newline="")
     writer = csv.writer(graphInfo)
     FirstLine = ["benchmark"]
@@ -84,8 +85,8 @@ def countEdgesForEachCell():
     if graphInfo.tell() == 0:
         writer.writerow(FirstLine)
 
-    for d in SoltionNum:
-        writer.writerow(SoltionNum[d])
+    for d in SolutionNum:
+        writer.writerow(SolutionNum[d])
 
 
 countEdgesForEachCell()

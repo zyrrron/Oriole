@@ -304,8 +304,7 @@ def findMergeCommunities(G, result, constraint, bio_flag, SearchStep=1):
 # Change the order of the sorted merge communities list assigning SearchStep as random seed
 def changeOrder(d, step):
 
-    if step <= 50:
-        random.seed(step)
+    random.seed(step)
     keys = list(d.keys())
     random.shuffle(keys)
     shuffled_d = {key: d[key] for key in keys}
