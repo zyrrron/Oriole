@@ -76,7 +76,7 @@ sha256_core_nor_12	../benchmark/sha256-master/src/rtl/sha256_core_nor	TRUE	TRUE	
 sha256_core_nor_20	../benchmark/sha256-master/src/rtl/sha256_core_nor	TRUE	TRUE	1,20	low	2,2	4	1	1000	1,4	3000	10000	3	3	3	4	10000	100	1	../results/sha256_core_nor/sha256_core_nor_20_bio
 sha256_core_nor_13_5	../benchmark/sha256-master/src/rtl/sha256_core_nor	TRUE	TRUE	1,13	low	2,2	5	1	1000	1,4	3000	10000	3	3	3	5	10000	100	1	../results/sha256_core_nor/sha256_core_nor_13_bio
 sha256_core_nor_13_5_8	../benchmark/sha256-master/src/rtl/sha256_core_nor	TRUE	TRUE	1,13	low	2,2	5	1	1000	1,4	3000	10000	3	3	3	8	30000	100	1	../results/sha256_core_nor/sha256_core_nor_13_bio
-sha256_core_nor_13_5_9	../benchmark/sha256-master/src/rtl/sha256_core_nor	TRUE	TRUE	1,13	low	2,2	5	1	1000	1,4	3000	10000	3	3	3	9	10000	10	1	../results/sha256_core_nor/sha256_core_nor_13_bio
+sha256_core_nor_13_5_9	../benchmark/sha256-master/src/rtl/sha256_core_nor	TRUE	TRUE	1,13	low	2,2	5	1	1000	1,4	3000	10000	3	3	3	9	30000	30	1	../results/sha256_core_nor/sha256_core_nor_13_bio
 sha256_core_nor_13_6_10	../benchmark/sha256-master/src/rtl/sha256_core_nor	TRUE	TRUE	1,13	low	2,2	6	1	1000	1,4	3000	10000	3	3	3	10	10000	10	1	../results/sha256_core_nor/sha256_core_nor_13_bio
 sha256_core_nor_13_6	../benchmark/sha256-master/src/rtl/sha256_core_nor	TRUE	TRUE	1,13	low	2,2	6	1	1000	1,2	3000	10000	3	3	3	6	10000	100	1	../results/sha256_core_nor/sha256_core_nor_13_bio
 sha256_core_nor_13_7	../benchmark/sha256-master/src/rtl/sha256_core_nor	TRUE	TRUE	1,13	low	2,2	7	1	1000	1,2	3000	10000	3	3	3	7	10000	100	1	../results/sha256_core_nor/sha256_core_nor_13_bio
