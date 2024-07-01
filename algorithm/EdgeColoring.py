@@ -351,8 +351,6 @@ def startColoring():
 
             # create the check result list
             checklist = range(0, len(MergeResultList)-1, check_interval)
-            if upperbound == 9:
-                checklist = range(840, 3000, check_interval)
             # if check_interval == 1:
             #     checklist = range(0, 20, check_interval)
             # if s == "ascon":
