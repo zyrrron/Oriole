@@ -15,8 +15,8 @@ def countEdgesForEachCell():
     samples, settings = utils.loadSettings()
     csvpath = "../results/sha256_core_nor/sha256_core_nor_13_bio"
     SolutionNum = {}
-    maxedges = [5]
-    maxcolor = 8
+    maxedges = [8]
+    maxcolor = 13
 
     # Check samples iteratively
     for s in samples:
@@ -31,7 +31,7 @@ def countEdgesForEachCell():
             if os.path.exists(f"{out_path}/sol_after_merge{info}.txt"):
                 MergeResult, TotalComm = iof.loadSolution(f"{out_path}/sol_after_merge{info}.txt", s)
             else:
-                print("file name incorrect!")
+                print(f"file name: '{out_path}/sol_after_merge{info}.txt' incorrect!")
                 continue
             CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
             ResultList.append(len(CommunityNumToNodes))
