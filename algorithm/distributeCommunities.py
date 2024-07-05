@@ -13,10 +13,10 @@ def countEdgesForEachCell():
 
     # Load samples and settings
     samples, settings = utils.loadSettings()
-    csvpath = "../results/sha256_core_nor/sha256_core_nor_13_bio"
+    csvpath = "../results/bionetwork/chris_group/jai_example/md5_opt_nor2"
     SolutionNum = {}
-    maxedges = [8]
-    maxcolor = 13
+    maxedges = [4]
+    maxcolor = -1
 
     # Check samples iteratively
     for s in samples:
@@ -28,6 +28,8 @@ def countEdgesForEachCell():
         ResultList = [s]
         for maxedge in maxedges:
             info = f"_{maxsize}_{constraint}_{attempt_range}_{maxcolor}"
+            if maxcolor < 0:
+                info = f"_{maxsize}_{constraint}_{attempt_range}"
             if os.path.exists(f"{out_path}/sol_after_merge{info}.txt"):
                 MergeResult, TotalComm = iof.loadSolution(f"{out_path}/sol_after_merge{info}.txt", s)
             else:
