@@ -357,13 +357,13 @@ def EdgeColoring():
             #     checklist = range(150, 250, check_interval)
 
             # timestepOld = 10000
-            # with open(f"{out_path}/EdgeIndexInfo_{timestepOld}.csv", "r") as csv_file:
-            #     reader = csv.reader(csv_file)
+            # with open(f"{out_path}/EdgeIndexInfo_{timestepOld}.csv_result_collection", "r") as csv_file:
+            #     reader = csv_result_collection.reader(csv_file)
             #     next(reader)
             #     data = list(reader)
             # top_names = [int(row[0]) for row in data[:50]]
 
-            # create a csv file saving the deepest edge for one solution has searched.
+            # create a csv_result_collection file saving the deepest edge for one solution has searched.
 
             EdgeIndexInfo_file = open(f"{out_path}/EdgeIndexInfo_{constraint}_{attempt_range}_{timestep_reback}_{len(ColorOptions)-2}.csv", "a", newline="")
             writer = csv.writer(EdgeIndexInfo_file)

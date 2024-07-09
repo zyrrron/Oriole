@@ -56,12 +56,12 @@ for value in column1_values:
 # tmp = sorted(d.items(), key=lambda x: (x[1], x[0]), reverse=False)
 # tmp = dict(tmp)
 #
-# # save it to a csv file
+# # save it to a csv_result_collection file
 # new_d = []
 #
-# with open(f"{out_path}/merge_result_list.csv", "w", newline="") as csv_file:
+# with open(f"{out_path}/merge_result_list.csv_result_collection", "w", newline="") as csv_file:
 #     fieldnames = ["Total Number of Comms", "Solution"]
-#     writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+#     writer = csv_result_collection.DictWriter(csv_file, fieldnames=fieldnames)
 #     writer.writeheader()
 #
 #     for i in tmp:
@@ -100,8 +100,8 @@ for value in column1_values:
 #                 ComU, ComV = MergeResult[u], MergeResult[v]
 #                 if ComU != ComV:
 #                     CellToCellEdges.append((u, v))
-#         EdgeIndexInfo_file = open(f"{out_path}/CellEdgesInfo.csv", "a", newline="")
-#         writer = csv.writer(EdgeIndexInfo_file)
+#         EdgeIndexInfo_file = open(f"{out_path}/CellEdgesInfo.csv_result_collection", "a", newline="")
+#         writer = csv_result_collection.writer(EdgeIndexInfo_file)
 #         writer.writerow([i, len(CellToCellEdges)])
 
 

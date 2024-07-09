@@ -35,34 +35,37 @@ After you install all the packages, you are able to run the algorithm.
 
 ## Usage
 
-
-### Verification for Small Graph Benchmarks
-You can run the first stage of our algorithm to verify the small graph benchmarks with the following command. 
-Don't forget to comment the command "Merge()" in Merging.py and command "EdgeColoring()" in EdgeColoring.py.
+### Generate edge list from a ".JSON" file
+The desired input graph format for Oriole algorithm is ".edgelist". Users can use this command to create the graphs of their own benchmarks.
+Since many the schematics of regular electronic circuits can be represented in JSON format, we provide an edge list generator for users to get the desired input format of Oriole algorithm.
 ```sh
-$ venv/bin/python3 verification.py
+$ venv/bin/python3 generateEdgeList.py -settings ./settings.txt -samples md5_opt_nor2
 ```
 
-If you want to generate random benchmarks by your self, you can use this command to generate random designs:
+### Create constraint set for your target benchmark
+In the "settings.txt" file, users can create a new row and modify constraints for their benchmark.
+
+### Verification stage for a 2-bit MD5 benchmark
+You can run the verification stage of Oriole algorithm to verify the 2-bit MD5 benchmarks with the following command. 
+The algorithm outputs a verified subgroup solution after passing this stage. Otherwise, it reports error. 
+Don't forget to comment the command "Merge()" in merging.py and command "EdgeColoring()" in EdgeColoring.py.
 ```sh
-$ venv/bin/python3 RandomCaseGenerator.py
+$ venv/bin/python3 algorithm/verification.py -settings ./settings.txt -samples md5_opt_nor2
 ```
 
-If it is the first time to test the random benchmarks, this command can automatically generate random Constraints by calling [ConstraintMaker.py](ConstraintMaker.py) and save it for the next time:
+### Merging stage for a 2-bit MD5 benchmark
+You can run the merging stage of Oriole algorithm to find more optimal subgroup solutions for the 2-bit MD5 benchmarks with the following command. 
+Don't forget to comment the command "Verification()" in verification.py and command "EdgeColoring()" in EdgeColoring.py.
 ```sh
-$ venv/bin/python3 TestAlgorithm.py
+$ venv/bin/python3 algorithm/merging.py -settings ./settings.txt -samples md5_opt_nor2
 ```
 
-All Experiment objectives for Random Constraints are set to ['F1', 'F2']. User can edit it in [TestAlgorithm.py](TestAlgorithm.py).
-
-### Literature Benchmarks
-You can run this algorithm to test the given literature review benchmarks with this command:
+### Edge Coloring stage for a 2-bit MD5 benchmark
+You can run the edge coloring stage of Oriole algorithm to find color assignment and the corresponding subgroup solution for the 2-bit MD5 benchmarks with the following command.
+Don't forget to comment the command "Verification()" in verification.py and command "Merge()" in merging.py.
 ```sh
-$ venv/bin/python3 lrbtest.py
+$ venv/bin/python3 algorithm/EdgeColoring.py -settings ./settings.txt -samples md5_opt_nor2
 ```
-
-You can also create your own biochip design by editing [LRB_new.py](Literature_Review_Benchmarks_Generator/LRB_new.py).
-And Create Constraint and Experiment objectives in [Constraint_UR_lrb_new.csv](TestCaseFiles/lrb/URC/Constraint_UR_lrb_new.csv).
 
 ## Maintainers
 
@@ -70,7 +73,7 @@ And Create Constraint and Experiment objectives in [Constraint_UR_lrb_new.csv](T
 
 ## Contributing
 
-Feel free to dive in! [Open an issue](https://github.com/zyrrron/VeSpA-Algorithm/issues/new) or submit PRs.
+Feel free to dive in! [Open an issue](https://github.com/CIDARLAB/Oriole/issues/new) or submit PRs.
 
 ### Contributors
 
@@ -78,8 +81,9 @@ This project exists thanks to all the people who contribute.
 
 ## License
 
-Parameters for verification, merging, EdgeColoring:
--settings
-../settings.txt
--samples
-test0
+BSD 2-Clause License
+
+Copyright (c) 2024, CIDAR LAB
+All rights reserved.
+
+See [LICENSE](/LICENSE) for more information.

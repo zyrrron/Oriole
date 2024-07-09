@@ -26,7 +26,7 @@ def Verification():
     txt0 = open(f"VerifyFailed.txt", "a")
     txt1 = open(f"VerifyPassedAfterMerge.txt", "a")
     txt2 = open(f"VerifyPassedDirectly.txt", "a")
-    ResultFile = open(f"VerifyResult.csv", "a", newline="")
+    ResultFile = open(f"../results/csv_result_collection/VerifyResult.csv", "a", newline="")
     csvwriter = csv.writer(ResultFile)
     if ResultFile.tell() == 0:
         csvwriter.writerow(["Benchmark", "Comm before verify", "Comm after verify", "Cell-cell Edges before verify", "Edges after verify"])

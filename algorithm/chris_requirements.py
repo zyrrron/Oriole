@@ -135,8 +135,8 @@ def VerifyAndMerge():
                 print("Target Achieved!")
         ress.append(res)
 
-    # Save the result into a csv file
-    outfile = "../results/bionetwork/chris_group/chris_new_requirement/" + "/plot_data.csv"
+    # Save the result into a csv_result_collection file
+    outfile = "../results/bionetwork/chris_group/chris_new_requirement/" + "/plot_data.csv_result_collection"
     if not os.path.exists(out_path):
         os.makedirs(out_path)
     with open(outfile, 'w') as f:

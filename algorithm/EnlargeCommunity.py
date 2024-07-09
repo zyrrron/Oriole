@@ -267,7 +267,7 @@ def tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, ti
 
 # Remove duplication merge solution in the list
 # Then sort the un-duplicated solution list
-# Save the list as json and csv
+# Save the list as json and csv_result_collection
 def sortAndSaveMergeResultList(S_bounds, out_path, constraint, MergeResultList, MergeResult, attempt_range, color_flag):
 
     if not color_flag:

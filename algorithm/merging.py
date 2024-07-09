@@ -16,7 +16,7 @@ import CommunityFunctions as ccf
 def Merging():
     # Load samples and settings
     samples, settings = utils.loadSettings()
-    ResultFile = open(f"MergeResult.csv", "a", newline="")
+    ResultFile = open(f"../results/csv_result_collection/MergeResult.csv", "a", newline="")
     csvwriter = csv.writer(ResultFile)
     if ResultFile.tell() == 0:
         csvwriter.writerow(["Benchmark", "Comm before merge", "Comm after merge", "Cell-cell Edges before merge", "Edges after merge"])
