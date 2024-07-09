@@ -27,7 +27,8 @@ Download the repository from GitHub, create a venv environment, and install the 
 ```sh
 $ git clone https://github.com/CIDARLAB/Oriole.git
 $ cd algorithm
-$ pip3 install -r requirements.txt
+$ python3 -m venv venv/
+$ venv/bin/pip3 install -r requirements.txt
 ```
 
 After you install all the packages, you are able to run the algorithm.
@@ -35,10 +36,11 @@ After you install all the packages, you are able to run the algorithm.
 ## Usage
 
 
-### Random Benchmarks
-You can run this algorithm to test the given random benchmarks with this command:
+### Verification for Small Graph Benchmarks
+You can run the first stage of our algorithm to verify the small graph benchmarks with the following command. 
+Don't forget to comment the command "Merge()" in Merging.py and command "EdgeColoring()" in EdgeColoring.py.
 ```sh
-$ venv/bin/python3 TestAlgorithm.py
+$ venv/bin/python3 verification.py
 ```
 
 If you want to generate random benchmarks by your self, you can use this command to generate random designs:

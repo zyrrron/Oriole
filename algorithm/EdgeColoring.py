@@ -315,7 +315,7 @@ def ColorAssignment(MergeResult, CommunityNumToNodes, G_primitive, DAG, bio_flag
     return ColorFlag, DAG, EdgeIndex, len(CellToCellEdges)
 
 
-def startColoring():
+def EdgeColoring():
 
     # Load samples and settings
     samples, settings = utils.loadSettings()
@@ -325,7 +325,7 @@ def startColoring():
 
         # Load merge result
         s = samples[ele]
-        G_primitive, S_bounds, target_n, _, _, constraint, _, out_path, _, _, bio_flag, _, DAG, _, attempt_range, _, upperbound, timestep_reback, \
+        G_primitive, S_bounds, target_n, _, _, constraint, _, out_path, _, _, bio_flag, color_flag, _, DAG, _, attempt_range, _, upperbound, timestep_reback, \
         check_interval, SingleFlag = utils.loadData(s, settings)
         ColorFlag = True
         print(f"try to assign with {upperbound} colors")
@@ -396,6 +396,6 @@ def startColoring():
             print(f"Cannot find appropriate solution for edge coloring! Run time: {CostTime}")
 
 
-startColoring()
+# EdgeColoring()
 
 

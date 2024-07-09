@@ -268,9 +268,9 @@ def tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, ti
 # Remove duplication merge solution in the list
 # Then sort the un-duplicated solution list
 # Save the list as json and csv
-def sortAndSaveMergeResultList(S_bounds, out_path, constraint, MergeResultList, MergeResult, attempt_range, bio_flag):
+def sortAndSaveMergeResultList(S_bounds, out_path, constraint, MergeResultList, MergeResult, attempt_range, color_flag):
 
-    if not bio_flag:
+    if not color_flag:
         return MergeResultList, [], [[len(MergeResult), MergeResult]]
 
     # Last MergeResult was not added to the list, add it now.
@@ -311,7 +311,7 @@ def sortAndSaveMergeResultList(S_bounds, out_path, constraint, MergeResultList, 
 
 
 # Enlarge Communities in the Merge stage using height level neighbor propagation checking. (every time try to merge multiple communities)
-def enlargeCommunityMerge(G, S_bounds, out_path, constraint, loop_free, timestep, Result, target_n, bio_flag, height, height2, attempt_range, ub):
+def enlargeCommunityMerge(G, S_bounds, out_path, constraint, loop_free, timestep, Result, target_n, bio_flag, color_flag, height, height2, attempt_range, ub):
 
     Result = renameKey(Result)
     MergeResult = copy.deepcopy(Result)
@@ -319,7 +319,7 @@ def enlargeCommunityMerge(G, S_bounds, out_path, constraint, loop_free, timestep
     MergeResultList, MergeResult, ll = tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, timestep, loop_free, Result,
                                                 attempt_range, ub, target_n)
 
-    MergeResultList, tmp, d_new = sortAndSaveMergeResultList(S_bounds, out_path, constraint, MergeResultList, MergeResult, attempt_range_original, bio_flag)
+    MergeResultList, tmp, d_new = sortAndSaveMergeResultList(S_bounds, out_path, constraint, MergeResultList, MergeResult, attempt_range_original, color_flag)
     MergeResult = d_new[0][1]
 
     # If the current number of communities is bigger than what we expected (target_n), return False

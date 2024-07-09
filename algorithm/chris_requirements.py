@@ -29,7 +29,7 @@ def VerifyAndMerge():
         begin_time = time.time()
 
         # Run and load verification result
-        G_primitive, S_bounds, target_n, primitive_only, ConstraintType, constraint, loop_free, out_path, timestep1, timestep2, bio_flag, height, \
+        G_primitive, S_bounds, target_n, primitive_only, ConstraintType, constraint, loop_free, out_path, timestep1, timestep2, bio_flag, color_flag, height, \
         DAG, height2, attempt_range, ub, _, _, _, _ = utils.loadData(s, settings)
         attempt_range_original = copy.deepcopy(attempt_range)
         target_n = math.ceil(len(G_primitive.nodes) / S_bounds[1])
@@ -68,7 +68,7 @@ def VerifyAndMerge():
 
                 # Start to solve the worst case by enlarging its size
                 VerifyResult, VerifyFlag, ErrorLog, _ = ec.enlargeCommunity(G_primitive, PendingCommunity, S_bounds, ConstraintType, timestep1,
-                                                                         constraint, loop_free, priority, CurrentVerifyResult, bio_flag, ub, height)
+                                                                         constraint, loop_free, CurrentVerifyResult, bio_flag, ub, height)
 
                 # If VerifyFlag is false, that means the graph and constraints don't pass the verification, user should change
                 # it later. If it is ture, save the result. Then we go to the merging stage.

@@ -37,7 +37,7 @@ def Verification():
 
         # Load data and check if we can directly put all the nodes in one community
         G_primitive, S_bounds, target_n, primitive_only, ConstraintType, constraint, loop_free, out_path, timestep, timestep2, \
-            bio_flag, height, DAG, height2, attempts, ub, _, _, _, _ = utils.loadData(s, settings)
+            bio_flag, color_flag, height, DAG, height2, attempts, ub, _, _, _, _ = utils.loadData(s, settings)
         CellEdgeBeforeVerify, CommBeforeVerify = G_primitive.number_of_edges(), G_primitive.number_of_nodes()
 
         # If the max size for one community is bigger than the current total number of the nodes, output it and continue the next sample
@@ -86,4 +86,4 @@ def Verification():
             iof.reportIssue(out_path, ErrorLog)
 
 
-# Verification()
+Verification()

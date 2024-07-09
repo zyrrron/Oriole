@@ -306,7 +306,7 @@ def loadData(s, settings):
 	print('Processing sample', s)
 	# print (settings[s])
 	# obtain user-defined params
-	tmp = settings[s]['S_bounds'].split(',')
+	tmp = settings[s]['S_bounds'].replace('\"','').split(',')
 	S_bounds = [eval(i) for i in tmp]
 
 	# if target_n = -1, that means we want to find the most optimal partition solution
@@ -326,9 +326,11 @@ def loadData(s, settings):
 	loop_free = False
 	if settings[s]['loop_free'].lower() == 'true':
 		loop_free = True
-	bio_flag = int(settings[s]['ColorFlag'])
-	if bio_flag == 0:
+	color_flag = int(settings[s]['ColorFlag'])
+	if color_flag == 0:
 		target_n = int(settings[s]['target_n'].split(',')[0])
+	bio_flag = int(settings[s]['BioFlag'])
+
 	out_path = settings[s]['output_path']
 
 	# "attempts" means the number of possible merging paths we will collect, note that each path includes multiple partition results
@@ -371,4 +373,4 @@ def loadData(s, settings):
 		G_primitive = copy.deepcopy(DAG)
 
 	return G_primitive, S_bounds, target_n, primitive_only, ConstraintType, constraint, loop_free, out_path, timestep, timestep2, \
-		bio_flag, height, DAG, height2, attempt_range, ub, color_upperbound, trace_back, check_interval, SingleFlag
+		bio_flag, color_flag, height, DAG, height2, attempt_range, ub, color_upperbound, trace_back, check_interval, SingleFlag

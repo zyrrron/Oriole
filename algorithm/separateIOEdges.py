@@ -13,7 +13,7 @@ def findIOEdges():
 
         # Load merge result
         G_primitive, S_bounds, target_n, primitive_only, ConstraintType, constraint, loop_free, out_path, timestep, timestep2, \
-        bio_flag, height, DAG, height2, attempt_range, ub, _, _, _, _ = utils.loadData(s, settings)
+        bio_flag, color_flag, height, DAG, height2, attempt_range, ub, _, _, _, _ = utils.loadData(s, settings)
         in_nodes, out_nodes, nonprimitives = utils.get_nonprimitive_nodes(DAG)
         different_edges = ef.findIOEdges(G_primitive, DAG)
         D = collections.defaultdict(list)
