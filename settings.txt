@@ -89,8 +89,8 @@ sha256_core_nor_13_13	../benchmark/sha256-master/src/rtl/sha256_core_nor	TRUE	TR
 sha256_core_nor_13_6_11	../benchmark/sha256-master/src/rtl/sha256_core_nor	TRUE	TRUE	"1,13"	low	"2,2"	6	1	1	1000	"1,4"	3000	10000	3	3	3	11	30000	10	1	../results/sha256_core_nor/sha256_core_nor_13_bio
 sha256_core_nor_13_7_12	../benchmark/sha256-master/src/rtl/sha256_core_nor	TRUE	TRUE	"1,13"	low	"2,2"	7	1	1	1000	"1,2"	3000	10000	3	3	3	12	30000	10	1	../results/sha256_core_nor/sha256_core_nor_13_bio
 sha256_core_nor_13_8_13	../benchmark/sha256-master/src/rtl/sha256_core_nor	TRUE	TRUE	"1,13"	low	"2,2"	8	1	1	1000	"1,2"	3000	10000	3	3	3	13	30000	10	1	../results/sha256_core_nor/sha256_core_nor_13_bio
-sha256_core_nor_13_9_14	../benchmark/sha256-master/src/rtl/sha256_core_nor	TRUE	TRUE	"1,13"	low	"2,2"	9	1	1	1000	"1,2"	3000	10000	3	3	3	13	30000	10	1	../results/sha256_core_nor/sha256_core_nor_13_bio
-sha256_core_nor_13_10_15	../benchmark/sha256-master/src/rtl/sha256_core_nor	TRUE	TRUE	"1,13"	low	"2,2"	10	1	1	1000	"1,2"	3000	10000	3	3	3	13	30000	10	1	../results/sha256_core_nor/sha256_core_nor_13_bio
+sha256_core_nor_13_9_14	../benchmark/sha256-master/src/rtl/sha256_core_nor	TRUE	TRUE	"1,13"	low	"2,2"	9	1	1	1000	"1,2"	3000	10000	3	3	3	14	30000	10	1	../results/sha256_core_nor/sha256_core_nor_13_bio
+sha256_core_nor_13_10_15	../benchmark/sha256-master/src/rtl/sha256_core_nor	TRUE	TRUE	"1,13"	low	"2,2"	10	1	1	1000	"1,2"	3000	10000	3	3	3	15	30000	10	1	../results/sha256_core_nor/sha256_core_nor_13_bio
 sha256_core_nor_13_14	../benchmark/sha256-master/src/rtl/sha256_core_nor	TRUE	TRUE	"1,13"	low	"2,2"	14	1	1	1000	"1,2"	3000	10000	3	3	3	14	30000	100	1	../results/sha256_core_nor/sha256_core_nor_13_bio
 sha256_core_nor_13_15	../benchmark/sha256-master/src/rtl/sha256_core_nor	TRUE	TRUE	"1,13"	low	"2,2"	15	1	1	1000	"1,2"	3000	10000	3	3	3	15	30000	100	1	../results/sha256_core_nor/sha256_core_nor_13_bio
 sha256_core_nor_8_4_nc	../benchmark/sha256-master/src/rtl/sha256_core_nor	TRUE	FALSE	"1,8"	low	"2,2"	4	0	0	1000	"1,4"	3000	10000	3	3	3	4	10000	100	1	../results/sha256_core_nor/sha256_core_nor_8_nc

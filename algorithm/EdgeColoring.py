@@ -396,6 +396,6 @@ def EdgeColoring():
             print(f"Cannot find appropriate solution for edge coloring! Run time: {CostTime}")
 
 
-# EdgeColoring()
+EdgeColoring()
 
 
