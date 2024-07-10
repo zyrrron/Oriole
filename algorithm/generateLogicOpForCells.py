@@ -12,7 +12,7 @@ import time
 sys.path.append("../Oriole")
 
 
-jsonName = 'sha256_core_nor'
+jsonName = 'md5_opt_nor2'
 samples, settings = utils.loadSettings()
 for ele in range(len(samples)):
 
@@ -22,7 +22,7 @@ for ele in range(len(samples)):
     bio_flag, color_flag, height, DAG, height2, attempt_range, ub, MaxColor, _, _, _ = utils.loadData(s, settings)
 
     # load partition solution and color assignment
-    filename = f"{out_path}/sol_after_merge_{S_bounds[1]}_{constraint[0]}_{attempt_range}_{MaxColor}"
+    filename = f"{out_path}/sol_after_merge_{S_bounds[1]}_{constraint}_{attempt_range}_{MaxColor}"
     MergeResult, TotalComm = iof.loadSolution(f"{filename}.txt", s)
     CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
     ColorAssignment = iof.loadColorAssignment(f"{filename}_colored.txt", s)
@@ -178,8 +178,8 @@ for ele in range(len(samples)):
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
 
-        for group, data in InterGateSignalColor.items():
-            row_data = {'Group': group}
+        for gate, data in InterGateSignalColor.items():
+            row_data = {'Gate': gate}
             row_data.update(data)
             writer.writerow(row_data)
 
