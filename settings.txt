@@ -191,7 +191,7 @@ md5_regular_20_50_nc	../benchmark/bionetwork/chris_group/md5_regular/src/rtl/md5
 md5_regular_20_100_nc	../benchmark/bionetwork/chris_group/md5_regular/src/rtl/md5_regular	TRUE	FALSE	"1,20"	low	"2,2"	100	0	0	60	"1,10"	3000	10000	3	3	3	100	10000	100	1	../results/bionetwork/chris_group/md5_regular_20_nc
 md5_regular_20_200_nc	../benchmark/bionetwork/chris_group/md5_regular/src/rtl/md5_regular	TRUE	FALSE	"1,20"	low	"2,2"	200	0	0	60	"1,10"	3000	10000	3	3	3	200	10000	100	1	../results/bionetwork/chris_group/md5_regular_20_nc
 md5_stass	../benchmark/bionetwork/chris_group/md5_stass/md5	TRUE	TRUE	"1,8"	low	"2,2"	4	1	1	60	"1,5"	3000	10000	3	3	3	4	10000	100	1	../results/bionetwork/chris_group/md5_stass/md5
-md5_opt_nor2	../benchmark/bionetwork/chris_group/jai_example/md5_opt_nor2	TRUE	TRUE	"1,8"	low	"2,2"	4	1	1	60	"1,10"	3000	10000	3	3	3	4	10000	100	1	../results/bionetwork/chris_group/jai_example/md5_opt_nor2
+md5_opt_nor2	../benchmark/bionetwork/chris_group/jai_example/md5_opt_nor2	TRUE	TRUE	"1,8"	low	"2,2"	4	1	1	60	"1,500"	3000	10000	3	3	3	4	10000	100	1	../results/bionetwork/chris_group/jai_example/md5_opt_nor2
 md5_opt_all	../benchmark/bionetwork/chris_group/jai_example/md5_opt_all	TRUE	TRUE	"1,8"	low	"2,2"	4	1	1	60	"1,51"	3000	10000	3	3	3	4	10000	100	1	../results/bionetwork/chris_group/jai_example/md5_opt_all
 md5_opt_nand	../benchmark/bionetwork/chris_group/jai_example/md5_opt_nand	TRUE	TRUE	"1,8"	low	"2,2"	4	1	1	60	"1,11"	3000	10000	3	3	3	4	10000	100	1	../results/bionetwork/chris_group/jai_example/md5_opt_nand
 md5_opt_ExceptXORXNOR	../benchmark/bionetwork/chris_group/jai_example/md5_opt_ExceptXORXNOR	TRUE	TRUE	"1,8"	low	"2,2"	4	1	1	60	"1,11"	3000	10000	3	3	3	4	10000	100	1	../results/bionetwork/chris_group/jai_example/md5_opt_ExceptXORXNOR
