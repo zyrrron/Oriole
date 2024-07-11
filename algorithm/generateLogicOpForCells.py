@@ -55,22 +55,21 @@ for ele in range(len(samples)):
     # OutputSignals: [{"NextCellID": str, "Edge": (ThisGateID, NextGateID), "Color": str}, ...]}
     # create 1 dictionary saving the internal logic gate layout of a subgroup
     # 3. CellID: {Size: int(), GateInfo: {GateID: GateType, ...}, Connections: [(Gate1 ID, Gate2 ID), ...]}
-    IntercellularSignalColor, InterGateSignalColor, IntracellularLayout = {}, {}, {}
+    InterGateSignalColor, CellLayout = {}, {}
 
     # Find input signal ID, output signal ID, their colors, and the logic layout for the current cell
     for cell in CommunityNumToNodes:
-        IntercellularSignalColor[cell] = {"InputSignals": [], "OutputSignals": []}
-        IntracellularLayout[cell] = {"Size": len(CommunityNumToNodes[cell]), "GateInfo": {}, "Connections": []}
+        CellLayout[cell] = {"Size": len(CommunityNumToNodes[cell]), "GateInfo": {}, "Connections": [], "Input": [], "Output": []}
 
         # find internal connections for the current cell
         for edge in G_primitive.edges:
             if edge[0] in CommunityNumToNodes[cell] and edge[1] in CommunityNumToNodes[cell]:
-                IntracellularLayout[cell]["Connections"].append(edge)
+                CellLayout[cell]["Connections"].append(edge)
 
         # find input signal ID, output signal ID, and their colors for the current gate
         for gate in CommunityNumToNodes[cell]:
 
-            IntracellularLayout[cell]["GateInfo"][gate] = gates_info[int(gate)]['type']
+            CellLayout[cell]["GateInfo"][gate] = gates_info[int(gate)]['type']
             InterGateSignalColor[gate] = {"InputSignals": [], "OutputSignals": []}
             LastGates, NextGates, LastCells, NextCells = [], [], [], []
 
@@ -112,7 +111,7 @@ for ele in range(len(samples)):
 
                 InterGateSignalColor[gate]["InputSignals"].append(EdgeInfoTemp)
                 if len(CellEdgeInfoTemp) > 0:
-                    IntercellularSignalColor[cell]["InputSignals"].append(CellEdgeInfoTemp)
+                    CellLayout[cell]["Input"].append(CellEdgeInfoTemp)
 
             # Output signal color assignment, one output signal can only be output by one gate. This signal only need one color.
             outputSignal = gates_info[int(gate)]['output']['Y']
@@ -138,7 +137,7 @@ for ele in range(len(samples)):
 
                     InterGateSignalColor[gate]["OutputSignals"].append(EdgeInfoTemp)
                     if len(CellEdgeInfoTemp) > 0:
-                        IntercellularSignalColor[cell]["OutputSignals"].append(CellEdgeInfoTemp)
+                        CellLayout[cell]["Output"].append(CellEdgeInfoTemp)
             else:
                 NextGates.append("Output Signal")
                 EdgeInfoTemp = {"NextGateID": "Output Signal", "Color": "black"}
@@ -148,26 +147,20 @@ for ele in range(len(samples)):
 
                 InterGateSignalColor[gate]["OutputSignals"].append(EdgeInfoTemp)
                 if len(CellEdgeInfoTemp) > 0:
-                    IntercellularSignalColor[cell]["OutputSignals"].append(CellEdgeInfoTemp)
+                    CellLayout[cell]["Output"].append(CellEdgeInfoTemp)
 
-    csv_file = f'{out_path}/IntercellularSignalColor.csv'
+    # find unique groups in the CellLayout
+
+
+
+    # Output
+    csv_file = f'{out_path}/CellLayout.csv'
     with open(csv_file, 'w', newline='') as csvfile:
-        fieldnames = ['Group'] + list(next(iter(IntercellularSignalColor.values())).keys())
+        fieldnames = ['Group'] + list(next(iter(CellLayout.values())).keys())
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
 
-        for group, data in IntercellularSignalColor.items():
-            row_data = {'Group': group}
-            row_data.update(data)
-            writer.writerow(row_data)
-
-    csv_file = f'{out_path}/IntracellularLayout.csv'
-    with open(csv_file, 'w', newline='') as csvfile:
-        fieldnames = ['Group'] + list(next(iter(IntracellularLayout.values())).keys())
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        writer.writeheader()
-
-        for group, data in IntracellularLayout.items():
+        for group, data in CellLayout.items():
             row_data = {'Group': group}
             row_data.update(data)
             writer.writerow(row_data)
@@ -182,4 +175,3 @@ for ele in range(len(samples)):
             row_data = {'Gate': gate}
             row_data.update(data)
             writer.writerow(row_data)
-
