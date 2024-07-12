@@ -7,12 +7,13 @@ import json
 import csv
 import utils
 import EdgeFunctions as ef
+from collections import defaultdict
 import collections
 import time
-sys.path.append("../Oriole")
 
 
-jsonName = 'md5_opt_nor2'
+
+jsonName = 'ascon1'
 samples, settings = utils.loadSettings()
 for ele in range(len(samples)):
 
@@ -148,10 +149,6 @@ for ele in range(len(samples)):
                 InterGateSignalColor[gate]["OutputSignals"].append(EdgeInfoTemp)
                 if len(CellEdgeInfoTemp) > 0:
                     CellLayout[cell]["Output"].append(CellEdgeInfoTemp)
-
-    # find unique groups in the CellLayout
-
-
 
     # Output
     csv_file = f'{out_path}/CellLayout.csv'
