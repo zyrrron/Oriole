@@ -143,15 +143,7 @@ for ele in range(len(samples)):
                 if len(CellEdgeInfoTemp) > 0:
                     CellLayout[cell]["Output"].append(CellEdgeInfoTemp)
 
-    # 1. First filter: Distinguish cells by their cell and logic info and create a tree-structure dictionary to store them
-    tree, leaf_count, single_leaf_count, multi_cell_nodes = uc.build_tree(CellLayout)
-    print("树的叶子节点总数:", leaf_count)
-    print("仅包含一个元素的叶子节点数量:", single_leaf_count)
-    print("包含多个元素的叶子节点路径:", multi_cell_nodes)
-    print("四层嵌套字典:", tree)
-
-    # 2. Second filter: Distinguish cells in the same leaf by their edge info
-
+    D = uc.createFeatureTable(CellLayout)
 
     # Output
     csv_file = f'{out_path}/CellLayout.csv'
