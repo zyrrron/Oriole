@@ -1,4 +1,11 @@
-import findUniqueCells as uc
+# Copyright (C) 2024 by
+# Yangruirui Zhou <yrrzhou@bu.edu>, CIDAR Lab, Boston University
+# All rights reserved.
+# OSI Non-Profit Open Software License ("Non-Profit OSL") 3.0 license.
+# Start working on the verification stage
+
+import uc_createFeatureTable as ucft
+import uc_findUniqueCells as ucfuc
 import InOutFunctions as iof
 import UpdateFunctions as uf
 import json
@@ -34,7 +41,7 @@ for ele in range(len(samples)):
         inputSignals = gates_info[int(g)]['input']
         for i in inputSignals:
 
-            # A signal can be many different gates' input signal, but it can only be output by one gate
+            # A signal can be many gates' input signal, but it can only be output by one gate
             if inputSignals[i] not in mapInputSignalToGate:
                 mapInputSignalToGate[inputSignals[i]] = []
             mapInputSignalToGate[inputSignals[i]].append(str(g))
@@ -143,7 +150,7 @@ for ele in range(len(samples)):
                 if len(CellEdgeInfoTemp) > 0:
                     CellLayout[cell]["Output"].append(CellEdgeInfoTemp)
 
-    D = uc.createFeatureTable(CellLayout)
+    D = ucfuc.distinguishCells(CellLayout)
 
     # Output
     csv_file = f'{out_path}/CellLayout.csv'

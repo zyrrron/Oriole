@@ -23,9 +23,9 @@ import CalculationFunctions as clf
 def Verification():
     # Load samples and settings
     samples, settings = utils.loadSettings()
-    txt0 = open(f"VerifyFailed.txt", "a")
-    txt1 = open(f"VerifyPassedAfterMerge.txt", "a")
-    txt2 = open(f"VerifyPassedDirectly.txt", "a")
+    txt0 = open(f"../results/csv_result_collection/VerifyFailed.txt", "a")
+    txt1 = open(f"../results/csv_result_collection/VerifyPassedAfterMerge.txt", "a")
+    txt2 = open(f"../results/csv_result_collection/VerifyPassedDirectly.txt", "a")
     ResultFile = open(f"../results/csv_result_collection/VerifyResult.csv", "a", newline="")
     csvwriter = csv.writer(ResultFile)
     if ResultFile.tell() == 0:
@@ -78,7 +78,7 @@ def Verification():
             txt1.write(f"{s},")
             CellToCellEdges = clf.calculateCellEdges(G_primitive, VerifyResult)
             csvwriter.writerow([s, CommBeforeVerify, len(uf.mapCommunityToNodes(VerifyResult)), CellEdgeBeforeVerify, CellToCellEdges])
-            # Write current verify solution into a output file
+            # Write current verify solution into an output file
             CostTime = time.time() - begin_time
             iof.writeSolution(out_path, f'/sol_after_verify_{S_bounds[1]}_{constraint}.txt', G_primitive, VerifyResult, CostTime)
         else:

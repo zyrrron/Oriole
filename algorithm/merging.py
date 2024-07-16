@@ -1,3 +1,9 @@
+# Copyright (C) 2023 by
+# Yangruirui Zhou <yrrzhou@bu.edu>, CIDAR Lab, Boston University
+# All rights reserved.
+# OSI Non-Profit Open Software License ("Non-Profit OSL") 3.0 license.
+# Start working on the verification stage
+
 # After verification stage, we will work on the solution optimization
 import sys
 sys.path.append("../")

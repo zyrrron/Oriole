@@ -1,28 +1,8 @@
-import argparse
-import sys
-import copy
-import InOutFunctions as iof
-import UpdateFunctions as uf
-import json
-import csv
-import utils
-import EdgeFunctions as ef
-from collections import defaultdict
-import collections
-import time
-
-# find unique groups in the CellLayout
-D = {
-    'cell0': {'Size': 3, 'GateInfo': {'1': 'NOR', '2': 'NOR', '0': 'NOR'}},
-    'cell9': {'Size': 1, 'GateInfo': {'3': 'NOT'}},
-    'cell8': {'Size': 3, 'GateInfo': {'4': 'NOR', '5': 'NOT', "6": 'NOT'}},
-    'cell7': {'Size': 2, 'GateInfo': {'7': 'NOT', '8': 'NOT'}},
-    'cell5': {'Size': 2, 'GateInfo': {'9': 'NOR', '10': 'NOT'}},
-    'cell4': {'Size': 3, 'GateInfo': {'12': 'NOR', '13': 'NOT', "14": 'NOR'}},
-    'cell11': {'Size': 3, 'GateInfo': {'15': 'NOT', '16': 'NOT', "17": 'NOR'}},
-    'cell12': {'Size': 3, 'GateInfo': {'18': 'NOR', '19': 'NOR', "20": 'NOR'}},
-}
-
+# Copyright (C) 2023 by
+# Yangruirui Zhou <yrrzhou@bu.edu>, CIDAR Lab, Boston University
+# All rights reserved.
+# OSI Non-Profit Open Software License ("Non-Profit OSL") 3.0 license.
+# Start working on the verification stage
 
 # Get basic gate info
 def get_gate_info(gate_info):
@@ -108,20 +88,44 @@ def GateToEdges(CellInfo):
 # Create logic expression set for the current cell
 def createLogic(CellInfo, CommunicationEdges, ColorDomain, GateToInputEdges, GateToOutputEdges, Edges):
     LogicExpressions = {}
+    InputNumForEachGateType = {'NOT': 1, 'NOR': 2}
 
     # For each output gate, we have multiple steps to creat the logic expression set.
     # Step 0 (before while loop): Add each output signal index Output_X from CommunicationEdges['OutputEdge'] to a queue. (First In First Out)
-    # Step 1 (while loop starts): If the queue is not empty, use the fist signal index in the queue to find the detail edge info in Edges.
+    # Step 1 (while loop starts): If the queue is not empty, check if the fist signal is an input signal.
     #   If it is in CommunicationEdges['InputEdge'], remove the signal and go to the next while loop.
-    # Step 2: Find the corresponding gate and its logic type. Determine the number of input edges (1 or 2) (Now we only detect NOT and NOR)
-    # Step 3: Find the corresponding input edge(s) in GateToInputEdges, append the source input edges into queue, add a new expression to the
+    # Step 2: Find the corresponding gate u and its logic type. Determine the number of input edges (1 or 2) (Now we only detect NOT and NOR)
+    # Step 3: Find the corresponding input edge(s) in GateToInputEdges, append the source input edge(s) into queue, add a new expression to the
     # logic expression set, [Current Signal Index, NOR, Input Edge 1, Input Edge 2] / [Current Signal Index, NOT, Input Edge 1]
-    # Step 4: Go to the next loop
-    for CurrentOutEdge in CommunicationEdges['OutputEdge']:
-        queue = [CurrentOutEdge]
+    # Step 4: Go to the next loop.
+    for CurrentOutputSignal in CommunicationEdges['OutputEdge']:
+        queue = [CurrentOutputSignal]
         while queue:
-            if queue[0] in CommunicationEdges['OutputEdge']:
-                queue.remove(0)
+            if queue[0] in CommunicationEdges['InputEdge']:
+                queue.pop(0)
+                continue
+
+            # Step 2
+            CurrentOutputSignal = queue.pop(0)
+            u, v = Edges[CurrentOutputSignal]['Edge']
+            u_type = CellInfo['GateInfo'][u]
+            InputNum = InputNumForEachGateType[u_type]
+
+            # Step 3
+            InputEdges, InputColors = [], []
+            for key, value in Edges.items():
+                if InputNum == 0:
+                    break
+
+                # Find input edges for gate u
+                if Edges[key]['Edge'][1] == u:
+                    queue.append(key)
+                    InputEdges.append(key)
+                    InputColors.append(Edges[key]['Color'])
+                    InputNum -= 1
+
+            LogicExpressions[CurrentOutputSignal] = {'GateType': u_type, 'Inputs': InputEdges}
+
     return LogicExpressions
 
 

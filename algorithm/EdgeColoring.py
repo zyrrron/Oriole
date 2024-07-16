@@ -1,3 +1,9 @@
+# Copyright (C) 2023 by
+# Yangruirui Zhou <yrrzhou@bu.edu>, CIDAR Lab, Boston University
+# All rights reserved.
+# OSI Non-Profit Open Software License ("Non-Profit OSL") 3.0 license.
+# Start working on the verification stage
+
 # Set the number of cell-cell communication as the input parameters
 # Assign coloring remarks for each edge in a dictionary and save it.
 import copy
