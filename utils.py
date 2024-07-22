@@ -358,7 +358,7 @@ def loadData(s, settings):
 	trace_back = int(settings[s]['timestep_traceback'])
 	check_interval = int(settings[s]['check_interval'])
 	SingleFlag = True
-	if settings[s]['SingleFlag'] == '1':
+	if settings[s]['SingleFlag'].lower() == 'false':
 		SingleFlag = False
 
 	# load graph
