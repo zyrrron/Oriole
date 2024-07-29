@@ -7,11 +7,11 @@ ascon8	../benchmark/ascon/asconRound1/8b	TRUE	TRUE	1,13	low	2,2	8	1	1	1	1,11	300
 ascon64	../benchmark/ascon/asconRound1/64b	TRUE	TRUE	1,13	low	2,2	8	1	1	1	1,6	3000	100000	3	3	3	8	10000	10	FALSE	../results/ascon/asconRound1/ascon64b_13_8
 ascon	../benchmark/ascon/asconRound1/General	TRUE	TRUE	1,13	low	2,2	8	1	1	1	1,11	3000	100000	3	3	3	8	50000	100	FALSE	../results/ascon/asconRound1/ascon_13_8
 ascon64_6	../benchmark/ascon/asconRound1/64b	TRUE	TRUE	1,13	low	2,2	6	1	1	1	1,4	3000	100000	3	3	3	8	10000	100	FALSE	../results/ascon/asconRound1/ascon64b_13_8
-ascon_6	../benchmark/ascon/asconRound1/General	TRUE	TRUE	1,13	low	2,2	6	1	1	1	1,4	3000	100000	3	3	3	8	10000	100	FALSE	../results/ascon/asconRound1/ascon_13_8
+ascon_6	../benchmark/ascon/asconRound1/General	TRUE	TRUE	1,13	low	2,2	6	1	1	1	1,4	3000	100000	3	3	3	8	30000	100	FALSE	../results/ascon/asconRound1/ascon_13_8
 ascon64_5	../benchmark/ascon/asconRound1/64b	TRUE	TRUE	1,13	low	2,2	5	1	1	1	1,4	3000	100000	3	3	3	8	10000	100	FALSE	../results/ascon/asconRound1/ascon64b_13_8
-ascon_5	../benchmark/ascon/asconRound1/General	TRUE	TRUE	1,13	low	2,2	5	1	1	1	1,4	3000	100000	3	3	3	8	10000	100	FALSE	../results/ascon/asconRound1/ascon_13_8
+ascon_5	../benchmark/ascon/asconRound1/General	TRUE	TRUE	1,13	low	2,2	5	1	1	1	1,4	3000	100000	3	3	3	8	30000	100	FALSE	../results/ascon/asconRound1/ascon_13_8
 ascon64_4	../benchmark/ascon/asconRound1/64b	TRUE	TRUE	1,13	low	2,2	4	1	1	1	1,4	3000	100000	3	3	3	8	10000	100	FALSE	../results/ascon/asconRound1/ascon64b_13_8
-ascon_4	../benchmark/ascon/asconRound1/General	TRUE	TRUE	1,13	low	2,2	4	1	1	1	1,4	3000	100000	3	3	3	8	10000	100	FALSE	../results/ascon/asconRound1/ascon_13_8
+ascon_4	../benchmark/ascon/asconRound1/General	TRUE	TRUE	1,13	low	2,2	4	1	1	1	1,4	3000	100000	3	3	3	8	30000	100	FALSE	../results/ascon/asconRound1/ascon_13_8
 apollo	../benchmark/apollo_guidance_simulation/apollo	TRUE	TRUE	1,8	low	2,2	6	0	0	4	1,11	3000	10000	3	3	3	6	10000	100	FALSE	../results/apollo/apollo
 agc_8_4	../benchmark/agc-Digital-Automatic-Gain-Control/src/agc	TRUE	FALSE	1,8	low	2,2	4	0	0	4	1,11	3000	10000	3	3	3	4	10000	100	FALSE	../results/AutoGainC/agc_8_4
 agc_8_5	../benchmark/agc-Digital-Automatic-Gain-Control/src/agc	TRUE	FALSE	1,8	low	2,2	5	0	0	4	1,11	3000	10000	3	3	3	5	10000	100	FALSE	../results/AutoGainC/agc_8_5
