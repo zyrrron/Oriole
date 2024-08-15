@@ -4,8 +4,8 @@ ascon1_test	../benchmark/ascon/asconRound1/1b	TRUE	TRUE	1,2	low	2,2	4	1	1	1	1,11
 ascon2	../benchmark/ascon/asconRound1/2b	TRUE	TRUE	1,13	low	2,2	8	1	1	1	1,11	3000	10000	3	3	3	8	10000	1	FALSE	../results/ascon/asconRound1/ascon2b_13_8
 ascon4	../benchmark/ascon/asconRound1/4b	TRUE	TRUE	1,13	low	2,2	8	1	1	1	1,11	3000	10000	3	3	3	8	10000	1	FALSE	../results/ascon/asconRound1/ascon4b_13_8
 ascon8	../benchmark/ascon/asconRound1/8b	TRUE	TRUE	1,13	low	2,2	8	1	1	1	1,11	3000	10000	3	3	3	8	50000	1	FALSE	../results/ascon/asconRound1/ascon8b_13_8
-ascon64	../benchmark/ascon/asconRound1/64b	TRUE	TRUE	1,13	low	2,2	8	1	1	1	1,6	3000	100000	3	3	3	8	10000	10	FALSE	../results/ascon/asconRound1/ascon64b_13_8
-ascon	../benchmark/ascon/asconRound1/General	TRUE	TRUE	1,13	low	2,2	8	1	1	1	1,11	3000	100000	3	3	3	8	50000	100	FALSE	../results/ascon/asconRound1/ascon_13_8
+ascon64	../benchmark/ascon/asconRound1/64b	TRUE	TRUE	1,13	low	2,2	8	1	1	1	1,11	3000	100000	3	3	3	8	10000	10	FALSE	../results/ascon/asconRound1/ascon64b_13_8
+ascon	../benchmark/ascon/asconRound1/General	TRUE	TRUE	1,13	low	2,2	8	1	1	1	1,4	3000	100000	3	3	3	8	50000	100	FALSE	../results/ascon/asconRound1/ascon_13_8
 ascon64_6	../benchmark/ascon/asconRound1/64b	TRUE	TRUE	1,13	low	2,2	6	1	1	1	1,4	3000	100000	3	3	3	8	10000	100	FALSE	../results/ascon/asconRound1/ascon64b_13_8
 ascon_6	../benchmark/ascon/asconRound1/General	TRUE	TRUE	1,13	low	2,2	6	1	1	1	1,4	3000	100000	3	3	3	8	30000	100	FALSE	../results/ascon/asconRound1/ascon_13_8
 ascon64_5	../benchmark/ascon/asconRound1/64b	TRUE	TRUE	1,13	low	2,2	5	1	1	1	1,4	3000	100000	3	3	3	8	10000	100	FALSE	../results/ascon/asconRound1/ascon64b_13_8

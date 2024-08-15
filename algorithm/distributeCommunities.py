@@ -13,10 +13,10 @@ def countEdgesForEachCell():
 
     # Load samples and settings
     samples, settings = utils.loadSettings()
-    csvpath = "../results/bionetwork/chris_group/jai_example/md5_opt_nor2"
+    csvpath = "../results/ascon/asconRound1"
     SolutionNum = {}
-    maxedges = [4]
-    maxcolor = -1
+    maxedges = [8]
+    maxcolor = 8
 
     # Check samples iteratively
     for s in samples:
@@ -83,7 +83,7 @@ def countEdgesForEachCell():
     writer = csv.writer(graphInfo)
     FirstLine = ["benchmark"]
     for i in maxedges:
-        FirstLine.append(f"intercellular edges <= {i}")
+        FirstLine.append(f"# of cells")
     if graphInfo.tell() == 0:
         writer.writerow(FirstLine)
 
