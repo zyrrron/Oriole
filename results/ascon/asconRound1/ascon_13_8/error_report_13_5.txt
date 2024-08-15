@@ -1,3 +1,0 @@
-Target N is: 479. Stop caused by: {'No more attempts'}. 
-During [1, 4] attempts of different merging strategy, we decrease the number of communities from 6215 to 1639
-Time Cost: 110331.35464859009s
