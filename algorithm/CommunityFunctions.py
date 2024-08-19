@@ -55,17 +55,17 @@ def findAllNeighborsComm(G, c, CurrentResult):
 
 
 # Find all neighbor communities and neighbor of neighbor communities
-def findPropagateNeighborComm(G, c, CurrentResult, height, res, path, S_bound, size, reward_path, rewards, constraint, bio_flag, path_set, ub):
+def findPropagateNeighborComm(G, c, CurrentResult, depth, res, path, S_bound, size, reward_path, rewards, constraint, bio_flag, path_set, ub):
 
     NegativeUpperBound = ub
-    if height <= 0:
+    if depth <= 0:
         return res, rewards, path_set
 
     CommunityNumToNodes = uf.mapCommunityToNodes(CurrentResult)
     if size >= S_bound[1]:
         return res, rewards, path_set
 
-    # save the neighbor communities in this height, format is "path,current comm"
+    # save the neighbor communities in this depth, format is "path,current comm"
     Neighbors = findAllNeighborsComm(G, c, CurrentResult)
 
     # If no more neighbors for current center, return
@@ -120,11 +120,11 @@ def findPropagateNeighborComm(G, c, CurrentResult, height, res, path, S_bound, s
             # But we will save all the path has less than NegativeUpperBound continuous negative rewards
             MergeCommList.append(com)
 
-    # If this height exits, append. Otherwise, create a new one
-    if height in res:
-        res[height] += MergeCommListStr
+    # If this depth exits, append. Otherwise, create a new one
+    if depth in res:
+        res[depth] += MergeCommListStr
     elif MergeCommListStr:
-        res[height] = MergeCommListStr
+        res[depth] = MergeCommListStr
 
     # Search for the next level neighbors from this level neighbors one by one
     # com is the community number of
@@ -136,7 +136,7 @@ def findPropagateNeighborComm(G, c, CurrentResult, height, res, path, S_bound, s
         tempvalue = CommunityNumToNodes[com]
         for node in CommunityNumToNodes[com]:
             CurrentResult[node] = c
-        res, rewards, path_set = findPropagateNeighborComm(G, c, CurrentResult, height-1, res, path, S_bound, size_new,
+        res, rewards, path_set = findPropagateNeighborComm(G, c, CurrentResult, depth-1, res, path, S_bound, size_new,
                                             reward_Neighbors[com], rewards, constraint, bio_flag, path_set, ub)
         for node in tempvalue:
             CurrentResult[node] = com

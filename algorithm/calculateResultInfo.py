@@ -8,7 +8,7 @@ samples, settings = utils.loadSettings()
 txt2 = open("../results/csv_result_collection/fail.txt", "a")
 for s in samples:
     G_primitive, S_bounds, target_n, primitive_only, ConstraintType, constraint, loop_free, out_path, _, timestep, \
-    bio_flag, color_flag, height, DAG, height2, attempt_range, ub, _, _, _, _ = utils.loadData(s, settings)
+    bio_flag, color_flag, depth, DAG, depth2, attempt_range, ub, _, _, _, _ = utils.loadData(s, settings)
     file = open(f"../results/csv_result_collection/RunTime.csv", "a", newline="")
     writer = csv.writer(file)
     if file.tell() == 0:

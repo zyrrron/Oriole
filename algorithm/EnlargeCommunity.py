@@ -11,9 +11,9 @@ import copy
 import UpdateFunctions as uf
 
 
-def getUnNeighborRewards(residualComm, CommunityNumToNodes, NodeNum, S_bound, rewards, CommPath, Result, CenterCommunity, constraint, bio_flag, G, height, timestep):
-    # force to escape from the current recursion if we meet the max height to search
-    if height <= 0 or timestep < 0:
+def getUnNeighborRewards(residualComm, CommunityNumToNodes, NodeNum, S_bound, rewards, CommPath, Result, CenterCommunity, constraint, bio_flag, G, depth, timestep):
+    # force to escape from the current recursion if we meet the max depth to search
+    if depth <= 0 or timestep < 0:
         return timestep, rewards
 
     # Search for the next level
@@ -33,15 +33,15 @@ def getUnNeighborRewards(residualComm, CommunityNumToNodes, NodeNum, S_bound, re
             if r >= 0:
                 rewards[tmp] = r
                 timestep, _ = getUnNeighborRewards(residualComm, CommunityNumToNodes, NodeNum + len(CommunityNumToNodes[c]), S_bound, rewards, path_sorted, Result,
-                             CenterCommunity, constraint, bio_flag, G, height-1, timestep-1)
+                             CenterCommunity, constraint, bio_flag, G, depth-1, timestep-1)
 
 
     return timestep, rewards
 
 
-# propagation checking stop after the given height
-# height2 is used for combining the unconnected cells, stop in a limited searching height.
-def prepareCommOrder(G, CenterCommunity, CurrentResult, constraint, bio_flag, height, height2, S_bound, ub, path_set, count=0):
+# propagation checking stop after the given depth
+# depth2 is used for combining the unconnected cells, stop in a limited searching depth.
+def prepareCommOrder(G, CenterCommunity, CurrentResult, constraint, bio_flag, depth, depth2, S_bound, ub, path_set, count=0):
 
     rewards = {}
     flag = True
@@ -69,13 +69,13 @@ def prepareCommOrder(G, CenterCommunity, CurrentResult, constraint, bio_flag, he
             # merge communities as big as possible every time, upper bound for search timestep is set to 100.
             CommPath = [CenterCommunity]
             timestep, rewards = getUnNeighborRewards(residualComm, CommunityNumToNodes, NodeNum, S_bound, rewards, CommPath, CurrentResult_new,
-                                                     CenterCommunity, constraint, bio_flag, G, height2, 100)
+                                                     CenterCommunity, constraint, bio_flag, G, depth2, 100)
     else:
 
-        # calculate the rewards provided by all neighbor communities and the n-height neighbors of the neighbors if we add them into the current community
+        # calculate the rewards provided by all neighbor communities and the n-depth neighbors of the neighbors if we add them into the current community
         # This procedure is called propagation checking
         CommunityNumToNodes = uf.mapCommunityToNodes(CurrentResult)
-        PropagandizedNeighborComm, rewards, path_set = ccf.findPropagateNeighborComm(G, CenterCommunity, CurrentResult, height-1, {height: CenterCommunity},
+        PropagandizedNeighborComm, rewards, path_set = ccf.findPropagateNeighborComm(G, CenterCommunity, CurrentResult, depth-1, {depth: CenterCommunity},
                                                                                [CenterCommunity], S_bound, len(CommunityNumToNodes[CenterCommunity]),
                                                                                [0], {}, constraint, bio_flag, path_set, ub)
 
@@ -94,10 +94,10 @@ def prepareCommOrder(G, CenterCommunity, CurrentResult, constraint, bio_flag, he
 # Check if current community i meets all constraints every time when we move node j into community i.
 # Record it if meets all constraints.
 # Better use recursion here.
-def enlargeCommunity(G, Community, S_bounds, ConstraintType, timestep, constraint, loop_free, CurrentResult, bio_flag, ub, height=0, height2=0):
+def enlargeCommunity(G, Community, S_bounds, ConstraintType, timestep, constraint, loop_free, CurrentResult, bio_flag, ub, depth=0, depth2=0):
     VerifyFlag, ErrorLog = False, {}
 
-    rewards_new, CurrentResult_new, path_set, _ = prepareCommOrder(G, Community, CurrentResult, constraint, bio_flag, height, 0, S_bounds, ub, set())
+    rewards_new, CurrentResult_new, path_set, _ = prepareCommOrder(G, Community, CurrentResult, constraint, bio_flag, depth, 0, S_bounds, ub, set())
 
     # start the middle part of backtracking
     for c in rewards_new:
@@ -132,10 +132,10 @@ def enlargeCommunity(G, Community, S_bounds, ConstraintType, timestep, constrain
                 Community = ccf.findWorstCommunity(G, PendingCommunities, CurrentResult_updated, bio_flag)
                 # print("Start new pending community: ", Community)
                 CurrentResult_updated, VerifyFlag, ErrorLog, timestep = enlargeCommunity(G, Community, S_bounds, ConstraintType, timestep,
-                                                                             constraint, loop_free, CurrentResult_updated, bio_flag, ub, height,height2)
+                                                                             constraint, loop_free, CurrentResult_updated, bio_flag, ub, depth,depth2)
         if VerifyFlag:
             return CurrentResult_updated, VerifyFlag, ErrorLog, timestep
-    return CurrentResult_new, VerifyFlag, {f"Community {Community} cannot be solved! Try increasing ub, height, or height2"}, timestep
+    return CurrentResult_new, VerifyFlag, {f"Community {Community} cannot be solved! Try increasing ub, depth, or depth2"}, timestep
 
 
 # In this function, we only provide the list of as-center-to-be-merged communities, in order of calculated center-merging rewards.
@@ -203,7 +203,7 @@ def renameKey(OldResult):
     return NewResult
 
 
-def tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, timestep, loop_free, Result, attempt_range, ub, target_n):
+def tryMerge(G, MergeResult, constraint, bio_flag, depth, depth2, S_bounds, timestep, loop_free, Result, attempt_range, ub, target_n):
     totalNum = 0
     count = 1
     MergeResultList = [MergeResult]
@@ -229,7 +229,7 @@ def tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, ti
 
             # Find all neighbor communities around the chosen community.
             # And get the sorted rewards dictionary for all the propagated neighbor communities
-            rewards_sorted, _, path_set, Neighborflag = prepareCommOrder(G, Community, MergeResult, constraint, bio_flag, height, height2, S_bounds, ub, path_set, count)
+            rewards_sorted, _, path_set, Neighborflag = prepareCommOrder(G, Community, MergeResult, constraint, bio_flag, depth, depth2, S_bounds, ub, path_set, count)
             RewardCounter += 1
             if RewardCounter % 1000 == 0:
                 print(f"Have tried to merge {RewardCounter}th community candidate, now we have {len(uf.mapCommunityToNodes(MergeResult))} communities.")
@@ -310,13 +310,13 @@ def sortAndSaveMergeResultList(S_bounds, out_path, constraint, MergeResultList, 
     return MergeResultList, tmp, new_d
 
 
-# Enlarge Communities in the Merge stage using height level neighbor propagation checking. (every time try to merge multiple communities)
-def enlargeCommunityMerge(G, S_bounds, out_path, constraint, loop_free, timestep, Result, target_n, bio_flag, color_flag, height, height2, attempt_range, ub):
+# Enlarge Communities in the Merge stage using depth level neighbor propagation checking. (every time try to merge multiple communities)
+def enlargeCommunityMerge(G, S_bounds, out_path, constraint, loop_free, timestep, Result, target_n, bio_flag, color_flag, depth, depth2, attempt_range, ub):
 
     Result = renameKey(Result)
     MergeResult = copy.deepcopy(Result)
     attempt_range_original = copy.deepcopy(attempt_range)
-    MergeResultList, MergeResult, ll = tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, timestep, loop_free, Result,
+    MergeResultList, MergeResult, ll = tryMerge(G, MergeResult, constraint, bio_flag, depth, depth2, S_bounds, timestep, loop_free, Result,
                                                 attempt_range, ub, target_n)
 
     MergeResultList, tmp, d_new = sortAndSaveMergeResultList(S_bounds, out_path, constraint, MergeResultList, MergeResult, attempt_range_original, color_flag)
@@ -330,12 +330,12 @@ def enlargeCommunityMerge(G, S_bounds, out_path, constraint, loop_free, timestep
 
 
 # Merging for Chris group: Every time when we decide to merge, do edge-coloring assignment first. If it fails, drop it and try next one.
-def enlargeCommunityMerge_chris(G, S_bounds, out_path, constraint, loop_free, timestep, Result, target_n, bio_flag, height, height2, DAG_original, ColorOptions, attempt_range, ub):
+def enlargeCommunityMerge_chris(G, S_bounds, out_path, constraint, loop_free, timestep, Result, target_n, bio_flag, depth, depth2, DAG_original, ColorOptions, attempt_range, ub):
     DAG = copy.deepcopy(DAG_original)
     MergeResult = copy.deepcopy(Result)
     MergeResult = renameKey(MergeResult)
     CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
-    MergeResultList, MergeResult, ll = tryMerge(G, MergeResult, constraint, bio_flag, height, height2, S_bounds, timestep, loop_free, Result,
+    MergeResultList, MergeResult, ll = tryMerge(G, MergeResult, constraint, bio_flag, depth, depth2, S_bounds, timestep, loop_free, Result,
                                                 attempt_range, ub, target_n)
 
     MergeResultList, tmp, d_new = sortAndSaveMergeResultList(S_bounds, out_path, constraint, MergeResultList, MergeResult, attempt_range, bio_flag)

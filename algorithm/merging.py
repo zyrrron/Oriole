@@ -33,7 +33,7 @@ def Merging():
 
         # Load verification result
         G_primitive, S_bounds, target_n, primitive_only, ConstraintType, constraint, loop_free, out_path, _, timestep, \
-            bio_flag, color_flag, height, DAG, height2, attempt_range, ub, _, _, _, _ = utils.loadData(s, settings)
+            bio_flag, color_flag, depth, DAG, depth2, attempt_range, ub, _, _, _, _ = utils.loadData(s, settings)
 
         attempt_range_original = copy.deepcopy(attempt_range)
         if target_n == -1:
@@ -65,7 +65,7 @@ def Merging():
         print("Now try merging the communities!")
 
         MergeResult, MergeFlag, MergeErrorLog = ec.enlargeCommunityMerge(G_primitive, S_bounds, out_path,
-                            constraint, loop_free, timestep, VerifyResult, target_n, bio_flag, color_flag, height, height2, attempt_range, ub)
+                            constraint, loop_free, timestep, VerifyResult, target_n, bio_flag, color_flag, depth, depth2, attempt_range, ub)
 
         CostTime = time.time() - begin_time
         print(f"Time Cost: {CostTime}")

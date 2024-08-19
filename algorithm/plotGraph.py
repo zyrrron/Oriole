@@ -15,12 +15,12 @@ for s_index in range(len(samples)):
     s = samples[s_index]
     G, S_bounds, target_n, primitive_only, ConstraintType, constraint, loop_free, out_path, _, _, bio_flag, _, _, DAG, _, attempt_range, \
     _, ColorNum, _, _, _ = utils.loadData(s, settings)
-    MergeResult, TotalComm = iof.loadSolution(f"{out_path}/sol_after_merge_{S_bounds[1]}_{constraint[0]}_{attempt_range}_{ColorNum}.txt", s)
+    MergeResult, TotalComm = iof.loadSolution(f"{out_path}/sol_after_merge_{S_bounds[1]}_{constraint}_{attempt_range}_{ColorNum}.txt", s)
     CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
 
     # Load edge list with color
     ResultColored = {}
-    with open(f"{out_path}/sol_after_merge_{S_bounds[1]}_{constraint[0]}_{attempt_range}_{ColorNum}_colored.txt") as f:
+    with open(f"{out_path}/sol_after_merge_{S_bounds[1]}_{constraint}_{attempt_range}_{ColorNum}_colored.txt") as f:
         for line in f:
             parts = line.strip().split(" ")
             key = tuple(parts[:2])

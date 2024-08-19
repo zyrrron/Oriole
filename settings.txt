@@ -1,4 +1,4 @@
-sample	graph_path	loop_free	primitive_only	S_bounds	high_low_flag	high_constraint	low_constraint	BioFlag	ColorFlag	target_n	attempt_range	timestep_v	timestep_m	height	height2	ub	color_upperbound	timestep_traceback	check_interval	SingleFlag	output_path
+sample	graph_path	loop_free	primitive_only	S_bounds	high_low_flag	high_constraint	low_constraint	BioFlag	ColorFlag	target_n	attempt_range	timestep_v	timestep_m	depth	depth2	ub	color_upperbound	timestep_traceback	check_interval	SingleFlag	output_path
 ascon1	../benchmark/ascon/asconRound1/1b	TRUE	TRUE	1,13	low	2,2	8	1	1	1	1,11	3000	10000	3	3	3	8	10000	1	FALSE	../results/ascon/asconRound1/ascon1b_13_8
 ascon1_test	../benchmark/ascon/asconRound1/1b	TRUE	TRUE	1,2	low	2,2	4	1	1	1	1,11	3000	10000	3	3	3	6	10000	1	FALSE	../results/ascon/asconRound1/ascon1b_13_8
 ascon2	../benchmark/ascon/asconRound1/2b	TRUE	TRUE	1,13	low	2,2	8	1	1	1	1,11	3000	10000	3	3	3	8	10000	1	FALSE	../results/ascon/asconRound1/ascon2b_13_8

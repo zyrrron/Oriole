@@ -336,8 +336,8 @@ def loadData(s, settings):
 	# "attempts" means the number of possible merging paths we will collect, note that each path includes multiple partition results
 	# time step for verification stage
 	# time step for merging stage
-	# height: searching depth for each community merging propaganda checking
-	# "height2": the depth of searching possible merging solution for un-neighbor communities in every propaganda checking
+	# depth: searching depth for each community merging propaganda checking
+	# "depth2": the depth of searching possible merging solution for un-neighbor communities in every propaganda checking
 	# Upper bound for continuously negative reward path in each propaganda checking
 	attempt_range = []
 	tmp = settings[s]['attempt_range'].split(',')
@@ -345,8 +345,8 @@ def loadData(s, settings):
 		attempt_range.append(eval(i))
 	timestep = int(settings[s]['timestep_v'])
 	timestep2 = int(settings[s]['timestep_m'])
-	height = int(settings[s]['height'])
-	height2 = int(settings[s]['height2'])
+	depth = int(settings[s]['depth'])
+	depth2 = int(settings[s]['depth2'])
 	ub = int(settings[s]['ub'])
 
 	# parameters for edge coloring.
@@ -373,4 +373,4 @@ def loadData(s, settings):
 		G_primitive = copy.deepcopy(DAG)
 
 	return G_primitive, S_bounds, target_n, primitive_only, ConstraintType, constraint, loop_free, out_path, timestep, timestep2, \
-		bio_flag, color_flag, height, DAG, height2, attempt_range, ub, color_upperbound, trace_back, check_interval, SingleFlag
+		bio_flag, color_flag, depth, DAG, depth2, attempt_range, ub, color_upperbound, trace_back, check_interval, SingleFlag

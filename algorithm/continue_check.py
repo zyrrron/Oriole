@@ -29,8 +29,8 @@ def VerifyAndMerge():
         begin_time = time.time()
 
         # Run and load verification result
-        G_primitive, S_bounds, target_n, primitive_only, ConstraintType, constraint, loop_free, out_path, timestep1, timestep2, bio_flag, color_flag, height, \
-        DAG, height2, attempt_range, ub, _, _, _, _ = utils.loadData(s, settings)
+        G_primitive, S_bounds, target_n, primitive_only, ConstraintType, constraint, loop_free, out_path, timestep1, timestep2, bio_flag, color_flag, depth, \
+        DAG, depth2, attempt_range, ub, _, _, _, _ = utils.loadData(s, settings)
         attempt_range_original = copy.deepcopy(attempt_range)
         target_n = math.ceil(len(G_primitive.nodes) / S_bounds[1])
         print(f"Current max gate per cell is {S_bounds[1]}")
@@ -68,7 +68,7 @@ def VerifyAndMerge():
 
                 # Start to solve the worst case by enlarging its size
                 VerifyResult, VerifyFlag, ErrorLog, _ = ec.enlargeCommunity(G_primitive, PendingCommunity, S_bounds, ConstraintType, timestep1,
-                                                                         constraint, loop_free, CurrentVerifyResult, bio_flag, ub, height)
+                                                                         constraint, loop_free, CurrentVerifyResult, bio_flag, ub, depth)
 
                 # If VerifyFlag is false, that means the graph and constraints don't pass the verification, user should change
                 # it later. If it is ture, save the result. Then we go to the merging stage.
@@ -100,12 +100,12 @@ def VerifyAndMerge():
             else:
                 # Start merging from the community with the least incoming or outgoing edges.
                 # Try different searching order may find more optimal solution and get rid of the local optimal
-                # height2 is used for combining the un-neighbored gates, stop in a limited searching height.
-                height2 = 3
+                # depth2 is used for combining the un-neighbored gates, stop in a limited searching depth.
+                depth2 = 3
                 CurrentVerifyResult, TotalComm = iof.loadSolution(f"{out_path}/sol_after_verify_{S_bounds[1]}_{constraint[0]}.txt", s)
                 print(f"Check {attempt_range} attempt range. Now start merging!")
                 MergeResult, MergeFlag, MergeErrorLog, ColorFlag, DAG_new = ec.enlargeCommunityMerge_chris(G_primitive, S_bounds, out_path,
-                                    constraint, loop_free, timestep2, CurrentVerifyResult, target_n, bio_flag, height, height2, DAG, ColorOptions, attempt_range, ub)
+                                    constraint, loop_free, timestep2, CurrentVerifyResult, target_n, bio_flag, depth, depth2, DAG, ColorOptions, attempt_range, ub)
 
                 # Check if the new result is better than the previous one with bigger intercellular constraint
                 # if not, don't save it and go to the next one
