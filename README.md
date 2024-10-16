@@ -62,7 +62,7 @@ $ venv/bin/python3 algorithm/partition_edge_color.py -settings ./settings.txt -s
 
 ### Edge Coloring stage for a 2-bit MD5 benchmark
 You can run the edge coloring stage of Oriole algorithm to find color assignment and the corresponding subgroup solution for the 2-bit MD5 benchmarks with the following command.
-Don't forget to comment the command "Verification()" and command "Merging()".
+Don't forget to comment the command "Verification()" and command "Merging()" if you only want to do the edge coloring step.
 ```sh
 $ venv/bin/python3 algorithm/partition_edge_color.py -settings ./settings.txt -samples md5_opt_nor2
 ```
