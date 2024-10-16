@@ -48,23 +48,23 @@ In the "settings.txt" file, users can create a new row and modify constraints fo
 ### Verification stage for a 2-bit MD5 benchmark
 You can run the verification stage of Oriole algorithm to verify the 2-bit MD5 benchmarks with the following command. 
 The algorithm outputs a verified subgroup solution after passing this stage. Otherwise, it reports error. 
-Don't forget to comment the command "Merge()" in merging.py and command "EdgeColoring()" in EdgeColoring.py.
+Don't forget to comment the command "Merging()" and command "EdgeColoring()" if you only want to do the verification step.
 ```sh
-$ venv/bin/python3 algorithm/verification.py -settings ./settings.txt -samples md5_opt_nor2
+$ venv/bin/python3 algorithm/partition_edge_color.py -settings ./settings.txt -samples md5_opt_nor2
 ```
 
 ### Merging stage for a 2-bit MD5 benchmark
 You can run the merging stage of Oriole algorithm to find more optimal subgroup solutions for the 2-bit MD5 benchmarks with the following command. 
-Don't forget to comment the command "Verification()" in verification.py and command "EdgeColoring()" in EdgeColoring.py.
+Don't forget to comment the command "Verification()" and "EdgeColoring()" if you only want to do the merging step.
 ```sh
-$ venv/bin/python3 algorithm/merging.py -settings ./settings.txt -samples md5_opt_nor2
+$ venv/bin/python3 algorithm/partition_edge_color.py -settings ./settings.txt -samples md5_opt_nor2
 ```
 
 ### Edge Coloring stage for a 2-bit MD5 benchmark
 You can run the edge coloring stage of Oriole algorithm to find color assignment and the corresponding subgroup solution for the 2-bit MD5 benchmarks with the following command.
-Don't forget to comment the command "Verification()" in verification.py and command "Merge()" in merging.py.
+Don't forget to comment the command "Verification()" and command "Merging()".
 ```sh
-$ venv/bin/python3 algorithm/EdgeColoring.py -settings ./settings.txt -samples md5_opt_nor2
+$ venv/bin/python3 algorithm/partition_edge_color.py -settings ./settings.txt -samples md5_opt_nor2
 ```
 
 ## Maintainers

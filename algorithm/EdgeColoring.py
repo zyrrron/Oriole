@@ -321,87 +321,78 @@ def ColorAssignment(MergeResult, CommunityNumToNodes, G_primitive, DAG, bio_flag
     return ColorFlag, DAG, EdgeIndex, len(CellToCellEdges)
 
 
-def EdgeColoring():
+def EdgeColoring(G_primitive, S_bounds, constraint, out_path,
+    bio_flag, DAG, attempt_range, MaxColor, trace_back, check_interval, SingleFlag, s):
 
-    # Load samples and settings
-    samples, settings = utils.loadSettings()
+    ColorFlag = True
+    print(f"try to assign with {MaxColor} colors")
 
-    # Assign colors to each cell-cell edge iteratively
-    for ele in range(len(samples)):
+    ColorOptions = ["black", "gray"]
+    for j in range(MaxColor):
+        ColorOptions.append(f"color{j}")
+    begin_time = time.time()
 
-        # Load merge result
-        s = samples[ele]
-        G_primitive, S_bounds, target_n, _, _, constraint, _, out_path, _, _, bio_flag, color_flag, _, DAG, _, attempt_range, _, upperbound, timestep_reback, \
-        check_interval, SingleFlag = utils.loadData(s, settings)
-        ColorFlag = True
-        print(f"try to assign with {upperbound} colors")
+    if SingleFlag:
+        # Only check one solution file
+        MergeResult, TotalComm = iof.loadSolution(f"{out_path}/sol_after_merge_{S_bounds[1]}_{constraint}_{attempt_range}.txt", s)
+        CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
+        ColorFlag, DAG, EdgeIndex, TotalEdges = ColorAssignment(MergeResult, CommunityNumToNodes, G_primitive, DAG, bio_flag, ColorOptions, trace_back)
 
-        ColorOptions = ["black", "gray"]
-        for j in range(upperbound):
-            ColorOptions.append(f"color{j}")
-        begin_time = time.time()
+    else:
+        # Check a list of potential solution with minimum length
+        json_file = open(f"{out_path}/merge_result_list_{S_bounds[1]}_{constraint}_{attempt_range}.json", "r")
+        json_data = json_file.read()
+        json_file.close()
+        MergeResultList = json.loads(json_data)
+        PreviousSolLength = 0
 
-        if SingleFlag:
-            # Only check one solution file
-            MergeResult, TotalComm = iof.loadSolution(f"{out_path}/sol_after_merge_{S_bounds[1]}_{constraint}_{attempt_range}.txt", s)
+        # create the check result list
+        checklist = range(0, len(MergeResultList)-1, check_interval)
+        # if check_interval == 1:
+        #     checklist = range(0, 20, check_interval)
+        # if s == "ascon":
+        #     checklist = range(150, 250, check_interval)
+
+        # timestepOld = 10000
+        # with open(f"{out_path}/EdgeIndexInfo_{timestepOld}.csv_result_collection", "r") as csv_file:
+        #     reader = csv_result_collection.reader(csv_file)
+        #     next(reader)
+        #     data = list(reader)
+        # top_names = [int(row[0]) for row in data[:50]]
+
+        # create a csv_result_collection file saving the deepest edge for one solution has searched.
+
+        EdgeIndexInfo_file = open(f"{out_path}/EdgeIndexInfo_{constraint}_{attempt_range}_{trace_back}_{len(ColorOptions)-2}.csv", "a", newline="")
+        writer = csv.writer(EdgeIndexInfo_file)
+        if EdgeIndexInfo_file.tell() == 0:
+            writer.writerow(["Solution index", "Edge index", "Total cell-cell edges", "Edges colored", "Color percentage"])
+
+        # Check merge solution respectively
+        for i in checklist:
+            SolLength, MergeResult = MergeResultList[i]
+            if SolLength != PreviousSolLength:
+                PreviousSolLength = SolLength
+                print(f"Now check the result with {SolLength} communities")
+
+            # print index of current solution
+            print(i)
             CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
-            ColorFlag, DAG, EdgeIndex, TotalEdges = ColorAssignment(MergeResult, CommunityNumToNodes, G_primitive, DAG, bio_flag, ColorOptions, timestep_reback)
+            ColorFlag, DAG, EdgeIndex, TotalEdges = ColorAssignment(MergeResult, CommunityNumToNodes, G_primitive, DAG, bio_flag, ColorOptions, trace_back)
+            writer.writerow([i, EdgeIndex, TotalEdges, TotalEdges - EdgeIndex - 1, (TotalEdges - EdgeIndex - 1) / TotalEdges])
+            if ColorFlag:
+                CostTime = time.time() - begin_time
+                iof.writeSolution(out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint}_{attempt_range}_{len(ColorOptions)-2}.txt', G_primitive, MergeResult, CostTime)
+                break
 
-        else:
-            # Check a list of potential solution with minimum length
-            json_file = open(f"{out_path}/merge_result_list_{S_bounds[1]}_{constraint}_{attempt_range}.json", "r")
-            json_data = json_file.read()
-            json_file.close()
-            MergeResultList = json.loads(json_data)
-            PreviousSolLength = 0
-
-            # create the check result list
-            checklist = range(0, len(MergeResultList)-1, check_interval)
-            # if check_interval == 1:
-            #     checklist = range(0, 20, check_interval)
-            # if s == "ascon":
-            #     checklist = range(150, 250, check_interval)
-
-            # timestepOld = 10000
-            # with open(f"{out_path}/EdgeIndexInfo_{timestepOld}.csv_result_collection", "r") as csv_file:
-            #     reader = csv_result_collection.reader(csv_file)
-            #     next(reader)
-            #     data = list(reader)
-            # top_names = [int(row[0]) for row in data[:50]]
-
-            # create a csv_result_collection file saving the deepest edge for one solution has searched.
-
-            EdgeIndexInfo_file = open(f"{out_path}/EdgeIndexInfo_{constraint}_{attempt_range}_{timestep_reback}_{len(ColorOptions)-2}.csv", "a", newline="")
-            writer = csv.writer(EdgeIndexInfo_file)
-            if EdgeIndexInfo_file.tell() == 0:
-                writer.writerow(["Solution index", "Edge index", "Total cell-cell edges", "Edges colored", "Color percentage"])
-
-            # Check merge solution respectively
-            for i in checklist:
-                SolLength, MergeResult = MergeResultList[i]
-                if SolLength != PreviousSolLength:
-                    PreviousSolLength = SolLength
-                    print(f"Now check the result with {SolLength} communities")
-
-                # print index of current solution
-                print(i)
-                CommunityNumToNodes = uf.mapCommunityToNodes(MergeResult)
-                ColorFlag, DAG, EdgeIndex, TotalEdges = ColorAssignment(MergeResult, CommunityNumToNodes, G_primitive, DAG, bio_flag, ColorOptions, timestep_reback)
-                writer.writerow([i, EdgeIndex, TotalEdges, TotalEdges - EdgeIndex - 1, (TotalEdges - EdgeIndex - 1) / TotalEdges])
-                if ColorFlag:
-                    CostTime = time.time() - begin_time
-                    iof.writeSolution(out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint}_{attempt_range}_{len(ColorOptions)-2}.txt', G_primitive, MergeResult, CostTime)
-                    break
-
-        CostTime = time.time() - begin_time
-        if ColorFlag:
-            # Write edge list with color
-            print(f"Find appropriate solution for edge coloring! Run time: {CostTime}")
-            iof.writeColoredEdgeList(out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint}_{attempt_range}_{len(ColorOptions)-2}_colored.txt', DAG)
-        else:
-            print(f"Cannot find appropriate solution for edge coloring! Run time: {CostTime}")
+    CostTime = time.time() - begin_time
+    if ColorFlag:
+        # Write edge list with color
+        print(f"Find appropriate solution for edge coloring! Run time: {CostTime}")
+        iof.writeColoredEdgeList(out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint}_{attempt_range}_{len(ColorOptions)-2}_colored.txt', DAG)
+    else:
+        print(f"Cannot find appropriate solution for edge coloring! Run time: {CostTime}")
 
 
-EdgeColoring()
+# EdgeColoring()
 
 
