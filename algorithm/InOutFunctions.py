@@ -23,10 +23,12 @@ def writeSolution(out_path, filename, G, CurrentResult, CostTime):
 
 
 # Write edge list with color
-def writeColoredEdgeList(out_path, filename, G):
+def writeColoredEdgeList(out_path, filename, G, CostTime, label):
     outfile = out_path + filename
     if not os.path.exists(out_path):
         os.makedirs(out_path)
+    f_out = open(f"{out_path}/color_runtime_{label}", 'w')
+    f_out.write(f"Find appropriate solution for edge coloring! Run time: {CostTime}s\n")
     nx.write_edgelist(G,outfile,data=["color"])
 
 

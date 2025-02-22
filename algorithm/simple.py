@@ -81,7 +81,7 @@ for value in column1_values:
 # # with open(f"{out_path}/merge_result_list.json", "r") as json_file:
 #     # loaded_data = json.load(json_file)
 #
-# json_file = open(f"{out_path}/merge_result_list_8_4_[1, 500].json", "r")
+# json_file = open(f"{out_path}/merge_result_list_8_[4]_[1, 500].json", "r")
 # json_data = json_file.read()
 # json_file.close()
 # loaded_data = json.loads(json_data)
