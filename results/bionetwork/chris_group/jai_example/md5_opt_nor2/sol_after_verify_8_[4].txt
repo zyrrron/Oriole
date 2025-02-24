@@ -1,3 +1,4 @@
+Time Cost: 0.011378765106201172s
 Community 1: ['1030']
 Community 2: ['1031']
 Community 3: ['1032']
