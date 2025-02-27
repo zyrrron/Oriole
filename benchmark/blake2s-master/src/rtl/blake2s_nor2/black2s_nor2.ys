@@ -1,0 +1,13 @@
+read_verilog ../blake2s.v ../blake2s_core.v ../blake2s_G.v ../blake2s_m_select.v
+splitnets
+hierarchy -top blake2s_core
+flatten
+proc
+techmap
+opt
+abc -g NOR
+opt
+opt_clean
+write_json ../blake2s_nor2/blake2s_nor2.json
+show -format pdf -prefix ../blake2s_nor2/blake2s_nor2_yosys
+dot -Ksfdp -Tpdf '../blake2s_nor2/blake2s_nor2_yosys.dot' > '../blake2s_nor2/blake2s_nor2_yosys.pdf'
