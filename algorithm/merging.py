@@ -29,8 +29,6 @@ def Merging(G_primitive, S_bounds, target_n, constraint, loop_free, out_path, ti
     begin_time = time.time()
 
     attempt_range_original = copy.deepcopy(attempt_range)
-    if target_n == -1:
-        target_n = math.ceil(len(G_primitive.nodes) / S_bounds[1])
     VerifyResult, TotalCommOld = iof.loadSolution(f"{out_path}/sol_after_verify_{S_bounds[1]}_{constraint}.txt", s)
     CellToCellEdgesOld = clf.calculateCellEdges(G_primitive, VerifyResult)
 
@@ -38,24 +36,29 @@ def Merging(G_primitive, S_bounds, target_n, constraint, loop_free, out_path, ti
     if TotalCommOld < target_n:
 
         csvwriter.writerow([s, TotalCommOld, CellToCellEdgesOld, TotalCommOld, CellToCellEdgesOld])
-        print("Verification solution is good enough according to the target number of communities!")
+        print("Verification solution is good enough according to the target number of subgroups!")
         return
 
     # If the number of target n can never achieve because S_bound[1] is too small, return error
     if S_bounds[1] * target_n < len(G_primitive.nodes()):
-        print("The upper bound of one community make it impossible to get target_n communities to take all the nodes in this graph!")
-        return
+        print("The upper bound of one subgroup make it impossible to get target_n subgroups to take all the nodes in this graph!")
+        print(f"Now we will try to find a partitioning solution with the least number of subgroups.")
+        target_n = -1
+
+    if target_n == -1:
+        target_n = math.ceil(len(G_primitive.nodes) / S_bounds[1])
+        print(target_n)
 
     # If S_bound[1] is big enough to take all the nodes in one community
     if S_bounds[1] >= len(G_primitive.nodes):
         CostTime = time.time() - begin_time
         csvwriter.writerow([s, TotalCommOld, CellToCellEdgesOld, 1, 0])
         iof.writeSolution(out_path, f'/sol_after_merge_{S_bounds[1]}_{constraint}_{attempt_range}.txt', G_primitive, [], CostTime)
-        print("All nodes can be put in one community!")
+        print("All nodes can be put in one subgroup!")
         return
 
     # Start merging from the community with the least incoming or outgoing edges.
-    print("Now try merging the communities!")
+    print("Now try merging the subgroups!")
 
     MergeResult, MergeFlag, MergeErrorLog = ec.enlargeCommunityMerge(G_primitive, S_bounds, out_path,
                         constraint, loop_free, timestep, VerifyResult, target_n, bio_flag, color_flag, height, height2, attempt_range, ub)

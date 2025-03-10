@@ -29,7 +29,7 @@ def Verification(G_primitive, S_bounds, ConstraintType, constraint, loop_free, o
     if len(G_primitive.nodes) < S_bounds[1]:
         CostTime = time.time() - begin_time
         iof.writeSolution(out_path, f'/sol_after_verify_{S_bounds[1]}_{constraint}.txt', G_primitive, [], CostTime)
-        print("All nodes can be put in one community!")
+        print("All nodes can be put in one subgroup!")
         return
 
     # Initiate communities
@@ -41,12 +41,12 @@ def Verification(G_primitive, S_bounds, ConstraintType, constraint, loop_free, o
         CostTime = time.time() - begin_time
         iof.writeSolution(out_path, f'/sol_after_verify_{S_bounds[1]}_{constraint}.txt', G_primitive, CurrentVerifyResult, CostTime)
         return
-    print("PendingCommunities: ", PendingCommunities)
+    print("Pending Subgroups: ", PendingCommunities)
 
     # Start to solve the pending communities
     # Find the worst case in the PendingCommunities
     PendingCommunity = ccf.findWorstCommunity(G_primitive, PendingCommunities, CurrentVerifyResult, bio_flag)
-    print("PendingCommunity: ", PendingCommunity)
+    print("Pending Subgroup: ", PendingCommunity)
 
     # Start to solve the worst case by enlarging its size
     VerifyResult, VerifyFlag, ErrorLog, _ = ec.enlargeCommunity(G_primitive, PendingCommunity, S_bounds, ConstraintType, timestep,

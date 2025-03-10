@@ -6,7 +6,7 @@ import collections
 import UpdateFunctions as uf
 import matplotlib.pyplot as plt
 
-# G = nx.read_edgelist(f"../benchmark/blake2s-master/src/rtl/blake2s_nor2/DAG.edgelist", nodetype = str, create_using=nx.DiGraph())
+# G = nx.read_edgelist(f"../benchmark/bionetwork/chris_group/jai_example/md5_opt_nor2/DAG.edgelist", nodetype = str, create_using=nx.DiGraph())
 # print(G.number_of_nodes(), G.number_of_edges())
 # in_nodes, out_nodes, nonprimitives = utils.get_nonprimitive_nodes(G)
 # G1 = utils.get_G_primitive(G, nonprimitives)
@@ -14,21 +14,21 @@ import matplotlib.pyplot as plt
 # print(G1.number_of_nodes(), G1.number_of_edges())
 
 # 打开文件并读取内容
-# with open('../settings.txt', 'r') as file:
-#     lines = file.readlines()
+with open('../settings.txt', 'r') as file:
+    lines = file.readlines()
 
 # 创建一个空列表来存储第一列的值
-# column1_values = []
-#
-# # 遍历每一行，分割并提取第一列的值
-# for line in lines[1:10]:
-#     columns = line.strip().split('\t')  # 如果是制表符分隔，使用'\t'，如果是空格分隔，使用' '
-#     if columns:  # 确保行中有内容
-#         column1_values.append(columns[0])
-#
-# # 输出提取的第一列值
-# for value in column1_values:
-#     print(value, end=",")
+column1_values = []
+
+# 遍历每一行，分割并提取第一列的值
+for line in lines[7:13]:
+    columns = line.strip().split('\t')  # 如果是制表符分隔，使用'\t'，如果是空格分隔，使用' '
+    if columns:  # 确保行中有内容
+        column1_values.append(columns[0])
+
+# 输出提取的第一列值
+for value in column1_values:
+    print(value, end=",")
 
 # pos = nx.spring_layout(G, seed=42)
 # nx.draw_networkx(G, with_labels=True)

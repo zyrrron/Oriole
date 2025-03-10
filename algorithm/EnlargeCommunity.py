@@ -233,7 +233,7 @@ def tryMerge(G, MergeResult, constraint, bio_flag, depth, depth2, S_bounds, time
             RewardCounter += 1
             if RewardCounter % 1000 == 0:
                 print(f"Have tried to merge {RewardCounter}th community candidate, now we have {len(uf.mapCommunityToNodes(MergeResult))} communities.")
-
+                print(f"{timestep} steps left!")
             for key in rewards_sorted:
 
                 # Merge the neighbor community providing the highest reward currently
@@ -258,6 +258,9 @@ def tryMerge(G, MergeResult, constraint, bio_flag, depth, depth2, S_bounds, time
             # After one iteration, we may have a successful merge or not.
             # Keep checking until all communities are checked.
             timestep -= 1
+            if timestep < 0:
+                print(f"No more timesteps left! Stop merging!")
+                break
         # ll = len(uf.mapCommunityToNodes(MergeResult))
         # print(f"attempt {attempts}: ", f"{timestep} timesteps left, ", f"{ll} cells in solution now.")
 
