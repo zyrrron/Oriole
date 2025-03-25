@@ -9,7 +9,3 @@ def createInitialCommunities(G):
         d[ele] = ele
     return d
 
-
-# Get all nodes in the given community
-def getNodesFromCommunity(PendingCommunities):
-    pass
