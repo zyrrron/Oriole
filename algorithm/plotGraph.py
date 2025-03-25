@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 import networkx as nx
 import utils
 import copy
-import UpdateFunctions as uf
-import InOutFunctions as iof
+import oriole_UpdateFunctions as uf
+import oriole_InOutFunctions as iof
 
 # Load samples and settings
 samples, settings = utils.loadSettings()

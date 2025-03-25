@@ -5,18 +5,18 @@
 # Start working on the verification stage
 
 import sys
-import UpdateFunctions as uf
+import oriole_UpdateFunctions as uf
 import csv
-import EnlargeCommunity as ec
+import oriole_EnlargeCommunity as ec
 sys.path.append("../Oriole")
 import utils
 import time
 import networkx as nx
-import EdgeFunctions as ef
-import CommunityFunctions as ccf
-import InOutFunctions as iof
-import InitiateFunctions as inf
-import CalculationFunctions as clf
+import oriole_EdgeFunctions as ef
+import oriole_CommunityFunctions as ccf
+import oriole_InOutFunctions as iof
+import oriole_InitiateFunctions as inf
+import oriole_CalculationFunctions as clf
 
 
 # If solution find, we return "verification passed" and save the current clustering solution.

@@ -8,12 +8,12 @@
 # Assign coloring remarks for each edge in a dictionary and save it.
 import copy
 import ijson
-import InOutFunctions as iof
-import UpdateFunctions as uf
+import oriole_InOutFunctions as iof
+import oriole_UpdateFunctions as uf
 import json
 import csv
 import utils
-import EdgeFunctions as ef
+import oriole_EdgeFunctions as ef
 import collections
 import time
 

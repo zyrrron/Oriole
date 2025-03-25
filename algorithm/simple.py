@@ -3,7 +3,7 @@ import utils
 import json
 import csv
 import collections
-import UpdateFunctions as uf
+import oriole_UpdateFunctions as uf
 import matplotlib.pyplot as plt
 
 # G = nx.read_edgelist(f"../benchmark/bionetwork/chris_group/jai_example/md5_opt_nor2/DAG.edgelist", nodetype = str, create_using=nx.DiGraph())

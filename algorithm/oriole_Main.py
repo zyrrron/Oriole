@@ -1,6 +1,6 @@
-from merging import Merging
-from verification import Verification
-from EdgeColoring import EdgeColoring
+from oriole_Merging import Merging
+from oriole_Verification import Verification
+from oriole_EdgeColoring import EdgeColoring
 import time
 import utils
 

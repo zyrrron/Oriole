@@ -1,20 +1,20 @@
-import UpdateFunctions as uf
-import merging as MG
+import oriole_UpdateFunctions as uf
+import oriole_Merging as MG
 import sys
 import math
 import os
-import EnlargeCommunity as ec
+import oriole_EnlargeCommunity as ec
 sys.path.append("../Oriole")
 import utils
 import time
 import networkx as nx
-import EdgeFunctions as ef
-import CommunityFunctions as ccf
-import InOutFunctions as iof
-import InitiateFunctions as inf
+import oriole_EdgeFunctions as ef
+import oriole_CommunityFunctions as ccf
+import oriole_InOutFunctions as iof
+import oriole_InitiateFunctions as inf
 import copy
 import csv
-import EdgeColoring as ca
+import oriole_EdgeColoring as ca
 
 
 def VerifyAndMerge():

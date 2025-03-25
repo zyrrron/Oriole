@@ -1,5 +1,5 @@
 import os
-import UpdateFunctions as uf
+import oriole_UpdateFunctions as uf
 import networkx as nx
 import re
 
@@ -44,8 +44,8 @@ def reportIssue(out_path, ErrorLog, info=""):
     print("Error caused by: ", ErrorLog)
 
 
-# 1. Load current verification solution and send it to "merging.py"
-# 2. Load current merge solution and send it to "EdgeColoring.py"
+# 1. Load current verification solution and send it to "oriole_Merging.py"
+# 2. Load current merge solution and send it to "oriole_EdgeColoring.py"
 def loadSolution(path, s=""):
 
     # read data from verification/merge result
@@ -72,7 +72,7 @@ def loadSolution(path, s=""):
     return Result, CommunityNum-1
 
 
-# 2. Load current color assignment and send it to "EdgeColoring.py"
+# 2. Load current color assignment and send it to "oriole_EdgeColoring.py"
 def loadColorAssignment(path, s=""):
 
     # read data from color assignment

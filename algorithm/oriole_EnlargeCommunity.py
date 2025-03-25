@@ -1,14 +1,13 @@
-import InitiateFunctions as inf
-import CalculationFunctions as calf
+import oriole_InitiateFunctions as inf
+import oriole_CalculationFunctions as calf
 import json
 import csv
-import NodeFunctions as nf
-import InOutFunctions as iof
+import oriole_InOutFunctions as iof
 import collections
-import EdgeColoring as eco
-import CommunityFunctions as ccf
+import oriole_EdgeColoring as eco
+import oriole_CommunityFunctions as ccf
 import copy
-import UpdateFunctions as uf
+import oriole_UpdateFunctions as uf
 
 
 def getUnNeighborRewards(residualComm, CommunityNumToNodes, NodeNum, S_bound, rewards, CommPath, Result, CenterCommunity, constraint, bio_flag, G, depth, timestep):

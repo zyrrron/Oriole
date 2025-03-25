@@ -7,16 +7,16 @@
 # After verification stage, we will work on the solution optimization
 import sys
 sys.path.append("../")
-import InOutFunctions as iof
-import UpdateFunctions as uf
+import oriole_InOutFunctions as iof
+import oriole_UpdateFunctions as uf
 import utils
-import EnlargeCommunity as ec
+import oriole_EnlargeCommunity as ec
 import time
 import csv
 import math
-import CalculationFunctions as clf
+import oriole_CalculationFunctions as clf
 import copy
-import CommunityFunctions as ccf
+import oriole_CommunityFunctions as ccf
 
 
 def Merging(G_primitive, S_bounds, target_n, constraint, loop_free, out_path, timestep, bio_flag, color_flag, height, height2, attempt_range, ub, s):

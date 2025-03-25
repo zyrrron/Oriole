@@ -1,10 +1,10 @@
 import utils
-import InOutFunctions as iof
-import UpdateFunctions as uf
+import oriole_InOutFunctions as iof
+import oriole_UpdateFunctions as uf
 import collections
 import os
 import csv
-import CommunityFunctions as ccf
+import oriole_CommunityFunctions as ccf
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 

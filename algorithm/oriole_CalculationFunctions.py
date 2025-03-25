@@ -1,5 +1,5 @@
-import EdgeFunctions as ef
-import CommunityFunctions as ccf
+import oriole_EdgeFunctions as ef
+import oriole_CommunityFunctions as ccf
 
 
 def calculateCellEdges(G, MergeResult):

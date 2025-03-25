@@ -1,8 +1,8 @@
 import utils
 import csv
 import os
-import CalculationFunctions as clf
-import InOutFunctions as iof
+import oriole_CalculationFunctions as clf
+import oriole_InOutFunctions as iof
 
 samples, settings = utils.loadSettings()
 txt2 = open("../results/csv_result_collection/fail.txt", "a")

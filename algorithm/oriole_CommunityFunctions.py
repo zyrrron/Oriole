@@ -1,8 +1,8 @@
-import EdgeFunctions as ef
+import oriole_EdgeFunctions as ef
 import networkx as nx
-import UpdateFunctions as uf
+import oriole_UpdateFunctions as uf
 import copy
-import CalculationFunctions as calf
+import oriole_CalculationFunctions as calf
 import random
 
 
