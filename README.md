@@ -43,7 +43,37 @@ $ venv/bin/python3 generateEdgeList.py -settings ./settings.txt -samples md5_opt
 ```
 
 ### Create constraint set for your target benchmark
-In the "settings.txt" file, users can create a new row and modify constraints for their benchmark.
+In the "settings.txt" file, users can add a new row and modify constraints for their benchmark.
+
+If users want to exclude non-primitive nodes from the network, set primitive_only to "True".
+
+If users want to avoid cycles or loops in the final solution, set loop_free to "True".
+
+If users want to limit the number of nodes in a subgroup to a maximum of 8, set S_bound to "1,8".
+
+If users want to apply a high constraint, set high_low_flag to "high". Otherwise, set it to "low".
+
+If the total number of intercellular edges in a subgroup should be less than 4, set high_constraint to "4".
+
+If the Indegree should be less than 2 and the Outdegree should be less than 3, set low_constraint to "[2,3]".
+
+If users want to treat the Indegree and Outdegree as exact values rather than limits, set BioFlag to "0".
+
+If users do not want to include the "EdgeColoring" stage, set ColorFlag to "0".
+
+If users want to minimize the number of subgroups in the final solution, set target_n to "-1".
+
+If users want one additional attempt for the current benchmark, set attempt_range to "1,3".
+
+Users can set timestep_v and timestep_m as needed to control time costs.
+
+depth, depth2, and ub are used to adjust the speed of propagation checking and to avoid local optima.
+
+If users want to limit the number of intercellular edge colors per subgroup to a maximum of 4, set color_upperbound to "4".
+
+If users do not want to check the merging results continuously, set check_interval to an integer greater than 1.
+
+If users want to check only the most optimal merging solution found after the "Merging" stage, set SingleFlag to "1".
 
 ### Verification stage for a 2-bit MD5 benchmark
 You can run the verification stage of Oriole algorithm to verify the 2-bit MD5 benchmarks with the following command. 
